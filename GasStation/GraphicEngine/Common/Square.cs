@@ -5,17 +5,11 @@ namespace GasStation.GraphicEngine.Common
 {
     public class Square
     {
-        readonly PictureBox _pictureBox;
+        protected readonly PictureBox _pictureBox;
 
         public Control Control
         {
             get => _pictureBox;
-        }
-
-        public Image Image
-        {
-            get => _pictureBox.Image;
-            set => _pictureBox.Image = value;
         }
 
         public Square(Point location, Size size)
@@ -26,7 +20,5 @@ namespace GasStation.GraphicEngine.Common
                 Location = location
             };
         }
-
-       
     }
 }

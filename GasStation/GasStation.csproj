@@ -53,7 +53,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GraphicEngine\Common\Area.cs" />
+    <Compile Include="GraphicEngine\Common\Abstract\IAnimatedComponent.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
+    <Compile Include="GraphicEngine\ColorSquare.cs" />
+    <Compile Include="GraphicEngine\ConstructorArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

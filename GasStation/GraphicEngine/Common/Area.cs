@@ -3,31 +3,34 @@ using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
 {
-    public class Area
+    public abstract class Area <S>
+        where S : Square
     {
-        readonly Panel _panel;
-        public Square[,] Squares { get; }
+        private readonly Panel _panel;
+        public int SquareWidthLength { get; }
+        public int SquareHeightLength { get; }
+        private S[,] _squares { get; }
         public Size SquareSize { get; }
 
         public Area(Panel panel, Size squareSize)
         {
             _panel = panel;
             SquareSize = squareSize;
+            SquareWidthLength = _panel.Width / squareSize.Width;
+            SquareHeightLength = _panel.Height / squareSize.Height;
 
-            int squareWidthLength = _panel.Width / SquareSize.Width;
-            int squareHeightLength = _panel.Height / SquareSize.Height;
-            Squares = new Square[squareWidthLength, squareHeightLength];
+            _squares = new S[SquareWidthLength, SquareHeightLength];
+        }
 
-            for (int i = 0; i < squareWidthLength; i++)
-            {
-                for (int j = 0; j < squareHeightLength; j++)
-                {
-                    var square = new Square(new Point(i * SquareSize.Width, j * SquareSize.Height), SquareSize);
-                    _panel.Controls.Add(square.Control);
-                    Squares[i, j] = square;
-                    square.Control.BackColor = Color.Red;
-                }
-            }
+        protected virtual void AddSquare(S square, int widthIndex, int heightIndex)
+        {
+            _squares[widthIndex, heightIndex] = square;
+            _panel.Controls.Add(square.Control);
+        }
+
+        public S GetSquare(int widthIndex, int heightIndex)
+        {
+            return _squares[widthIndex, heightIndex];
         }
     }
 }
