@@ -59,8 +59,10 @@
     <Compile Include="GraphicEngine\ConstructorArea.cs" />
     <Compile Include="LifeEngine\LifeEngine.cs" />
     <Compile Include="LifeEngine\LifeSquare.cs" />
-    <Compile Include="LifeEngine\SimulatorEntity.cs" />
-    <Compile Include="LifeEngine\SurfaceEntity.cs" />
+    <Compile Include="LifeEngine\Simulation.cs" />
+    <Compile Include="LifeEngine\SimulatorType.cs" />
+    <Compile Include="LifeEngine\Surface.cs" />
+    <Compile Include="LifeEngine\SurfaceType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

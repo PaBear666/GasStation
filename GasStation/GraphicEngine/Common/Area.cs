@@ -9,7 +9,7 @@ namespace GasStation.GraphicEngine.Common
         private readonly Panel _panel;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
-        private S[,] _squares { get; }
+        private S[] _squares { get; }
         public Size SquareSize { get; }
 
         public Area(Panel panel, Size squareSize)
@@ -19,18 +19,24 @@ namespace GasStation.GraphicEngine.Common
             SquareWidthLength = _panel.Width / squareSize.Width;
             SquareHeightLength = _panel.Height / squareSize.Height;
 
-            _squares = new S[SquareWidthLength, SquareHeightLength];
+            _squares = new S[SquareWidthLength * SquareHeightLength];
         }
 
-        protected virtual void AddSquare(S square, int widthIndex, int heightIndex)
+        protected virtual void AddSquare(int index, S square)
         {
-            _squares[widthIndex, heightIndex] = square;
+            var currentSquare = _squares[index];
+            if(currentSquare != null)
+            {
+                _panel.Controls.Remove(currentSquare.Control);
+            }
+
+            _squares[index] = square;
             _panel.Controls.Add(square.Control);
         }
 
-        public S GetSquare(int widthIndex, int heightIndex)
+        public S GetSquare(int index)
         {
-            return _squares[widthIndex, heightIndex];
+            return _squares[index];
         }
     }
 }

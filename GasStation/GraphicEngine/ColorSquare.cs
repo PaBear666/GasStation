@@ -5,10 +5,36 @@ using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine
 {
-    public class ColorSquare : Square, IAnimatedComponent
+    public abstract class ColorSquare : Square, IAnimatedComponent
     {
-        public Color BaseColor { get; set; }
-        public Image BaseImage { get; set; }
+        Color _baseColor;
+        Image _baseImage;
+        public Color BaseColor 
+        {
+            get
+            {
+                return _baseColor;
+            }
+            set
+            {
+                SetDesign(value);
+                _baseColor = value;
+            }
+        }
+        public Image BaseImage 
+        { 
+            get
+            {
+                return _baseImage;
+            }
+
+            set
+            {
+                SetDesign(value);
+                _baseImage = value;
+            }
+
+        }
         public ColorSquare(int id, Point location, Size size, Color baseColor, Image baseImage = null) : base(id, location, size)
         {
             _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
