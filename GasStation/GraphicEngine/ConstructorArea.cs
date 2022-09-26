@@ -19,8 +19,11 @@ namespace GasStation.GraphicEngine
                     id++;
                 }
             }
-            var currnetSqure = GetSquare(22);
+            var currnetSqure = GetSquare(0);
             currnetSqure.Surface = new Surface(SurfaceType.DeleteCar, Color.Green);
+            var a = new Bitmap("C:\\Users\\NIKITA\\OneDrive\\Рабочий стол\\00_B9AkuG0.jpg.740x555_q85_box-314,0,1918,1200_crop_detail_upscale.jpg");
+           
+            currnetSqure.OverEntity = new Simulation(currnetSqure.Surface, SimulatorType.TankCar,Color.Red, image: a);
         }
     }
 }

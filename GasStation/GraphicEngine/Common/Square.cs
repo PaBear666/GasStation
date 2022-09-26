@@ -25,7 +25,8 @@ namespace GasStation.GraphicEngine.Common
             
             _label = new Label()
             {
-                Text = id.ToString()
+                Text = id.ToString(),
+                
             };
             _pictureBox.Controls.Add(_label);
         }
