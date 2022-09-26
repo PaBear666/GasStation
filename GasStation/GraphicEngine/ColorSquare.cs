@@ -1,6 +1,7 @@
 ﻿using GasStation.GraphicEngine.Common;
 using GasStation.GraphicEngine.Common.Abstract;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine
 {
@@ -8,10 +9,12 @@ namespace GasStation.GraphicEngine
     {
         public Color BaseColor { get; set; }
         public Image BaseImage { get; set; }
-
-        public ColorSquare(Point location, Size size, Color baseColor) : base(location, size)
+        public ColorSquare(int id, Point location, Size size, Color baseColor, Image baseImage = null) : base(id, location, size)
         {
+            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             BaseColor = baseColor;
+            BaseImage = baseImage;
+            SetDesign(baseImage);
             SetDesign(baseColor);
         }
 
