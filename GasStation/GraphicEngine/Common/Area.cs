@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
@@ -7,22 +9,23 @@ namespace GasStation.GraphicEngine.Common
         where S : Square
     {
         private readonly Panel _panel;
+        public event EventHandler<SquareArgs<S>> ClickSquare;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
         private S[] Squares { get; }
         public Size SquareSize { get; }
 
-        public Area(Panel panel, Size squareSize)
+        public Area(Panel panel, Size squareSize, int length)
         {
             _panel = panel;
             SquareSize = squareSize;
             SquareWidthLength = _panel.Width / squareSize.Width;
             SquareHeightLength = _panel.Height / squareSize.Height;
 
-            Squares = new S[SquareWidthLength * SquareHeightLength];
+            Squares = new S[length * length];
         }
 
-        protected virtual void AddSquare(int index, S square)
+        protected void AddSquare(int index, S square)
         {
             var currentSquare = Squares[index];
             if(currentSquare != null)
@@ -32,11 +35,21 @@ namespace GasStation.GraphicEngine.Common
 
             Squares[index] = square;
             _panel.Controls.Add(square.Control);
+
+            square.Control.Click += (sender, args) =>
+            {
+                ClickSquare(this, new SquareArgs<S>(square));
+            };
         }
 
         public S GetSquare(int index)
         {
             return Squares[index];
+        }
+
+        public S[] GetAllSquares()
+        {
+            return Squares;
         }
     }
 }

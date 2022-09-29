@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
@@ -30,5 +31,7 @@ namespace GasStation.GraphicEngine.Common
             };
             _pictureBox.Controls.Add(_label);
         }
+
+        
     }
 }

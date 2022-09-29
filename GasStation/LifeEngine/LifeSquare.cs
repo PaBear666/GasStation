@@ -1,20 +1,23 @@
 ﻿using GasStation.GraphicEngine;
+using GasStation.GraphicEngine.Common;
+using System;
 using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    class LifeSquare : ColorSquare
+    public class LifeSquare : ColorSquare
     {
-        Simulation _overEntity;
+        Appliance _overEntity;
         Surface _surface;
 
         public LifeSquare(int id, Point location, Size size, Surface surface) 
-            : base (id, location, size, surface.Color, surface.Image)
+            : base (id, location, size, surface.ViewComponent)
         {
             Surface = surface;
         }
 
-        public Simulation OverEntity
+        
+        public Appliance OverEntity
         {
             get
             {
@@ -37,8 +40,8 @@ namespace GasStation.LifeEngine
 
             set
             {
-                BaseColor = value.Color;
-                BaseImage = value.Image;
+                BaseColor = value.ViewComponent.Color;
+                BaseImage = value.ViewComponent.Image;
                 _surface = value;
             }
         }

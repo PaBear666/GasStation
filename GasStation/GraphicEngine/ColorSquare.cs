@@ -35,13 +35,13 @@ namespace GasStation.GraphicEngine
             }
 
         }
-        public ColorSquare(int id, Point location, Size size, Color baseColor, Image baseImage = null) : base(id, location, size)
+        public ColorSquare(int id, Point location, Size size, ViewComponent viewComponent) : base(id, location, size)
         {
             _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            BaseColor = baseColor;
-            BaseImage = baseImage;
-            SetDesign(baseImage);
-            SetDesign(baseColor);
+            BaseColor = viewComponent.Color;
+            BaseImage = viewComponent.Image;
+            SetDesign(viewComponent.Color);
+            SetDesign(viewComponent.Image);
         }
 
         public void ReturnBaseDesign()

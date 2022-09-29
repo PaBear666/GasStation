@@ -1,10 +1,7 @@
 ﻿namespace GasStation.LifeEngine
 {
-    public enum SimulatorType
+    public enum ApplianceType
     {
-        Car,
-        TankCar,
-        Collector,
         Shop,
         GasStation,
         Tanker

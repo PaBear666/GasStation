@@ -1,18 +1,18 @@
-﻿using System.Drawing;
+﻿using GasStation.GraphicEngine.Common;
+using GasStation.GraphicEngine.Common.Abstract;
+using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    public class Surface
+    public class Surface 
     {
         public SurfaceType Type { get; set; }
-        public Image Image { get; set; }
-        public Color Color { get; set; }
+        public ViewComponent ViewComponent { get; set; }
 
-        public Surface(SurfaceType type, Color color, Image image = null)
+        public Surface(SurfaceType type, ViewComponent viewComponent)
         {
             Type = type;
-            Image = image;
-            Color = color;
+            ViewComponent = viewComponent;
         }
     }
 }
