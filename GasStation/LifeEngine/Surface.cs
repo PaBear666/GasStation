@@ -4,15 +4,12 @@ using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    public class Surface 
+    public class Surface : LifeComponent
     {
         public SurfaceType Type { get; set; }
-        public ViewComponent ViewComponent { get; set; }
-
-        public Surface(SurfaceType type, ViewComponent viewComponent)
+        public Surface(SurfaceType type, ViewComponent viewComponent) : base(viewComponent)
         {
             Type = type;
-            ViewComponent = viewComponent;
         }
     }
 }

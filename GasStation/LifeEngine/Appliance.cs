@@ -1,21 +1,14 @@
-﻿using GasStation.GraphicEngine.Common.Abstract;
-using System.Drawing;
+﻿using GasStation.GraphicEngine.Common;
 
 namespace GasStation.LifeEngine
 {
-    public abstract class Appliance
+    public class Appliance : LifeComponent
     {
         public ApplianceType Type { get; set; }
 
-        public Image Image { get; set; }
-
-        public Color Color { get; set; }
-
-        public Appliance(ApplianceType type, Color color, Image image = null)
+        public Appliance(ApplianceType type, ViewComponent component) : base(component)
         {
             Type = type;
-            Color = color;
-            Image = image;
         }
     }
 }

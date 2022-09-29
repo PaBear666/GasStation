@@ -26,8 +26,8 @@ namespace GasStation.LifeEngine
 
             set
             {
-                SetDesign(value.Color);
-                SetDesign(value.Image);
+                SetDesign(value.ViewComponent.Color);
+                SetDesign(value.ViewComponent.Image);
                 _overEntity = value;
             }
         }
