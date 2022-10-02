@@ -52,22 +52,24 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphicEngine\Common\SquareArgs.cs" />
+    <Compile Include="GraphicEngine\Common\ViewComponent.cs" />
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Abstract\IAnimatedComponent.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
-    <Compile Include="GraphicEngine\ConstructorArea.cs" />
+    <Compile Include="LifeEngine\ConstructorArea.cs" />
+    <Compile Include="LifeEngine\LifeComponent.cs" />
     <Compile Include="LifeEngine\LifeEngine.cs" />
     <Compile Include="LifeEngine\LifeSquare.cs" />
-    <Compile Include="LifeEngine\Simulation.cs" />
-    <Compile Include="LifeEngine\SimulatorType.cs" />
+    <Compile Include="LifeEngine\Appliance.cs" />
+    <Compile Include="LifeEngine\ApplianceType.cs" />
+    <Compile Include="LifeEngine\SurfaceSetuper.cs" />
     <Compile Include="LifeEngine\Surface.cs" />
+    <Compile Include="LifeEngine\SurfaceProvider.cs" />
     <Compile Include="LifeEngine\SurfaceType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -90,6 +92,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,10 +14,7 @@ namespace GasStation.LifeEngine
         
         public ConstructorArea(Panel panel, int size, int length) : base(panel, new Size(size, size), length)
         {
-            _surfaceProvider = new SurfaceProvider(new Surface[]{
-                new Surface(SurfaceType.Earth, new ViewComponent(Color.Green)),
-                new Surface(SurfaceType.GasStation, new ViewComponent(Color.Red))
-            });
+            _surfaceProvider = new SurfaceProvider();
 
             SurfaceSetuper = new SurfaceSetuper(SurfaceType.Earth);
             InitArea(size, length);
