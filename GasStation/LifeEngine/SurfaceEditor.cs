@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GasStation.LifeEngine
 {
-    public class SurfaceSetuper
+    public class SurfaceEditor
     {
         public SurfaceType CurrentSurfase { get; private set; }
-        public SurfaceSetuper(SurfaceType currentSurfase)
+        public SurfaceEditor(SurfaceType currentSurfase)
         {
             CurrentSurfase = currentSurfase;
         }

@@ -9,24 +9,19 @@ namespace GasStation.LifeEngine
 {
     class ConstructorArea : Area<LifeSquare>
     {
-        public SurfaceSetuper SurfaceSetuper { get; }
+        public SurfaceEditor SurfaceSetuper { get; }
         readonly SurfaceProvider _surfaceProvider;
         
         public ConstructorArea(Panel panel, int size, int length) : base(panel, new Size(size, size), length)
         {
             _surfaceProvider = new SurfaceProvider();
 
-            SurfaceSetuper = new SurfaceSetuper(SurfaceType.Earth);
+            SurfaceSetuper = new SurfaceEditor(SurfaceType.Earth);
             InitArea(size, length);
 
 
             ClickSquare += ConstructorArea_ClickSquare;
-        }
-
-        private void ConstructorArea_ClickSquare(object sender, SquareArgs<LifeSquare> e)
-        {
-            e.Square.Surface = _surfaceProvider.GetSurface(SurfaceSetuper.CurrentSurfase);
-        }        
+        }      
 
         private void InitArea(int size, int length)
         {
@@ -40,6 +35,28 @@ namespace GasStation.LifeEngine
                     id++;
                 }
             }
+            DragDropSquare += DropSquare;
+            DragOverSquare += OverSquare;
+            DragLeaveSquare += LeaveSquare;
+        }
+
+        private void LeaveSquare(object sender, SquareArgs<LifeSquare> e)
+        {
+            e.Square.ReturnBaseDesign();
+        }
+
+        private void ConstructorArea_ClickSquare(object sender, SquareArgs<LifeSquare> e)
+        {
+            e.Square.Surface = _surfaceProvider.GetSurface(SurfaceSetuper.CurrentSurfase);
+        }
+        private void DropSquare(object sender, DragSquareArgs<LifeSquare> e)
+        {
+            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent.Color);
+        }
+
+        private void OverSquare(object sender, DragSquareArgs<LifeSquare> e)
+        {
+            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent.Color);
         }
     }
 }

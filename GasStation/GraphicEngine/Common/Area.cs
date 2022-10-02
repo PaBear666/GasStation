@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
@@ -10,6 +11,9 @@ namespace GasStation.GraphicEngine.Common
     {
         private readonly Panel _panel;
         public event EventHandler<SquareArgs<S>> ClickSquare;
+        public event EventHandler<DragSquareArgs<S>> DragDropSquare;
+        public event EventHandler<DragSquareArgs<S>> DragOverSquare;
+        public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
         private S[] Squares { get; }
@@ -35,11 +39,33 @@ namespace GasStation.GraphicEngine.Common
 
             Squares[index] = square;
             _panel.Controls.Add(square.Control);
+            square.Control.AllowDrop = true;
 
-            square.Control.Click += (sender, args) =>
+            square.Control.MouseDown += (sender, args) =>
             {
-                ClickSquare(this, new SquareArgs<S>(square));
+                ClickSquare.Invoke(this, new SquareArgs<S>(square));
+                square.Control.DoDragDrop(square, DragDropEffects.All);
             };
+            
+            square.Control.DragDrop += (object sender, DragEventArgs e) =>
+            {
+                var dataSquare = e.Data.GetData(typeof(S)) as S;
+                DragDropSquare.Invoke(this, new DragSquareArgs<S>(dataSquare, square));
+
+            };
+
+            square.Control.DragOver += (object sender, DragEventArgs e) =>
+            {
+                e.Effect = DragDropEffects.Move;
+                var dataSquare = e.Data.GetData(typeof(S)) as S;
+                DragOverSquare.Invoke(this, new DragSquareArgs<S>(dataSquare, square));
+            };
+
+            square.Control.DragLeave += (object sender, EventArgs e) =>
+            {
+                DragLeaveSquare.Invoke(this, new SquareArgs<S>(square));
+            };
+
         }
 
         public S GetSquare(int index)

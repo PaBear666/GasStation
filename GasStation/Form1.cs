@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using GasStation.GraphicEngine;
+using GasStation.LifeEngine;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace GasStation
@@ -15,6 +11,10 @@ namespace GasStation
         public Form1()
         {
             InitializeComponent();
+
+            var a = new ConstructorArea(panel1, 50, 10);
+
+            a.SurfaceSetuper.ChooseSurface(SurfaceType.GasStation);
         }
     }
 }

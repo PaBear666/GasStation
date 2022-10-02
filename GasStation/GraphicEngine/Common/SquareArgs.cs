@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GasStation.GraphicEngine.Common
 {
@@ -13,6 +9,16 @@ namespace GasStation.GraphicEngine.Common
         public SquareArgs(T square) : base()
         {
             Square = square;    
+        }
+    }
+
+    public class DragSquareArgs<T> : SquareArgs<T>
+    where T : Square
+    {
+        public T DataSquare;
+        public DragSquareArgs(T dataSquare, T senderSquare) : base(senderSquare)
+        {
+            DataSquare = dataSquare;
         }
     }
 }
