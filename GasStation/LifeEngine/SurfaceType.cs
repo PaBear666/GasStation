@@ -2,6 +2,7 @@
 {
     public enum SurfaceType
     {
+        None,
         Earth,
         Road,
         CheckinRoad,

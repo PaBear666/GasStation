@@ -1,7 +1,4 @@
 ﻿using GasStation.GraphicEngine.Common;
-using GasStation.LifeEngine;
-using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -18,9 +15,6 @@ namespace GasStation.LifeEngine
 
             SurfaceSetuper = new SurfaceEditor(SurfaceType.Earth);
             InitArea(size, length);
-
-
-            ClickSquare += ConstructorArea_ClickSquare;
         }      
 
         private void InitArea(int size, int length)
@@ -38,6 +32,16 @@ namespace GasStation.LifeEngine
             DragDropSquare += DropSquare;
             DragOverSquare += OverSquare;
             DragLeaveSquare += LeaveSquare;
+            MouseDownSquare += DownMouse;
+            MouseDownSquare += ConstructorArea_ClickSquare;
+        }
+
+        private void DownMouse(object sender, SquareArgs<LifeSquare> e)
+        {
+            if(e.Square.OverEntity != null)
+            {
+                e.Square.Control.DoDragDrop(e.Square, DragDropEffects.All);
+            }           
         }
 
         private void LeaveSquare(object sender, SquareArgs<LifeSquare> e)
@@ -47,16 +51,19 @@ namespace GasStation.LifeEngine
 
         private void ConstructorArea_ClickSquare(object sender, SquareArgs<LifeSquare> e)
         {
-            e.Square.Surface = _surfaceProvider.GetSurface(SurfaceSetuper.CurrentSurfase);
+            if(SurfaceSetuper.CurrentSurfase != SurfaceType.None)
+            {
+                e.Square.Surface = _surfaceProvider.GetSurface(SurfaceSetuper.CurrentSurfase);
+            }
         }
         private void DropSquare(object sender, DragSquareArgs<LifeSquare> e)
         {
-            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent.Color);
+            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent);
         }
 
         private void OverSquare(object sender, DragSquareArgs<LifeSquare> e)
         {
-            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent.Color);
+            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent);
         }
     }
 }

@@ -59,5 +59,11 @@ namespace GasStation.GraphicEngine
         {
             _pictureBox.Image = image;
         }
+
+        public void SetDesign(ViewComponent view)
+        {
+            _pictureBox.BackColor = view.Color;
+            _pictureBox.Image = view.Image;
+        }
     }
 }
