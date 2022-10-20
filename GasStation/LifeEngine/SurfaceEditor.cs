@@ -8,7 +8,8 @@ namespace GasStation.LifeEngine
 {
     public class SurfaceEditor
     {
-        public SurfaceType CurrentSurfase { get; private set; }
+        public SurfaceType CurrentSurfase { get; set; }
+
         public SurfaceEditor(SurfaceType currentSurfase)
         {
             CurrentSurfase = currentSurfase;

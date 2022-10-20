@@ -1,10 +1,11 @@
 ﻿using GasStation.GraphicEngine.Common;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
 {
-    class ConstructorArea : Area<LifeSquare>
+    class ConstructorArea : Area<LifeSquare, Appliance>
     {
         public SurfaceEditor SurfaceSetuper { get; }
         readonly SurfaceProvider _surfaceProvider;
@@ -29,16 +30,17 @@ namespace GasStation.LifeEngine
                     id++;
                 }
             }
+
             DragDropSquare += DropSquare;
             DragOverSquare += OverSquare;
             DragLeaveSquare += LeaveSquare;
             MouseDownSquare += DownMouse;
-            MouseDownSquare += ConstructorArea_ClickSquare;
+            MouseDownSquare += SetSurface;
         }
 
         private void DownMouse(object sender, SquareArgs<LifeSquare> e)
         {
-            if(e.Square.OverEntity != null)
+            if(e.Square.Appliance != null)
             {
                 e.Square.Control.DoDragDrop(e.Square, DragDropEffects.All);
             }           
@@ -46,24 +48,25 @@ namespace GasStation.LifeEngine
 
         private void LeaveSquare(object sender, SquareArgs<LifeSquare> e)
         {
-            e.Square.ReturnBaseDesign();
+            e.Square.ResetDesign();
         }
 
-        private void ConstructorArea_ClickSquare(object sender, SquareArgs<LifeSquare> e)
+        private void SetSurface(object sender, SquareArgs<LifeSquare> e)
         {
             if(SurfaceSetuper.CurrentSurfase != SurfaceType.None)
             {
                 e.Square.Surface = _surfaceProvider.GetSurface(SurfaceSetuper.CurrentSurfase);
             }
         }
-        private void DropSquare(object sender, DragSquareArgs<LifeSquare> e)
+        private void DropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
-            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent);
+            e.Square.Appliance = e.DragDropElement;
+            e.DragDropFinish();
         }
 
-        private void OverSquare(object sender, DragSquareArgs<LifeSquare> e)
+        private void OverSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
-            e.Square.SetDesign(e.DataSquare.Surface.ViewComponent);
+            e.Square.SetDesign(e.DragDropElement.ViewComponent);
         }
     }
 }

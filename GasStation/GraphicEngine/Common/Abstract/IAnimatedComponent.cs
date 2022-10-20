@@ -4,11 +4,9 @@ namespace GasStation.GraphicEngine.Common.Abstract
 {
     interface IAnimatedComponent
     {
-        Color BaseColor { get; set; }
-        Image BaseImage { get; set; }
+        ViewComponent BaseViewComponent { get; set; }
 
-        void SetDesign(Color backColor);
-        void SetDesign(Image image);
-        void ReturnBaseDesign();
+        void SetDesign(ViewComponent viewComponent);
+        void ResetDesign();
     }
 }

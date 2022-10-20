@@ -32,6 +32,27 @@ namespace GasStation.GraphicEngine.Common
             _pictureBox.Controls.Add(_label);
         }
 
-        
+        public Square(PictureBox pictureBox)
+        {
+            _pictureBox = pictureBox;
+        }   
+    }
+
+
+    abstract public class SquareDragDrop<T> : Square
+        where T : class
+    {
+        public SquareDragDrop(int id, Point location, Size size) : base(id, location, size)
+        {
+        }
+
+        public SquareDragDrop(PictureBox pictureBox) : base(pictureBox)
+        {
+
+        }
+
+        abstract public T GetDragDropComponent();
+
+        abstract public void FinishDragDrop();
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="LifeEngine\LifeSquare.cs" />
     <Compile Include="LifeEngine\Appliance.cs" />
     <Compile Include="LifeEngine\ApplianceType.cs" />
+    <Compile Include="LifeEngine\Side.cs" />
     <Compile Include="LifeEngine\SurfaceEditor.cs" />
     <Compile Include="LifeEngine\Surface.cs" />
     <Compile Include="LifeEngine\SurfaceProvider.cs" />

@@ -5,62 +5,38 @@ using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine
 {
-    public abstract class ColorSquare : Square, IAnimatedComponent
+    public abstract class ColorSquare <T> : SquareDragDrop<T>, IAnimatedComponent
+        where T : class
     {
-        Color _baseColor;
-        Image _baseImage;
-        public Color BaseColor 
+        ViewComponent _baseViewComponent;
+
+        public ViewComponent BaseViewComponent 
         {
             get
             {
-                return _baseColor;
-            }
-            set
-            {
-                SetDesign(value);
-                _baseColor = value;
-            }
-        }
-        public Image BaseImage 
-        { 
-            get
-            {
-                return _baseImage;
+                return _baseViewComponent;
             }
 
             set
             {
-                SetDesign(value);
-                _baseImage = value;
+                _baseViewComponent = value;
             }
-
         }
+
         public ColorSquare(int id, Point location, Size size, ViewComponent viewComponent) : base(id, location, size)
         {
             _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            BaseColor = viewComponent.Color;
-            BaseImage = viewComponent.Image;
-            SetDesign(viewComponent.Color);
-            SetDesign(viewComponent.Image);
+            BaseViewComponent = viewComponent;
+            SetDesign(viewComponent);
         }
 
-        public void ReturnBaseDesign()
+        public virtual void ResetDesign()
         {
-            _pictureBox.BackColor = BaseColor;
-            _pictureBox.Image = BaseImage;
+            _pictureBox.BackColor = _baseViewComponent.Color;
+            _pictureBox.Image = _baseViewComponent.Image;
         }
 
-        public void SetDesign(Color backColor)
-        {
-            _pictureBox.BackColor = backColor;
-        }
-
-        public void SetDesign(Image image)
-        {
-            _pictureBox.Image = image;
-        }
-
-        public void SetDesign(ViewComponent view)
+        public virtual void SetDesign(ViewComponent view)
         {
             _pictureBox.BackColor = view.Color;
             _pictureBox.Image = view.Image;

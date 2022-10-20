@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
+
 
 namespace GasStation.GraphicEngine.Common
 {
-    public abstract class Area <S>
-        where S : Square
+    public abstract class Area <S,T>
+        where S : SquareDragDrop<T>
+        where T : class
     {
         private readonly Panel _panel;
+        private readonly int _squareLength;
         public event EventHandler<SquareArgs<S>> MouseDownSquare;
-        public event EventHandler<DragSquareArgs<S>> DragDropSquare;
-        public event EventHandler<DragSquareArgs<S>> DragOverSquare;
+        public event EventHandler<SquareDragDropArgs<T,S>> DragDropSquare;
+        public event EventHandler<SquareDragDropArgs<T,S>> DragOverSquare;
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
-        private S[] Squares { get; }
+        private S[,] Squares { get; }
         public Size SquareSize { get; }
 
         public Area(Panel panel, Size squareSize, int length)
@@ -25,19 +26,21 @@ namespace GasStation.GraphicEngine.Common
             SquareSize = squareSize;
             SquareWidthLength = _panel.Width / squareSize.Width;
             SquareHeightLength = _panel.Height / squareSize.Height;
-
-            Squares = new S[length * length];
+            _squareLength = length;
+            Squares = new S[length,length];
         }
 
         protected void AddSquare(int index, S square)
         {
-            var currentSquare = Squares[index];
-            if(currentSquare != null)
+            var currentSquare = GetSquare(index);
+            if (currentSquare != null)
             {
                 _panel.Controls.Remove(currentSquare.Control);
             }
 
-            Squares[index] = square;
+
+
+            Squares[index / _squareLength, index % _squareLength] = square;
             _panel.Controls.Add(square.Control);
             square.Control.AllowDrop = true;
 
@@ -49,7 +52,7 @@ namespace GasStation.GraphicEngine.Common
             square.Control.DragDrop += (object sender, DragEventArgs e) =>
             {
                 var dataSquare = e.Data.GetData(typeof(S)) as S;
-                DragDropSquare.Invoke(this, new DragSquareArgs<S>(dataSquare, square));
+                DragDropSquare.Invoke(this, new SquareDragDropArgs<T,S>(square, dataSquare.GetDragDropComponent(), dataSquare.FinishDragDrop));
 
             };
 
@@ -57,7 +60,7 @@ namespace GasStation.GraphicEngine.Common
             {
                 e.Effect = DragDropEffects.Move;
                 var dataSquare = e.Data.GetData(typeof(S)) as S;
-                DragOverSquare.Invoke(this, new DragSquareArgs<S>(dataSquare, square));
+                DragOverSquare.Invoke(this, new SquareDragDropArgs<T,S>(square, dataSquare.GetDragDropComponent(), dataSquare.FinishDragDrop));
             };
 
             square.Control.DragLeave += (object sender, EventArgs e) =>
@@ -69,7 +72,33 @@ namespace GasStation.GraphicEngine.Common
 
         public S GetSquare(int index)
         {
-            return Squares[index];
+            return Squares[index / _squareLength, index % _squareLength];
+        }
+
+        public S[] GetAroundSquares(int index)
+        {
+            int width = index / _squareLength;
+            int height = index % _squareLength;
+            var squares = new S[9];
+
+            int k = 0;
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                { 
+                    if((width + i) >= _squareLength || (height + j) >= _squareLength || (width + i) < 0 || (height + j) < 0)
+                    {
+                        squares[k] = null;
+                    }
+                    else
+                    {
+                        squares[k] = Squares[width + i, height + j];
+                    }
+                    
+                }
+            }
+
+            return squares;
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using GasStation.GraphicEngine;
-using GasStation.GraphicEngine.Common;
-using System;
 using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    public class LifeSquare : ColorSquare
+    public class LifeSquare : ColorSquare<Appliance>
     {
-        Appliance _overEntity;
+        Appliance _appliance;
         Surface _surface;
 
         public LifeSquare(int id, Point location, Size size, Surface surface) 
@@ -17,18 +15,24 @@ namespace GasStation.LifeEngine
         }
 
         
-        public Appliance OverEntity
+        public Appliance Appliance
         {
             get
             {
-                return _overEntity;
+                return _appliance;
             }
 
             set
             {
-                SetDesign(value.ViewComponent.Color);
-                SetDesign(value.ViewComponent.Image);
-                _overEntity = value;
+                if(value == null)
+                {
+                    ResetDesign();
+                    _appliance = value;
+                    return;
+                }
+
+                SetDesign(value.ViewComponent);
+                _appliance = value;
             }
         }
         public Surface Surface
@@ -40,10 +44,19 @@ namespace GasStation.LifeEngine
 
             set
             {
-                BaseColor = value.ViewComponent.Color;
-                BaseImage = value.ViewComponent.Image;
+                BaseViewComponent = value.ViewComponent;
                 _surface = value;
             }
+        }
+
+        public override void FinishDragDrop()
+        {
+            Appliance = null;
+        }
+
+        public override Appliance GetDragDropComponent()
+        {
+            return _appliance;
         }
     }
 }
