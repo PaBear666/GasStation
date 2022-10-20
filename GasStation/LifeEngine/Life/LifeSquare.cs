@@ -1,5 +1,7 @@
 ﻿using GasStation.GraphicEngine;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
 {
@@ -26,8 +28,8 @@ namespace GasStation.LifeEngine
             {
                 if(value == null)
                 {
-                    ResetDesign();
                     _appliance = value;
+                    ResetDesign();
                     return;
                 }
 
@@ -47,6 +49,18 @@ namespace GasStation.LifeEngine
                 BaseViewComponent = value.ViewComponent;
                 _surface = value;
             }
+        }
+
+        public override void ResetDesign()
+        {
+            if(Appliance != null)
+            {
+                _pictureBox.BackColor = Appliance.ViewComponent.Color;
+                _pictureBox.Image = Appliance.ViewComponent.Image;
+                return;
+            }
+
+            base.ResetDesign();
         }
     }
 }

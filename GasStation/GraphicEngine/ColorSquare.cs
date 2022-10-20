@@ -10,7 +10,7 @@ namespace GasStation.GraphicEngine
     {
         ViewComponent _baseViewComponent;
 
-        public ViewComponent BaseViewComponent 
+        protected ViewComponent BaseViewComponent 
         {
             get
             {
@@ -32,8 +32,8 @@ namespace GasStation.GraphicEngine
 
         public virtual void ResetDesign()
         {
-            _pictureBox.BackColor = _baseViewComponent.Color;
-            _pictureBox.Image = _baseViewComponent.Image;
+            _pictureBox.BackColor = BaseViewComponent.Color;
+            _pictureBox.Image = BaseViewComponent.Image;
         }
 
         public virtual void SetDesign(ViewComponent view)
