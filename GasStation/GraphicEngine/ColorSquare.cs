@@ -1,12 +1,12 @@
 ﻿using GasStation.GraphicEngine.Common;
 using GasStation.GraphicEngine.Common.Abstract;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine
 {
-    public abstract class ColorSquare <T> : SquareDragDrop<T>, IAnimatedComponent
-        where T : class
+    public abstract class ColorSquare : Square, IAnimatedComponent
     {
         ViewComponent _baseViewComponent;
 
@@ -20,12 +20,12 @@ namespace GasStation.GraphicEngine
             set
             {
                 _baseViewComponent = value;
+                SetDesign(value);
             }
         }
 
         public ColorSquare(int id, Point location, Size size, ViewComponent viewComponent) : base(id, location, size)
         {
-            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             BaseViewComponent = viewComponent;
             SetDesign(viewComponent);
         }

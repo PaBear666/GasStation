@@ -1,19 +1,20 @@
-﻿using System;
+﻿using GasStation.LifeEngine;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 
 namespace GasStation.GraphicEngine.Common
 {
-    public abstract class Area <S,T>
-        where S : SquareDragDrop<T>
-        where T : class
+    public abstract class Area <S,D>
+        where S : Square
+        where D : class
     {
         private readonly Panel _panel;
         private readonly int _squareLength;
         public event EventHandler<SquareArgs<S>> MouseDownSquare;
-        public event EventHandler<SquareDragDropArgs<T,S>> DragDropSquare;
-        public event EventHandler<SquareDragDropArgs<T,S>> DragOverSquare;
+        public event EventHandler<SquareDragDropArgs<D,S>> DragDropSquare;
+        public event EventHandler<SquareDragDropArgs<D,S>> DragOverSquare;
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
@@ -38,11 +39,10 @@ namespace GasStation.GraphicEngine.Common
                 _panel.Controls.Remove(currentSquare.Control);
             }
 
-
-
             Squares[index / _squareLength, index % _squareLength] = square;
             _panel.Controls.Add(square.Control);
             square.Control.AllowDrop = true;
+
 
             square.Control.MouseDown += (sender, args) =>
             {
@@ -51,16 +51,15 @@ namespace GasStation.GraphicEngine.Common
             
             square.Control.DragDrop += (object sender, DragEventArgs e) =>
             {
-                var dataSquare = e.Data.GetData(typeof(S)) as S;
-                DragDropSquare.Invoke(this, new SquareDragDropArgs<T,S>(square, dataSquare.GetDragDropComponent(), dataSquare.FinishDragDrop));
-
+                var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
+                DragDropSquare.Invoke(this, new SquareDragDropArgs<D,S>(square, dataSquare));
             };
 
             square.Control.DragOver += (object sender, DragEventArgs e) =>
             {
                 e.Effect = DragDropEffects.Move;
-                var dataSquare = e.Data.GetData(typeof(S)) as S;
-                DragOverSquare.Invoke(this, new SquareDragDropArgs<T,S>(square, dataSquare.GetDragDropComponent(), dataSquare.FinishDragDrop));
+                var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
+                DragOverSquare.Invoke(this, new SquareDragDropArgs<D, S>(square, dataSquare));
             };
 
             square.Control.DragLeave += (object sender, EventArgs e) =>

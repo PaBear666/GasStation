@@ -1,7 +1,5 @@
-﻿using GasStation.GraphicEngine;
+﻿using GasStation.GraphicEngine.Common;
 using GasStation.LifeEngine;
-using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace GasStation
@@ -12,9 +10,9 @@ namespace GasStation
         {
             InitializeComponent();
 
-            var a = new ConstructorArea(panel1, 50, 10);
-
-            a.SurfaceSetuper.ChooseSurface(SurfaceType.GasStation);
+            var surfaceProvider = new SurfaceProvider();
+            var a = new ConstructorArea(panel1, surfaceProvider, 50, 10);
+            var b = new AppliancePictureBox(new Appliance(ApplianceType.Tanker, Side.Right, surfaceProvider.GetSurface(SurfaceType.GasStation).ViewComponent), pictureBox3);
         }
     }
 }

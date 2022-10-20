@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    public class LifeSquare : ColorSquare<Appliance>
+    public class LifeSquare : ColorSquare
     {
         Appliance _appliance;
         Surface _surface;
@@ -47,16 +47,6 @@ namespace GasStation.LifeEngine
                 BaseViewComponent = value.ViewComponent;
                 _surface = value;
             }
-        }
-
-        public override void FinishDragDrop()
-        {
-            Appliance = null;
-        }
-
-        public override Appliance GetDragDropComponent()
-        {
-            return _appliance;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
@@ -18,12 +17,13 @@ namespace GasStation.GraphicEngine.Common
         public Square(int id, Point location, Size size)
         {
             Id = id;
-            _pictureBox = new PictureBox()
+            _pictureBox = new PictureBox
             {
                 Size = size,
-                Location = location
+                Location = location,
+                SizeMode = PictureBoxSizeMode.StretchImage
             };
-            
+
             _label = new Label()
             {
                 Text = id.ToString(),
@@ -35,24 +35,7 @@ namespace GasStation.GraphicEngine.Common
         public Square(PictureBox pictureBox)
         {
             _pictureBox = pictureBox;
+            _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
         }   
-    }
-
-
-    abstract public class SquareDragDrop<T> : Square
-        where T : class
-    {
-        public SquareDragDrop(int id, Point location, Size size) : base(id, location, size)
-        {
-        }
-
-        public SquareDragDrop(PictureBox pictureBox) : base(pictureBox)
-        {
-
-        }
-
-        abstract public T GetDragDropComponent();
-
-        abstract public void FinishDragDrop();
     }
 }
