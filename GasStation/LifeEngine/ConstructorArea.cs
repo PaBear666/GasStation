@@ -1,5 +1,6 @@
 ﻿using GasStation.GraphicEngine.Common;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Forms;
@@ -31,7 +32,6 @@ namespace GasStation.LifeEngine
         {
             ShowAvailableZone(data.DragDropComponent.Type);
         }
-
         public SurfaceType GetAvailableSurface(ApplianceType appliance)
         {
             switch (appliance)
@@ -57,7 +57,6 @@ namespace GasStation.LifeEngine
         }
 
 
-
         private void InitArea(int size, int length)
         {
             int id = 0;
@@ -72,7 +71,7 @@ namespace GasStation.LifeEngine
             }
 
             SuccessDragDropSquare += SuccessDropSquare;
-            DragOverSquare += OverSquare;
+            DragEnterSquare += EnterSquare;
             DragLeaveSquare += LeaveSquare;
             MouseDownSquare += DownMouse;
             MouseDownSquare += SetSurface;
@@ -103,13 +102,11 @@ namespace GasStation.LifeEngine
             }
 
         }
-
-        private void OverSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
+        private void EnterSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             ShowAvailableZone(e.Data.DragDropComponent.Type);
             e.Square.SetDesign(e.Data.DragDropComponent.ViewComponent);
         }
-
         private void SetSurface(object sender, SquareArgs<LifeSquare> e)
         {
             if (SurfaceEditor.CurrentSurfase != SurfaceType.None)
@@ -142,7 +139,6 @@ namespace GasStation.LifeEngine
                 _showedAvailableZone = true;
                 _currentApplicane = appliance;
             }
-
 
             ForSquares((square) =>
             {

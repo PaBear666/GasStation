@@ -1,7 +1,6 @@
 ﻿using GasStation.GraphicEngine.Common;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace GasStation.LifeEngine
 {

@@ -17,6 +17,7 @@ namespace GasStation.GraphicEngine.Common
         public event EventHandler<SquareArgs<S>> MouseDownSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> SuccessDragDropSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> DragOverSquare;
+        public event EventHandler<SquareDragDropArgs<D,S>> DragEnterSquare;
         public event EventHandler<EventArgs> EndDragDrop;
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int SquareWidthLength { get; }
@@ -49,25 +50,31 @@ namespace GasStation.GraphicEngine.Common
 
             square.Control.MouseDown += (sender, args) =>
             {
-                MouseDownSquare.Invoke(this, new SquareArgs<S>(square));
+                MouseDownSquare?.Invoke(this, new SquareArgs<S>(square));
             };
             
             square.Control.DragDrop += (object sender, DragEventArgs e) =>
             {
                 var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
-                SuccessDragDropSquare.Invoke(this, new SquareDragDropArgs<D,S>(square, dataSquare));
+                SuccessDragDropSquare?.Invoke(this, new SquareDragDropArgs<D,S>(square, dataSquare));
             };
 
             square.Control.DragOver += (object sender, DragEventArgs e) =>
             {
                 e.Effect = DragDropEffects.Move;
                 var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
-                DragOverSquare.Invoke(this, new SquareDragDropArgs<D, S>(square, dataSquare));
+                DragOverSquare?.Invoke(this, new SquareDragDropArgs<D, S>(square, dataSquare));
+            };
+
+            square.Control.DragEnter += (object sender, DragEventArgs e) =>
+            {
+                var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
+                DragEnterSquare?.Invoke(this, new SquareDragDropArgs<D, S>(square, dataSquare));
             };
 
             square.Control.DragLeave += (object sender, EventArgs e) =>
             {
-                DragLeaveSquare.Invoke(this, new SquareArgs<S>(square));
+                DragLeaveSquare?.Invoke(this, new SquareArgs<S>(square));
             };
 
 
@@ -75,7 +82,7 @@ namespace GasStation.GraphicEngine.Common
             {
                 if(args.Action == DragAction.Drop)
                 {
-                    EndDragDrop.Invoke(this, new SquareArgs<S>(square));
+                    EndDragDrop?.Invoke(this, new SquareArgs<S>(square));
                 }
 
                 Console.WriteLine(args.Action);
