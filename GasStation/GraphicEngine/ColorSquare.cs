@@ -10,7 +10,7 @@ namespace GasStation.GraphicEngine
     {
         ViewComponent _baseViewComponent;
 
-        protected ViewComponent BaseViewComponent 
+        public ViewComponent BaseViewComponent 
         {
             get
             {

@@ -1,6 +1,8 @@
 ﻿using GasStation.LifeEngine;
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -13,8 +15,9 @@ namespace GasStation.GraphicEngine.Common
         private readonly Panel _panel;
         private readonly int _squareLength;
         public event EventHandler<SquareArgs<S>> MouseDownSquare;
-        public event EventHandler<SquareDragDropArgs<D,S>> DragDropSquare;
+        public event EventHandler<SquareDragDropArgs<D,S>> SuccessDragDropSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> DragOverSquare;
+        public event EventHandler<EventArgs> EndDragDrop;
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int SquareWidthLength { get; }
         public int SquareHeightLength { get; }
@@ -52,7 +55,7 @@ namespace GasStation.GraphicEngine.Common
             square.Control.DragDrop += (object sender, DragEventArgs e) =>
             {
                 var dataSquare = e.Data.GetData(typeof(DragAndDropData<D>)) as DragAndDropData<D>;
-                DragDropSquare.Invoke(this, new SquareDragDropArgs<D,S>(square, dataSquare));
+                SuccessDragDropSquare.Invoke(this, new SquareDragDropArgs<D,S>(square, dataSquare));
             };
 
             square.Control.DragOver += (object sender, DragEventArgs e) =>
@@ -65,6 +68,17 @@ namespace GasStation.GraphicEngine.Common
             square.Control.DragLeave += (object sender, EventArgs e) =>
             {
                 DragLeaveSquare.Invoke(this, new SquareArgs<S>(square));
+            };
+
+
+            square.Control.QueryContinueDrag += (sender, args) =>
+            {
+                if(args.Action == DragAction.Drop)
+                {
+                    EndDragDrop.Invoke(this, new SquareArgs<S>(square));
+                }
+
+                Console.WriteLine(args.Action);
             };
 
         }
@@ -98,6 +112,17 @@ namespace GasStation.GraphicEngine.Common
             }
 
             return squares;
+        }
+
+        public void ForSquares(Action<S> action)
+        {
+            for (int i = 0; i < _squareLength; i++)
+            {
+                for (int j = 0; j < _squareLength; j++)
+                {
+                    action(Squares[i, j]);
+                }
+            }
         }
     }
 }

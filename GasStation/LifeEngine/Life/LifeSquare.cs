@@ -60,6 +60,13 @@ namespace GasStation.LifeEngine
                 return;
             }
 
+            if(Surface != null)
+            {
+                _pictureBox.BackColor = Surface.ViewComponent.Color;
+                _pictureBox.Image = Surface.ViewComponent.Image;
+                return;
+            }
+
             base.ResetDesign();
         }
     }
