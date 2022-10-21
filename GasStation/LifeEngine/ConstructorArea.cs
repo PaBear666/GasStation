@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
@@ -71,7 +72,7 @@ namespace GasStation.LifeEngine
             }
 
             SuccessDragDropSquare += SuccessDropSquare;
-            DragEnterSquare += EnterSquare;
+            DragOverSquare += OverSquare;
             DragLeaveSquare += LeaveSquare;
             MouseDownSquare += DownMouse;
             MouseDownSquare += SetSurface;
@@ -102,7 +103,7 @@ namespace GasStation.LifeEngine
             }
 
         }
-        private void EnterSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
+        private void OverSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             ShowAvailableZone(e.Data.DragDropComponent.Type);
             e.Square.SetDesign(e.Data.DragDropComponent.ViewComponent);
@@ -128,7 +129,6 @@ namespace GasStation.LifeEngine
             }
 
         }
-        private void ShowAvailableZone(ApplianceType appliance)
         {
             if (_showedAvailableZone)
             {
