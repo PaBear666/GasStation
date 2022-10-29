@@ -1,19 +1,28 @@
 ﻿using GasStation.GraphicEngine.Common;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
 {
-    public class SurfaceProvider
+    public class EditorProvider
     {
         public Dictionary<SurfaceType, Surface> Surfaces { get; private set; }
-        public SurfaceProvider()
+        public Dictionary<ApplianceType, Appliance> Appliance { get; private set; }
+        public EditorProvider()
         {
             Surfaces = new Dictionary<SurfaceType, Surface>()
             {
-                { SurfaceType.Earth, new Surface(SurfaceType.Earth, new ViewComponent(Color.Yellow)) },
-                { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Color.Red, new Bitmap("C:\\Users\\NIKITA\\OneDrive\\Рабочий стол\\00_B9AkuG0.jpg.740x555_q85_box-314,0,1918,1200_crop_detail_upscale.jpg"))) },
-                { SurfaceType.ServiceGasStation, new Surface(SurfaceType.ServiceGasStation, new ViewComponent(Color.Blue)) }
+                { SurfaceType.Road, new Surface(SurfaceType.Road, new ViewComponent(Control.DefaultBackColor, Resource.road))},
+                { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Control.DefaultBackColor, Resource.gasStation_2))},
+                { SurfaceType.Service, new Surface(SurfaceType.Service, new ViewComponent(Control.DefaultBackColor, Resource.gasStationService)) }
+            };
+
+            Appliance = new Dictionary<ApplianceType, Appliance>()
+            {
+                { ApplianceType.Shop, new Appliance(ApplianceType.Shop, Side.Right, new ViewComponent(Control.DefaultBackColor, Resource.shop)) },
+                { ApplianceType.GasStation, new Appliance(ApplianceType.GasStation, Side.Right, new ViewComponent(Control.DefaultBackColor, Resource.fuelgiver)) },
+                { ApplianceType.Tanker, new Appliance(ApplianceType.Tanker, Side.Right, new ViewComponent(Control.DefaultBackColor, Resource.tanker)) },
             };
         }
     }

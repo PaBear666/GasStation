@@ -2,16 +2,8 @@
 {
     public enum SurfaceType
     {
-        None,
-        Earth,
+        Service,
         Road,
-        CheckinRoad,
-        CheckOutRoad,
-        ServiceCheckinRoad,
-        ServiceCheckOutRoad,
-        GasStation,
-        ServiceGasStation,
-        SpawnCar,
-        DeleteCar
+        GasStation
     }
 }

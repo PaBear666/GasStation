@@ -12,16 +12,13 @@ namespace GasStation.LifeEngine
     {
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;
-        public SurfaceEditor SurfaceEditor { get; }
-        readonly SurfaceProvider _surfaceProvider;
+        readonly EditorProvider _surfaceProvider;
         
-        public ConstructorArea(Panel panel, SurfaceProvider surfaceProvider, int size, int length) : base(panel, new Size(size, size), length)
+        public ConstructorArea(Panel panel, EditorProvider surfaceProvider, int size, int length) : base(panel, new Size(size, size), length)
         {
             _surfaceProvider = surfaceProvider;
 
-            SurfaceEditor = new SurfaceEditor(SurfaceType.ServiceGasStation);
             InitArea(size, length);
-            SurfaceEditor.ChooseSurface(SurfaceType.None);
         }      
 
         public void EndDrop(object sender, EventArgs e)
@@ -42,7 +39,7 @@ namespace GasStation.LifeEngine
                 case ApplianceType.GasStation:
                     return SurfaceType.GasStation;
                 case ApplianceType.Tanker:
-                    return SurfaceType.ServiceGasStation;
+                    return SurfaceType.Service;
                 default:
                     throw new Exception();
             }
@@ -65,7 +62,7 @@ namespace GasStation.LifeEngine
             {
                 for (int j = 0; j < length; j++)
                 {
-                    var square = new LifeSquare(id, new Point(i * size, j * size), new Size(size, size), _surfaceProvider.Surfaces[SurfaceEditor.CurrentSurfase]);
+                    var square = new LifeSquare(id, new Point(i * size, j * size), new Size(size, size), _surfaceProvider.Surfaces[SurfaceType.GasStation]);
                     AddSquare(id, square);
                     id++;
                 }
@@ -75,7 +72,6 @@ namespace GasStation.LifeEngine
             DragOverSquare += OverSquare;
             DragLeaveSquare += LeaveSquare;
             MouseDownSquare += DownMouse;
-            MouseDownSquare += SetSurface;
             EndDragDrop += EndDrop;
 
         }
@@ -108,13 +104,7 @@ namespace GasStation.LifeEngine
             ShowAvailableZone(e.Data.DragDropComponent.Type);
             e.Square.SetDesign(e.Data.DragDropComponent.ViewComponent);
         }
-        private void SetSurface(object sender, SquareArgs<LifeSquare> e)
-        {
-            if (SurfaceEditor.CurrentSurfase != SurfaceType.None)
-            {
-                e.Square.Surface = _surfaceProvider.Surfaces[SurfaceEditor.CurrentSurfase];
-            }
-        }
+
         private void SuccessDropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             if (GetAvailableSurface(e.Data.DragDropComponent.Type) == e.Square.Surface.Type)
@@ -129,6 +119,8 @@ namespace GasStation.LifeEngine
             }
 
         }
+
+        private void ShowAvailableZone(ApplianceType appliance)
         {
             if (_showedAvailableZone)
             {
