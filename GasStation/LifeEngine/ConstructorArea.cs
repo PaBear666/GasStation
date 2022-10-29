@@ -14,12 +14,20 @@ namespace GasStation.LifeEngine
         private bool _showedAvailableZone;
         readonly EditorProvider _surfaceProvider;
         
-        public ConstructorArea(Panel panel, EditorProvider surfaceProvider, int size, int length) : base(panel, new Size(size, size), length)
+        public ConstructorArea(Panel panel, Side roadSide, EditorProvider surfaceProvider, int size, int length) : base(panel, new Size(size, size), length)
         {
             _surfaceProvider = surfaceProvider;
 
-            InitArea(size, length);
-        }      
+            InitArea(size, length, roadSide);
+
+
+
+            SuccessDragDropSquare += SuccessDropSquare;
+            DragOverSquare += OverSquare;
+            DragLeaveSquare += LeaveSquare;
+            MouseDownSquare += DownMouse;
+            EndDragDrop += EndDrop;
+        }
 
         public void EndDrop(object sender, EventArgs e)
         {
@@ -55,7 +63,7 @@ namespace GasStation.LifeEngine
         }
 
 
-        private void InitArea(int size, int length)
+        private void InitArea(int size, int length, Side roadSide)
         {
             int id = 0;
             for (int i = 0; i < length; i++)
@@ -68,12 +76,58 @@ namespace GasStation.LifeEngine
                 }
             }
 
-            SuccessDragDropSquare += SuccessDropSquare;
-            DragOverSquare += OverSquare;
-            DragLeaveSquare += LeaveSquare;
-            MouseDownSquare += DownMouse;
-            EndDragDrop += EndDrop;
 
+            // Строим сервисную часть АЗС
+            int serviceGasStationWidth = 4;
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < serviceGasStationWidth; j++)
+                {
+                    LifeSquare square = null;
+
+                    switch (roadSide)
+                    {
+                        case Side.Top | Side.Bottom:
+                            square = GetSquare(length * (length - j) - i - 1);
+                            break;
+
+                        case Side.Left | Side.Right:
+                            square = GetSquare(i * length + j);
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    square.Surface = _surfaceProvider.Surfaces[SurfaceType.Service];
+                }
+            }
+
+            // Строим дороги
+            for (int i = 0; i < length; i++)
+            {
+                LifeSquare square = null;
+                switch (roadSide)
+                {
+                    case Side.Top:
+                        square = GetSquare(i * length);
+                        break;
+
+                    case Side.Right:
+                        square = GetSquare(length * length - i - 1);
+                        break;
+
+                    case Side.Bottom:
+                        square = GetSquare((length - i) * length - 1);
+                        break;
+
+                    case Side.Left:
+                        square = GetSquare(i);
+                        break;
+                }
+
+                square.Surface = _surfaceProvider.Surfaces[SurfaceType.Road];
+            }
         }
         private void DownMouse(object sender, SquareArgs<LifeSquare> e)
         {
@@ -104,7 +158,6 @@ namespace GasStation.LifeEngine
             ShowAvailableZone(e.Data.DragDropComponent.Type);
             e.Square.SetDesign(e.Data.DragDropComponent.ViewComponent);
         }
-
         private void SuccessDropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             if (GetAvailableSurface(e.Data.DragDropComponent.Type) == e.Square.Surface.Type)
@@ -119,7 +172,6 @@ namespace GasStation.LifeEngine
             }
 
         }
-
         private void ShowAvailableZone(ApplianceType appliance)
         {
             if (_showedAvailableZone)
@@ -131,11 +183,9 @@ namespace GasStation.LifeEngine
                 _showedAvailableZone = true;
                 _currentApplicane = appliance;
             }
-
-            ForSquares((square) =>
-            {
-                SetAvailableDesign(square);
-            });
+            
+            ForSquares((square) => SetAvailableDesign(square));
+            
         }
         private void SetAvailableDesign(LifeSquare square)
         {
@@ -145,9 +195,11 @@ namespace GasStation.LifeEngine
             }
             else
             {
-                square.BaseViewComponent = new ViewComponent(Color.Red);
+                square.BaseViewComponent = new ViewComponent(Color.FromArgb(100, Color.Red));
             }
 
         }
+
+
     }
 }

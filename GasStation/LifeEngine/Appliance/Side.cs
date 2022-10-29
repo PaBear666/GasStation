@@ -8,7 +8,6 @@ namespace GasStation.LifeEngine
 {
     public enum Side
     {
-        None,
         Top,
         Right,
         Bottom,
