@@ -1,22 +1,16 @@
 ﻿using GasStation.GraphicEngine;
+using Newtonsoft.Json;
 using System.Drawing;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class LifeSquare : ColorSquare
     {
         Appliance _appliance;
         Surface _surface;
 
-        public LifeSquare(int id, Point location, Size size, Surface surface) 
-            : base (id, location, size, surface.ViewComponent)
-        {
-            Surface = surface;
-        }
-
-        
+        [JsonProperty]
         public Appliance Appliance
         {
             get
@@ -37,6 +31,8 @@ namespace GasStation.LifeEngine
                 _appliance = value;
             }
         }
+
+        [JsonProperty]
         public Surface Surface
         {
             get
@@ -49,6 +45,12 @@ namespace GasStation.LifeEngine
                 BaseViewComponent = value.ViewComponent;
                 _surface = value;
             }
+        }
+
+        public LifeSquare(int id, Point location, Size size, Surface surface)
+            : base(id, location, size, surface.ViewComponent)
+        {
+            Surface = surface;
         }
 
         public override void ResetDesign()

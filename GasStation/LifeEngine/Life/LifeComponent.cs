@@ -9,5 +9,10 @@ namespace GasStation.LifeEngine
         {
             ViewComponent = viewComponent;
         }
+
+        public LifeComponent()
+        {
+
+        }
     }
 }

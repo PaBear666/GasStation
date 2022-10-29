@@ -4,7 +4,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace GasStation.GraphicEngine.Common
 {
@@ -20,8 +21,8 @@ namespace GasStation.GraphicEngine.Common
         public event EventHandler<SquareDragDropArgs<D,S>> DragEnterSquare;
         public event EventHandler<EventArgs> EndDragDrop;
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
-        public int SquareWidthLength { get; }
-        public int SquareHeightLength { get; }
+        public int WidthLength { get; }
+        public int Heightength { get; }
         private S[,] Squares { get; }
         public Size SquareSize { get; }
 
@@ -29,8 +30,8 @@ namespace GasStation.GraphicEngine.Common
         {
             _panel = panel;
             SquareSize = squareSize;
-            SquareWidthLength = _panel.Width / squareSize.Width;
-            SquareHeightLength = _panel.Height / squareSize.Height;
+            WidthLength = length;
+            Heightength = length;
             _squareLength = length;
             Squares = new S[length,length];
         }
@@ -95,6 +96,17 @@ namespace GasStation.GraphicEngine.Common
             return Squares[index / _squareLength, index % _squareLength];
         }
 
+        public TopologyTransfer<S> GetTransfer(string topologyName)
+        {
+            return new TopologyTransfer<S>()
+            {
+                Name = topologyName,
+                HeightLength = Heightength,
+                WidthLength = WidthLength,
+                Squares = GetSquareArray()
+            };
+        }
+
         public S[] GetAroundSquares(int index)
         {
             int width = index / _squareLength;
@@ -130,6 +142,13 @@ namespace GasStation.GraphicEngine.Common
                     action(Squares[i, j]);
                 }
             }
+        }
+
+        private S[] GetSquareArray()
+        {
+            var squares = new S[WidthLength * Heightength];
+            ForSquares((s) => squares[s.Id] = s);
+            return squares;
         }
     }
 }

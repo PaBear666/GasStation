@@ -38,7 +38,17 @@ namespace GasStation.LifeEngine
         {
             ShowAvailableZone(data.DragDropComponent.Type);
         }
-        public SurfaceType GetAvailableSurface(ApplianceType appliance)
+      
+        public void ShowNormalZone()
+        {
+            _showedAvailableZone = false;
+            ForSquares((square) =>
+            {
+                square.ResetDesign();
+            });       
+        }
+
+        private SurfaceType GetAvailableSurface(ApplianceType appliance)
         {
             switch (appliance)
             {
@@ -51,18 +61,8 @@ namespace GasStation.LifeEngine
                 default:
                     throw new Exception();
             }
-           
-        }
-        public void ShowNormalZone()
-        {
-            _showedAvailableZone = false;
-            ForSquares((square) =>
-            {
-                square.ResetDesign();
-            });       
-        }
 
-
+        }
         private void InitArea(int size, int length, Side roadSide)
         {
             int id = 0;
