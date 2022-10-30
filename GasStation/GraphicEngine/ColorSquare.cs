@@ -1,45 +1,83 @@
 ﻿using GasStation.GraphicEngine.Common;
-using GasStation.GraphicEngine.Common.Abstract;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine
 {
-    public abstract class ColorSquare : Square, IAnimatedComponent
+    public abstract class ColorSquare : Square
     {
-        ViewComponent _baseViewComponent;
+        Color _baseBackgroundColor;
+        Image _baseBackgroundImage;
+        Image _baseFontImage;
 
-        public ViewComponent BaseViewComponent 
+        public Color BaseBackgroundColor
         {
             get
             {
-                return _baseViewComponent;
+                return _baseBackgroundColor;
             }
 
             set
             {
-                _baseViewComponent = value;
-                SetDesign(value);
+                _baseBackgroundColor = value;
+                _pictureBox.BackColor = value;
             }
         }
 
-        public ColorSquare(int id, Point location, Size size, ViewComponent viewComponent) : base(id, location, size)
+        public Image BaseBackgroundImage
         {
-            BaseViewComponent = viewComponent;
-            SetDesign(viewComponent);
+            get
+            {
+                return _baseBackgroundImage;
+            }
+
+            set
+            {
+                _baseBackgroundImage = value;
+                _pictureBox.BackgroundImage = value;
+            }
+        }
+
+        public Image BaseFrontImage
+        {
+            get
+            {
+                return _baseFontImage;
+            }
+
+            set
+            {
+                _baseFontImage = value;
+                _pictureBox.Image = value;
+            }
+        }
+
+        public ColorSquare(int id, Point location, Size size) : base(id, location, size)
+        {
+            BaseBackgroundColor = Control.DefaultBackColor;
         }
 
         public virtual void ResetDesign()
         {
-            _pictureBox.BackColor = BaseViewComponent.Color;
-            _pictureBox.Image = BaseViewComponent.Image;
+            _pictureBox.BackColor = BaseBackgroundColor;
+            _pictureBox.Image = BaseFrontImage;
+            _pictureBox.BackgroundImage = BaseBackgroundImage;
         }
 
-        public virtual void SetDesign(ViewComponent view)
+        public void SetBackgroundColor(Color color)
         {
-            _pictureBox.BackColor = view.Color;
-            _pictureBox.Image = view.Image;
+            _pictureBox.BackColor = color;
+        }
+
+        public void SetBackgroundImage(Image image)
+        {
+            _pictureBox.BackgroundImage = image;
+        }
+
+        public void SetFrontImage(Image image)
+        {
+            _pictureBox.Image = image;
         }
     }
 }

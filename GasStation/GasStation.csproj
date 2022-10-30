@@ -60,7 +60,6 @@
     <Compile Include="GraphicEngine\Common\DragAndDrop\SquareDragDropArgs.cs" />
     <Compile Include="GraphicEngine\Common\ViewComponent.cs" />
     <Compile Include="GraphicEngine\Common\Area.cs" />
-    <Compile Include="GraphicEngine\Common\Abstract\IAnimatedComponent.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
     <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
@@ -70,7 +69,7 @@
     <Compile Include="LifeEngine\Life\LifeSquare.cs" />
     <Compile Include="LifeEngine\Appliance\Appliance.cs" />
     <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
-    <Compile Include="LifeEngine\Appliance\Side.cs" />
+    <Compile Include="LifeEngine\Side.cs" />
     <Compile Include="LifeEngine\Surface\Surface.cs" />
     <Compile Include="LifeEngine\Surface\SurfaceProvider.cs" />
     <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
@@ -145,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GraphicEngine\Common\Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

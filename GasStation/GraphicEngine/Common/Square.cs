@@ -26,7 +26,9 @@ namespace GasStation.GraphicEngine.Common
             {
                 Size = size,
                 Location = location,
-                SizeMode = PictureBoxSizeMode.StretchImage
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                BackgroundImageLayout = ImageLayout.Stretch
+                
             };
 
             #if DEBUG

@@ -11,28 +11,6 @@ namespace GasStation.LifeEngine
         Surface _surface;
 
         [JsonProperty]
-        public Appliance Appliance
-        {
-            get
-            {
-                return _appliance;
-            }
-
-            set
-            {
-                if(value == null)
-                {
-                    _appliance = value;
-                    ResetDesign();
-                    return;
-                }
-
-                SetDesign(value.ViewComponent);
-                _appliance = value;
-            }
-        }
-
-        [JsonProperty]
         public Surface Surface
         {
             get
@@ -42,34 +20,67 @@ namespace GasStation.LifeEngine
 
             set
             {
-                BaseViewComponent = value.ViewComponent;
                 _surface = value;
+                BaseBackgroundImage = value.ViewComponent.Image;
+                BaseBackgroundColor = value.ViewComponent.Color;
+                ResetDesign();
             }
+        }
+
+        [JsonProperty]
+        public Appliance Appliance
+        {
+            get
+            {
+                return _appliance;
+            }
+
+            set
+            {
+                _appliance = value;
+                if(value != null)
+                {
+                    BaseFrontImage = value.ViewComponent.Image;
+
+                    if (value.ViewComponent.Image == null)
+                    {
+                        BaseBackgroundColor = value.ViewComponent.Color;
+                        BaseBackgroundImage = null;
+                    }
+                }
+                else
+                {
+                    BaseFrontImage = null;
+                    BaseBackgroundColor = Surface.ViewComponent.Color;
+                    BaseBackgroundImage = Surface.ViewComponent.Image;
+                }
+
+                ResetDesign();
+            }
+        }
+
+        public void ShowAppliance()
+        {
+            SetFrontImage(Appliance?.ViewComponent.Image);
+        }
+
+
+        public void FillColor(Color color)
+        {
+            SetBackgroundColor(color);
+            ShowAppliance();
+            SetBackgroundImage(null);
+        }
+
+        public void HideAppliance()
+        {
+            SetFrontImage(null);
         }
 
         public LifeSquare(int id, Point location, Size size, Surface surface)
-            : base(id, location, size, surface.ViewComponent)
+            : base(id, location, size)
         {
             Surface = surface;
-        }
-
-        public override void ResetDesign()
-        {
-            if(Appliance != null)
-            {
-                _pictureBox.BackColor = Appliance.ViewComponent.Color;
-                _pictureBox.Image = Appliance.ViewComponent.Image;
-                return;
-            }
-
-            if(Surface != null)
-            {
-                _pictureBox.BackColor = Surface.ViewComponent.Color;
-                _pictureBox.Image = Surface.ViewComponent.Image;
-                return;
-            }
-
-            base.ResetDesign();
         }
     }
 }

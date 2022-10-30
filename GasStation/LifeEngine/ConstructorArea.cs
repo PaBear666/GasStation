@@ -145,18 +145,15 @@ namespace GasStation.LifeEngine
         {
             if (_showedAvailableZone)
             {
-                SetAvailableDesign(e.Square);
+                SetAvailableDesignStatus(e.Square);
             }
-            else
-            {
-                e.Square.ResetDesign();
-            }
+            e.Square.ShowAppliance();
 
         }
         private void OverSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             ShowAvailableZone(e.Data.DragDropComponent.Type);
-            e.Square.SetDesign(e.Data.DragDropComponent.ViewComponent);
+            e.Square.SetFrontImage(e.Data.DragDropComponent.ViewComponent.Image);
         }
         private void SuccessDropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
@@ -164,7 +161,6 @@ namespace GasStation.LifeEngine
             {
                 e.Data.FinishDragDrop?.Invoke();
                 e.Square.Appliance = e.Data.DragDropComponent;
-
             }
             else
             {
@@ -184,22 +180,20 @@ namespace GasStation.LifeEngine
                 _currentApplicane = appliance;
             }
             
-            ForSquares((square) => SetAvailableDesign(square));
+            ForSquares((square) => SetAvailableDesignStatus(square));
             
         }
-        private void SetAvailableDesign(LifeSquare square)
+        private void SetAvailableDesignStatus(LifeSquare square)
         {
             if (square.Surface.Type == GetAvailableSurface(_currentApplicane))
             {
-                square.BaseViewComponent = new ViewComponent(Color.FromArgb(100, Color.Green), square?.Appliance?.ViewComponent?.Image);
+                square.FillColor(Color.Green);
             }
             else
             {
-                square.BaseViewComponent = new ViewComponent(Color.FromArgb(100, Color.Red));
+                square.FillColor(Color.Red);
             }
 
         }
-
-
     }
 }

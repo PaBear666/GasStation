@@ -13,7 +13,7 @@ namespace GasStation
             InitializeComponent();
 
             var editorProvider = new EditorProvider();
-             _constructor = new ConstructorArea(panel1,Side.Left, editorProvider, 50, 10);
+             _constructor = new ConstructorArea(panel1,Side.Bottom, editorProvider, 50, 10);
             var gasStationAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.GasStation], pictureBox3);
             var tankerAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.Tanker], pictureBox2);
             var shopAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.Shop], pictureBox1);
