@@ -2,8 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GasStation.LifeEngine
@@ -19,8 +18,6 @@ namespace GasStation.LifeEngine
             _surfaceProvider = surfaceProvider;
 
             InitArea(size, length, roadSide);
-
-
 
             SuccessDragDropSquare += SuccessDropSquare;
             DragOverSquare += OverSquare;
@@ -49,16 +46,23 @@ namespace GasStation.LifeEngine
             });       
         }
 
-        private SurfaceType GetAvailableSurface(ApplianceType appliance)
+        private bool isAvailableSquare(ApplianceType appliance, LifeSquare square)
         {
             switch (appliance)
             {
                 case ApplianceType.Shop:
-                    return SurfaceType.GasStation;
+                    return square.Surface.Type == SurfaceType.GasStation;
+
                 case ApplianceType.GasStation:
-                    return SurfaceType.GasStation;
+                    return square.Surface.Type == SurfaceType.GasStation;
+
                 case ApplianceType.Tanker:
-                    return SurfaceType.Service;
+                    return square.Surface.Type == SurfaceType.Service;
+
+                case ApplianceType surfaceType when (surfaceType == ApplianceType.InBridge || surfaceType == ApplianceType.OutBridge):
+                    return square.Surface.Type == SurfaceType.GasStation 
+                        && GetArroundSquares(square).Any(s => s?.Surface.Type == SurfaceType.Road);
+
                 default:
                     throw new Exception();
             }
@@ -144,10 +148,8 @@ namespace GasStation.LifeEngine
         {
             if (_showedAvailableZone)
             {
-                SetAvailableDesignStatus(e.Square);
+                SetAvailableDesignStatus(e.Square); 
             }
-            e.Square.ShowAppliance();
-
         }
 
 
@@ -163,7 +165,7 @@ namespace GasStation.LifeEngine
 
         private void SuccessDropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
-            if (GetAvailableSurface(e.Data.DragDropComponent.Type) == e.Square.Surface.Type)
+            if (isAvailableSquare(e.Data.DragDropComponent.Type, e.Square))
             {
                 e.Data.FinishDragDrop?.Invoke();
                 e.Square.Appliance = e.Data.DragDropComponent;
@@ -191,15 +193,16 @@ namespace GasStation.LifeEngine
         }
         private void SetAvailableDesignStatus(LifeSquare square)
         {
-            if (square.Surface.Type == GetAvailableSurface(_currentApplicane))
+            if (isAvailableSquare(_currentApplicane, square))
             {
                 square.FillColor(Color.Green);
+                square.ShowAppliance();
             }
             else
             {
                 square.FillColor(Color.Red);
+                square.HideAppliance();
             }
-
         }
     }
 }

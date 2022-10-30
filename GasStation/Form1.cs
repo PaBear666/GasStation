@@ -7,33 +7,33 @@ namespace GasStation
 {
     public partial class Form1 : Form
     {
-        ConstructorArea _constructor;
+        readonly ConstructorArea _constructor;
         public Form1()
         {
             InitializeComponent();
 
             var editorProvider = new EditorProvider();
              _constructor = new ConstructorArea(panel1,Side.Bottom, editorProvider, 50, 10);
-            var gasStationAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.GasStation], pictureBox3);
-            var tankerAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.Tanker], pictureBox2);
-            var shopAppliance = new AppliancePictureBox(editorProvider.Appliance[ApplianceType.Shop], pictureBox1);
 
-            gasStationAppliance.EndDragDrop += _constructor.EndDrop;
-            gasStationAppliance.StartDrop += _constructor.ShowAvailableZone;
-
-            tankerAppliance.EndDragDrop += _constructor.EndDrop;
-            tankerAppliance.StartDrop += _constructor.ShowAvailableZone;
-
-            shopAppliance.EndDragDrop += _constructor.EndDrop;
-            shopAppliance.StartDrop += _constructor.ShowAvailableZone;
-
+            AddAppliancePictureBox(editorProvider, ApplianceType.OutBridge, pictureBox5);
+            AddAppliancePictureBox(editorProvider, ApplianceType.InBridge, pictureBox4);
+            AddAppliancePictureBox(editorProvider, ApplianceType.GasStation, pictureBox3);
+            AddAppliancePictureBox(editorProvider, ApplianceType.Tanker, pictureBox2);
+            AddAppliancePictureBox(editorProvider, ApplianceType.Shop, pictureBox1);
         }
 
         private void button1_Click(object sender, System.EventArgs e)
         {
             var a = _constructor.GetTransfer("as");
             var serializer = JsonConvert.SerializeObject(a);
+        }
 
+        public AppliancePictureBox AddAppliancePictureBox(EditorProvider editorProvider, ApplianceType applianceType, PictureBox pictureBox)
+        {
+            var appliance = new AppliancePictureBox(editorProvider.Appliance[applianceType], pictureBox);
+            appliance.EndDragDrop += _constructor.EndDrop;
+            appliance.StartDrop += _constructor.ShowAvailableZone;
+            return appliance;
         }
     }
 }

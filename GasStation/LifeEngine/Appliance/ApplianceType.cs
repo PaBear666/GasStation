@@ -4,6 +4,8 @@
     {
         Shop,
         GasStation,
-        Tanker
+        Tanker,
+        InBridge,
+        OutBridge
     }
 }

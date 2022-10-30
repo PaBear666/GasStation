@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Reflection;
 
 namespace GasStation.GraphicEngine.Common
 {
@@ -105,6 +106,33 @@ namespace GasStation.GraphicEngine.Common
                 WidthLength = WidthLength,
                 Squares = Squares
             };
+        }
+
+        public S[] GetArroundSquares(Square square)
+        {
+            var squares = new S[9];
+            var squareIdDes = square.Id / Heightength;
+            int k = 0;
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    var index = square.Id + i * WidthLength + j;
+                    if(index < WidthLength * Heightength 
+                        && index >= 0 
+                        && index / Heightength - squareIdDes == i)
+                    {
+                        squares[k] = Squares[index];
+                    }
+                    else
+                    {
+                        squares[k] = null;
+                    }
+
+                    k++;
+                }
+            }
+            return squares;
         }
 
         public void ForSquares(Action<S> action)

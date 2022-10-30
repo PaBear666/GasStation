@@ -68,7 +68,6 @@ namespace GasStation.LifeEngine
         public void FillColor(Color color)
         {
             SetBackgroundColor(color);
-            ShowAppliance();
             SetBackgroundImage(null);
         }
 
