@@ -23,7 +23,7 @@ namespace GasStation.GraphicEngine.Common
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int WidthLength { get; }
         public int Heightength { get; }
-        private S[,] Squares { get; }
+        private S[] Squares { get; }
         public Size SquareSize { get; }
 
         public Area(Panel panel, Size squareSize, int length)
@@ -33,7 +33,7 @@ namespace GasStation.GraphicEngine.Common
             WidthLength = length;
             Heightength = length;
             _squareLength = length;
-            Squares = new S[length,length];
+            Squares = new S[length * length];
         }
 
         protected void AddSquare(int index, S square)
@@ -44,7 +44,7 @@ namespace GasStation.GraphicEngine.Common
                 _panel.Controls.Remove(currentSquare.Control);
             }
 
-            Squares[index / _squareLength, index % _squareLength] = square;
+            Squares[index] = square;
             _panel.Controls.Add(square.Control);
             square.Control.AllowDrop = true;
 
@@ -93,7 +93,7 @@ namespace GasStation.GraphicEngine.Common
 
         public S GetSquare(int index)
         {
-            return Squares[index / _squareLength, index % _squareLength];
+            return Squares[index];
         }
 
         public TopologyTransfer<S> GetTransfer(string topologyName)
@@ -103,52 +103,13 @@ namespace GasStation.GraphicEngine.Common
                 Name = topologyName,
                 HeightLength = Heightength,
                 WidthLength = WidthLength,
-                Squares = GetSquareArray()
+                Squares = Squares
             };
-        }
-
-        public S[] GetAroundSquares(int index)
-        {
-            int width = index / _squareLength;
-            int height = index % _squareLength;
-            var squares = new S[9];
-
-            int k = 0;
-            for (int i = -1; i < 2; i++)
-            {
-                for (int j = -1; j < 2; j++)
-                { 
-                    if((width + i) >= _squareLength || (height + j) >= _squareLength || (width + i) < 0 || (height + j) < 0)
-                    {
-                        squares[k] = null;
-                    }
-                    else
-                    {
-                        squares[k] = Squares[width + i, height + j];
-                    }
-                    
-                }
-            }
-
-            return squares;
         }
 
         public void ForSquares(Action<S> action)
         {
-            for (int i = 0; i < _squareLength; i++)
-            {
-                for (int j = 0; j < _squareLength; j++)
-                {
-                    action(Squares[i, j]);
-                }
-            }
-        }
-
-        private S[] GetSquareArray()
-        {
-            var squares = new S[WidthLength * Heightength];
-            ForSquares((s) => squares[s.Id] = s);
-            return squares;
+            Squares.AsParallel().ForAll(action);
         }
     }
 }

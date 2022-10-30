@@ -27,8 +27,6 @@ namespace GasStation
             shopAppliance.EndDragDrop += _constructor.EndDrop;
             shopAppliance.StartDrop += _constructor.ShowAvailableZone;
 
-
-
         }
 
         private void button1_Click(object sender, System.EventArgs e)

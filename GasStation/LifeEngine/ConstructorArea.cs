@@ -27,6 +27,7 @@ namespace GasStation.LifeEngine
             DragLeaveSquare += LeaveSquare;
             MouseDownSquare += DownMouse;
             EndDragDrop += EndDrop;
+            DragEnterSquare += EnterSquare;
         }
 
         public void EndDrop(object sender, EventArgs e)
@@ -44,7 +45,7 @@ namespace GasStation.LifeEngine
             _showedAvailableZone = false;
             ForSquares((square) =>
             {
-                square.ResetDesign();
+                square.Control.BeginInvoke(new Action(square.ResetDesign));
             });       
         }
 
@@ -150,11 +151,18 @@ namespace GasStation.LifeEngine
             e.Square.ShowAppliance();
 
         }
+
+
         private void OverSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
-            ShowAvailableZone(e.Data.DragDropComponent.Type);
+            ShowAvailableZone(e.Data.DragDropComponent.Type);      
+        }
+
+        private void EnterSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
+        {
             e.Square.SetFrontImage(e.Data.DragDropComponent.ViewComponent.Image);
         }
+
         private void SuccessDropSquare(object sender, SquareDragDropArgs<Appliance, LifeSquare> e)
         {
             if (GetAvailableSurface(e.Data.DragDropComponent.Type) == e.Square.Surface.Type)
@@ -180,8 +188,8 @@ namespace GasStation.LifeEngine
                 _currentApplicane = appliance;
             }
             
-            ForSquares((square) => SetAvailableDesignStatus(square));
-            
+            ForSquares((square) => square.Control.BeginInvoke(new Action(() => SetAvailableDesignStatus(square))) );
+           
         }
         private void SetAvailableDesignStatus(LifeSquare square)
         {

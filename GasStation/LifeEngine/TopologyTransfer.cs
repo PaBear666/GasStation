@@ -1,15 +1,16 @@
 ﻿using GasStation.GraphicEngine.Common;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace GasStation.LifeEngine
 {
     [JsonObject]
-    public class TopologyTransfer<T>
-        where T: Square
+    public class TopologyTransfer<S>
+        where S: Square
     {
         public string Name { get; set; }
         public int WidthLength { get; set; }
         public int HeightLength { get; set; }
-        public T[] Squares { get; set; }
+        public IEnumerable<S> Squares { get; set; }
     }
 }
