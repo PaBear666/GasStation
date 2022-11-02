@@ -7,7 +7,7 @@ namespace GasStation.LifeEngine
     [JsonObject(MemberSerialization.OptIn)]
     public class LifeSquare : ColorSquare
     {
-        Appliance _appliance;
+        LifeAppliance _appliance;
         Surface _surface;
 
         [JsonProperty]
@@ -28,7 +28,7 @@ namespace GasStation.LifeEngine
         }
 
         [JsonProperty]
-        public Appliance Appliance
+        public LifeAppliance LifeAppliance
         {
             get
             {
@@ -61,7 +61,7 @@ namespace GasStation.LifeEngine
 
         public void ShowAppliance()
         {
-            SetFrontImage(Appliance?.ViewComponent.Image);
+            SetFrontImage(LifeAppliance?.ViewComponent.Image);
         }
 
 

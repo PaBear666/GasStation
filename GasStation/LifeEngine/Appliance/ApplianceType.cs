@@ -5,7 +5,6 @@
         Shop,
         GasStation,
         Tanker,
-        InBridge,
-        OutBridge
+        Bridge
     }
 }

@@ -118,14 +118,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="arrow_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\arrow_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrow_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\arrow_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrow_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\arrow_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrow_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\arrow_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="car" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\137831-top-ferrari-pixel-view-free-transparent-image-hd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="entry" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Entry.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="fuelgiver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\pixel-art-gas-pump-vector-icon-8bit-game-white-background_360488-529.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gasStation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\01bfa6926cdfddf55b9605252d6e7efe.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,16 +142,43 @@
   <data name="gasStation_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\brick.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="outer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\outer.PNG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gasstation_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\gasstation_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gasstation_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\gasstation_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gasstation_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\gasstation_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gasstation_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\gasstation_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="road" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\642a33fac18a5e7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\pixel-art-shop-store-front-with-awning-vector-build-for-8bit-game-on-white-background_360488-575.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shop_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shop_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tanker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\танкер.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shop_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shop_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shop_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shop_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="shop_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\shop_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tanker_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tanker_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tanker_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tanker_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tanker_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tanker_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tanker_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\tanker_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

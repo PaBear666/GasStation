@@ -13,13 +13,11 @@ namespace GasStation
             InitializeComponent();
 
             var editorProvider = new EditorProvider();
-             _constructor = new ConstructorArea(panel1,Side.Bottom, editorProvider, 50, 10);
-
-            AddAppliancePictureBox(editorProvider, ApplianceType.OutBridge, pictureBox5);
-            AddAppliancePictureBox(editorProvider, ApplianceType.InBridge, pictureBox4);
-            AddAppliancePictureBox(editorProvider, ApplianceType.GasStation, pictureBox3);
-            AddAppliancePictureBox(editorProvider, ApplianceType.Tanker, pictureBox2);
-            AddAppliancePictureBox(editorProvider, ApplianceType.Shop, pictureBox1);
+            _constructor = new ConstructorArea(panel1, Side.Bottom, editorProvider, 50, 10);
+            AddAppliancePictureBox(editorProvider, new Appliance(ApplianceType.Bridge, Side.Top), pictureBox4);
+            AddAppliancePictureBox(editorProvider, new Appliance(ApplianceType.GasStation, Side.Bottom), pictureBox3);
+            AddAppliancePictureBox(editorProvider, new Appliance(ApplianceType.Tanker, Side.Bottom), pictureBox2);
+            AddAppliancePictureBox(editorProvider, new Appliance(ApplianceType.Shop, Side.Bottom), pictureBox1);
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -28,12 +26,12 @@ namespace GasStation
             var serializer = JsonConvert.SerializeObject(a);
         }
 
-        public AppliancePictureBox AddAppliancePictureBox(EditorProvider editorProvider, ApplianceType applianceType, PictureBox pictureBox)
+        public AppliancePictureBox AddAppliancePictureBox(EditorProvider editorProvider, Appliance appliance, PictureBox pictureBox)
         {
-            var appliance = new AppliancePictureBox(editorProvider.Appliance[applianceType], pictureBox);
-            appliance.EndDragDrop += _constructor.EndDrop;
-            appliance.StartDrop += _constructor.ShowAvailableZone;
-            return appliance;
+            var appliancePicture = new AppliancePictureBox(editorProvider, appliance, pictureBox);
+            appliancePicture.EndDragDrop += _constructor.EndDrop;
+            appliancePicture.StartDrop += _constructor.ShowAvailableZone;
+            return appliancePicture;
         }
     }
 }

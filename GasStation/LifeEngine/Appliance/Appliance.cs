@@ -1,24 +1,19 @@
-﻿using GasStation.GraphicEngine.Common;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GasStation.LifeEngine
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class Appliance : LifeComponent
+    public struct Appliance
     {
-        [JsonProperty]
         public ApplianceType Type { get; set; }
 
-        [JsonProperty]
         public Side Side { get; set; }
 
-        public Appliance()
-        {
-            
-        }
-
-        public Appliance(ApplianceType type, Side side, ViewComponent component) : base(component)
+        public Appliance(ApplianceType type, Side side)
         {
             Type = type;
             Side = side;

@@ -5,8 +5,8 @@ namespace GasStation.GraphicEngine.Common
 {
     public class ViewComponent
     {
-        public Image Image { get; set; }
-        public Color Color { get; set; }
+        public Image Image { get; private set; }
+        public Color Color { get; private set; }
 
         public ViewComponent(Color color, Image image = null)
         {

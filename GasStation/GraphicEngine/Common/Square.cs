@@ -36,7 +36,8 @@ namespace GasStation.GraphicEngine.Common
             _label = new Label()
             {
                 Text = id.ToString(),
-
+                BackColor = Color.Transparent,
+                ForeColor = Color.White
             };
             _pictureBox.Controls.Add(_label);
             #endif

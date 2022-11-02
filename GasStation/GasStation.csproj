@@ -62,16 +62,17 @@
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
+    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
     <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
     <Compile Include="LifeEngine\ConstructorArea.cs" />
     <Compile Include="LifeEngine\Life\LifeComponent.cs" />
     <Compile Include="LifeEngine\Life\LifeEngine.cs" />
     <Compile Include="LifeEngine\Life\LifeSquare.cs" />
-    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
+    <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
     <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
     <Compile Include="LifeEngine\Side.cs" />
+    <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
     <Compile Include="LifeEngine\Surface\Surface.cs" />
-    <Compile Include="LifeEngine\Surface\SurfaceProvider.cs" />
     <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
     <Compile Include="LifeEngine\TopologyTransfer.cs" />
     <Compile Include="Program.cs" />
@@ -147,6 +148,54 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GraphicEngine\Common\Abstract\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_top.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

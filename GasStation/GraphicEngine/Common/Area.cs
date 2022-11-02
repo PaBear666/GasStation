@@ -16,7 +16,9 @@ namespace GasStation.GraphicEngine.Common
     {
         private readonly Panel _panel;
         private readonly int _squareLength;
-        public event EventHandler<SquareArgs<S>> MouseDownSquare;
+        public event EventHandler<SquareArgs<S>> MouseLeftDownSquare;
+        public event EventHandler<SquareArgs<S>> MouseMiddleDownSquare;
+        public event EventHandler<SquareArgs<S>> MouseRightDownSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> SuccessDragDropSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> DragOverSquare;
         public event EventHandler<SquareDragDropArgs<D,S>> DragEnterSquare;
@@ -52,7 +54,19 @@ namespace GasStation.GraphicEngine.Common
 
             square.Control.MouseDown += (sender, args) =>
             {
-                MouseDownSquare?.Invoke(this, new SquareArgs<S>(square));
+                switch (args.Button)
+                {
+                    case MouseButtons.Left:
+                        MouseLeftDownSquare?.Invoke(this, new SquareArgs<S>(square));
+                        break;
+                    case MouseButtons.Right:
+                        MouseRightDownSquare?.Invoke(this, new SquareArgs<S>(square));
+                        break;
+                    case MouseButtons.Middle:
+                        MouseMiddleDownSquare?.Invoke(this, new SquareArgs<S>(square));
+                        break;
+                }
+               
             };
             
             square.Control.DragDrop += (object sender, DragEventArgs e) =>
@@ -86,8 +100,6 @@ namespace GasStation.GraphicEngine.Common
                 {
                     EndDragDrop?.Invoke(this, new SquareArgs<S>(square));
                 }
-
-                Console.WriteLine(args.Action);
             };
 
         }

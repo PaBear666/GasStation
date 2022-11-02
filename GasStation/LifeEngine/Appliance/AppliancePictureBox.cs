@@ -6,34 +6,78 @@ namespace GasStation.LifeEngine
 {
     public class AppliancePictureBox : Square
     {
-        public Appliance Appliance { get; }
-        public event EventHandler<EventArgs> EndDragDrop;
-        public event EventHandler<DragAndDropData<Appliance>> StartDrop;
-        public AppliancePictureBox(Appliance appliance, PictureBox pictureBox) : base(pictureBox)
+        private LifeAppliance _appliance;
+        public LifeAppliance Appliance
         {
-            Appliance = appliance;
-            _pictureBox.Image = appliance.ViewComponent.Image;
-            _pictureBox.BackColor = appliance.ViewComponent.Color;
+            get
+            {
+                return _appliance;
+            }
+
+            set
+            {
+                _appliance = value;
+                _pictureBox.Image = value.ViewComponent.Image;
+                _pictureBox.BackColor = value.ViewComponent.Color;
+            }
+        }
+        public event EventHandler<EventArgs> EndDragDrop;
+        public event EventHandler<DragAndDropData<LifeAppliance>> StartDrop;
+
+        public AppliancePictureBox(EditorProvider editorProvider, Appliance appliance, PictureBox pictureBox) : base(pictureBox)
+        {
+            Appliance = editorProvider.Appliance[appliance];
+            _pictureBox.Image = Appliance.ViewComponent.Image;
+            _pictureBox.BackColor = Appliance.ViewComponent.Color;
 
             Control.AllowDrop = true;
-            Control.MouseDown += (object sender, MouseEventArgs e) =>
+            Control.MouseUp += (sender, e) =>
             {
-                Control.DoDragDrop(new DragAndDropData<Appliance>(Appliance, null), DragDropEffects.Move);
+                if(e.Button == MouseButtons.Right)
+                {
+                    switch (Appliance.Appliance.Side)
+                    {
+                        case Side.Top:
+                            Appliance = editorProvider.Appliance[new Appliance(Appliance.Appliance.Type, Side.Right)];
+                            break;
+                        case Side.Right:
+                            Appliance = editorProvider.Appliance[new Appliance(Appliance.Appliance.Type, Side.Bottom)];
+                            break;
+                        case Side.Bottom:
+                            Appliance = editorProvider.Appliance[new Appliance(Appliance.Appliance.Type, Side.Left)];
+                            break;
+                        case Side.Left:
+                            Appliance = editorProvider.Appliance[new Appliance(Appliance.Appliance.Type, Side.Top)];
+                            break;
+                        default:
+                            break;
+                    }
+                }    
             };
 
-            Control.DragDrop += (object sender, DragEventArgs e) =>
+            Control.MouseDown += (sender, e) =>
             {
-                
+                if(e.Button == MouseButtons.Left)
+                {
+                    Control.DoDragDrop(new DragAndDropData<LifeAppliance>(Appliance, null), DragDropEffects.Move);
+                }              
             };
+
+
+
 
             Control.QueryContinueDrag += Control_QueryContinueDrag;
+
+
         }
+
+
 
         private void Control_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
             if(e.Action == DragAction.Continue)
             {
-                StartDrop.Invoke(sender, new DragAndDropData<Appliance>(Appliance, null));
+                StartDrop.Invoke(sender, new DragAndDropData<LifeAppliance>(Appliance, null));
             }
 
             if(e.Action == DragAction.Drop)
