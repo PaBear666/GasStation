@@ -1,6 +1,5 @@
 ﻿using GasStation.GraphicEngine.Common;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,21 +11,22 @@ namespace GasStation.LifeEngine
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;
         readonly EditorProvider _editorProvider;
-        
+
         public ConstructorArea(Panel panel, Side roadSide, EditorProvider editorProvider, int widthLength,int heightLength) : base(panel, widthLength, heightLength)
         {
             _editorProvider = editorProvider;
+            InitSubscribers();
 
             InitArea(SquareSize, widthLength, heightLength, roadSide);
+        }
 
-            SuccessDragDropSquare += SuccessDropSquare;
-            DragOverSquare += OverSquare;
-            DragLeaveSquare += LeaveSquare;
-            MouseLeftDownSquare += LeftDownMouse;
-            MouseRightDownSquare += RightDownMouse;
-            MouseMiddleDownSquare += ConstructorArea_MouseMiddleDownSquare;
-            EndDragDrop += EndDrop;
-            DragEnterSquare += EnterSquare;
+
+        public ConstructorArea(Panel panel, TopologyTransfer<LifeSquare> topology, EditorProvider editorProvider) : base(panel, topology.WidthLength, topology.HeightLength)
+        {
+            _editorProvider = editorProvider;
+            InitSubscribers();
+
+            InitArea(topology);
         }
 
         private void ConstructorArea_MouseMiddleDownSquare(object sender, SquareArgs<LifeSquare> e)
@@ -204,6 +204,16 @@ namespace GasStation.LifeEngine
             }
         }
 
+        private void InitArea(TopologyTransfer<LifeSquare> topology) 
+        {
+            foreach(var square in topology.Squares) 
+            {
+                var currentSquare = GetSquare(square.Id);
+                currentSquare.Surface = _editorProvider.Surfaces[square.Surface.Type];
+                currentSquare.LifeAppliance = _editorProvider.Appliance[square.LifeAppliance.Appliance];
+            }
+        }
+
         private void LeftDownMouse(object sender, SquareArgs<LifeSquare> e)
         {
             if (e.Square.LifeAppliance != null)
@@ -294,6 +304,18 @@ namespace GasStation.LifeEngine
                 default:
                     throw new Exception();
             }
+        }
+
+        private void InitSubscribers()
+        {
+            SuccessDragDropSquare += SuccessDropSquare;
+            DragOverSquare += OverSquare;
+            DragLeaveSquare += LeaveSquare;
+            MouseLeftDownSquare += LeftDownMouse;
+            MouseRightDownSquare += RightDownMouse;
+            MouseMiddleDownSquare += ConstructorArea_MouseMiddleDownSquare;
+            EndDragDrop += EndDrop;
+            DragEnterSquare += EnterSquare;
         }
     }
 }
