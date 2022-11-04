@@ -70,6 +70,7 @@
     <Compile Include="LifeEngine\Life\LifeSquare.cs" />
     <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
     <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
+    <Compile Include="LifeEngine\Life\TransferSquare.cs" />
     <Compile Include="LifeEngine\Side.cs" />
     <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
     <Compile Include="LifeEngine\Surface\Surface.cs" />

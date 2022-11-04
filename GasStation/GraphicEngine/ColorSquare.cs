@@ -58,6 +58,11 @@ namespace GasStation.GraphicEngine
             BaseBackgroundColor = Control.DefaultBackColor;
         }
 
+        public ColorSquare()
+        {
+
+        }
+
         public virtual void ResetDesign()
         {
             _pictureBox.BackColor = BaseBackgroundColor;

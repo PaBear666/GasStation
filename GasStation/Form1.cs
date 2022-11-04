@@ -8,9 +8,10 @@ namespace GasStation
 {
     public partial class Form1 : Form
     {
-        ConstructorArea _constructor;
-        ICollection<AppliancePictureBox> _appliancePicturesBoxes;
-        EditorProvider _editorProvider;
+        private ConstructorArea _constructor;
+        private List<AppliancePictureBox> _appliancePicturesBoxes;
+        private EditorProvider _editorProvider;
+        private string _lastSaved;
 
         public Form1()
         {
@@ -23,7 +24,7 @@ namespace GasStation
         private void SaveTopology(object sender, System.EventArgs e)
         {
             var a = _constructor.GetTransfer("as");
-            var serializer = JsonConvert.SerializeObject(a);
+            _lastSaved = JsonConvert.SerializeObject(a);
         }
 
         private void InitAppliacnePictureBox()
@@ -39,21 +40,59 @@ namespace GasStation
 
         public AppliancePictureBox AddAppliancePictureBox(EditorProvider editorProvider, Appliance appliance, PictureBox pictureBox)
         {
-            var appliancePicture = new AppliancePictureBox(editorProvider, appliance, pictureBox);
-            appliancePicture.EndDragDrop += _constructor.EndDrop;
-            appliancePicture.StartDrop += _constructor.ShowAvailableZone;
-            return appliancePicture;
+            return new AppliancePictureBox(editorProvider, appliance, pictureBox);
+        }
+
+        public void RemoveAppliacneEventcPictureBox()
+        {
+            foreach (var appliancePictureBox in _appliancePicturesBoxes)
+            {
+                appliancePictureBox.EndDragDrop -= _constructor.EndDrop;
+                appliancePictureBox.StartDrop -= _constructor.ShowAvailableZone;
+                appliancePictureBox.Dispose();
+            }
+        }
+
+        public void SetAppliacneEventcPictureBox()
+        {
+            foreach (var appliancePictureBox in _appliancePicturesBoxes)
+            {
+                appliancePictureBox.EndDragDrop += _constructor.EndDrop;
+                appliancePictureBox.StartDrop += _constructor.ShowAvailableZone;
+            }
         }
 
         private void UploadTopology(object sender, System.EventArgs e)
         {
+            if(_lastSaved != null)
+            {
+                
+                if(_constructor != null)
+                {
+                    RemoveAppliacneEventcPictureBox();
+                    _constructor.Dispose();
+                }
 
+                InitAppliacnePictureBox();
+              
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
+                _constructor = new ConstructorArea(panel1, topology, _editorProvider);
+                SetAppliacneEventcPictureBox();
+            }
         }
 
         private void NewConstructor(object sender, System.EventArgs e)
         {
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, 10, 7);
+            if(_constructor != null)
+            {
+                RemoveAppliacneEventcPictureBox();
+                _constructor.Dispose();
+            }
+
             InitAppliacnePictureBox();
+
+            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, 10, 7);
+            SetAppliacneEventcPictureBox();
         }
     }
 }

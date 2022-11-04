@@ -1,16 +1,15 @@
 ﻿using GasStation.GraphicEngine;
+using GasStation.LifeEngine.Life;
 using Newtonsoft.Json;
 using System.Drawing;
 
 namespace GasStation.LifeEngine
 {
-    [JsonObject(MemberSerialization.OptIn)]
     public class LifeSquare : ColorSquare
     {
         LifeAppliance _appliance;
         Surface _surface;
 
-        [JsonProperty]
         public Surface Surface
         {
             get
@@ -27,7 +26,6 @@ namespace GasStation.LifeEngine
             }
         }
 
-        [JsonProperty]
         public LifeAppliance LifeAppliance
         {
             get
@@ -74,6 +72,11 @@ namespace GasStation.LifeEngine
         public void HideAppliance()
         {
             SetFrontImage(null);
+        }
+        
+        public TransferSquare GetTransferSquare()
+        {
+           return new TransferSquare(Id, _surface, _appliance);
         }
 
         public LifeSquare(int id, Point location, Size size, Surface surface)

@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace GasStation.GraphicEngine.Common
 {
-    public abstract class Area <S,D>
+    public abstract class Area <S,D> : IDisposable
         where S : Square
         where D : class
     {
@@ -25,7 +25,7 @@ namespace GasStation.GraphicEngine.Common
         public event EventHandler<SquareArgs<S>> DragLeaveSquare;
         public int WidthLength { get; }
         public int Heightength { get; }
-        private S[] Squares { get; }
+        protected S[] Squares { get; }
         public Size SquareSize { get; }
 
         public Area(Panel panel, int widthLength, int heightLength)
@@ -107,16 +107,6 @@ namespace GasStation.GraphicEngine.Common
             return Squares[index];
         }
 
-        public TopologyTransfer<S> GetTransfer(string topologyName)
-        {
-            return new TopologyTransfer<S>()
-            {
-                Name = topologyName,
-                HeightLength = Heightength,
-                WidthLength = WidthLength,
-                Squares = Squares
-            };
-        }
 
         public S[] GetArroundSquares(Square square)
         {
@@ -148,6 +138,14 @@ namespace GasStation.GraphicEngine.Common
         public void ForSquares(Action<S> action)
         {
             Squares.AsParallel().ForAll(action);
+        }
+
+        public virtual void Dispose()
+        {
+            foreach (var square in Squares)
+            {
+                square.Dispose();
+            }
         }
     }
 }

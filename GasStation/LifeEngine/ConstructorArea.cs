@@ -1,4 +1,5 @@
 ﻿using GasStation.GraphicEngine.Common;
+using GasStation.LifeEngine.Life;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -21,12 +22,12 @@ namespace GasStation.LifeEngine
         }
 
 
-        public ConstructorArea(Panel panel, TopologyTransfer<LifeSquare> topology, EditorProvider editorProvider) : base(panel, topology.WidthLength, topology.HeightLength)
+        public ConstructorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider) : base(panel, topology.WidthLength, topology.HeightLength)
         {
             _editorProvider = editorProvider;
             InitSubscribers();
 
-            InitArea(topology);
+            InitArea(SquareSize, topology);
         }
 
         private void ConstructorArea_MouseMiddleDownSquare(object sender, SquareArgs<LifeSquare> e)
@@ -81,7 +82,19 @@ namespace GasStation.LifeEngine
             });       
         }
 
-        private bool isAvailableSquare(ApplianceType appliance, LifeSquare square)
+
+        public TopologyTransfer GetTransfer(string topologyName)
+        {
+            return new TopologyTransfer()
+            {
+                Name = topologyName,
+                HeightLength = Heightength,
+                WidthLength = WidthLength,
+                Squares = Squares.Select(s => s.GetTransferSquare())
+            };
+        }
+
+        private bool IsAvailableSquare(ApplianceType appliance, LifeSquare square)
         {
             switch (appliance)
             {
@@ -204,13 +217,29 @@ namespace GasStation.LifeEngine
             }
         }
 
-        private void InitArea(TopologyTransfer<LifeSquare> topology) 
+        private void InitArea(Size size, TopologyTransfer topology) 
         {
-            foreach(var square in topology.Squares) 
+            int id = 0;
+            for (int i = 0; i < topology.WidthLength; i++)
+            {
+                for (int j = 0; j < topology.HeightLength; j++)
+                {
+                    var square = new LifeSquare(id, new Point(i * size.Width, j * size.Height), size, _editorProvider.Surfaces[SurfaceType.GasStation]);
+                    AddSquare(id, square);
+                    id++;
+                }
+            }
+
+
+            foreach (var square in topology.Squares) 
             {
                 var currentSquare = GetSquare(square.Id);
                 currentSquare.Surface = _editorProvider.Surfaces[square.Surface.Type];
-                currentSquare.LifeAppliance = _editorProvider.Appliance[square.LifeAppliance.Appliance];
+
+                if(square.LifeAppliance != null)
+                {
+                    currentSquare.LifeAppliance = _editorProvider.Appliance[square.LifeAppliance.Appliance];
+                }             
             }
         }
 
@@ -245,7 +274,7 @@ namespace GasStation.LifeEngine
 
         private void SuccessDropSquare(object sender, SquareDragDropArgs<LifeAppliance, LifeSquare> e)
         {
-            if (isAvailableSquare(e.Data.DragDropComponent.Appliance.Type, e.Square))
+            if (IsAvailableSquare(e.Data.DragDropComponent.Appliance.Type, e.Square))
             {
                 e.Data.FinishDragDrop?.Invoke();
                 e.Square.LifeAppliance = e.Data.DragDropComponent;
@@ -273,7 +302,7 @@ namespace GasStation.LifeEngine
         }
         private void SetAvailableDesignStatus(LifeSquare square)
         {
-            if (isAvailableSquare(_currentApplicane, square))
+            if (IsAvailableSquare(_currentApplicane, square))
             {
                 square.FillColor(Color.Green);
                 square.ShowAppliance();
@@ -305,6 +334,21 @@ namespace GasStation.LifeEngine
                     throw new Exception();
             }
         }
+
+
+        public override void Dispose()
+        {
+            SuccessDragDropSquare -= SuccessDropSquare;
+            DragOverSquare -= OverSquare;
+            DragLeaveSquare -= LeaveSquare;
+            MouseLeftDownSquare -= LeftDownMouse;
+            MouseRightDownSquare -= RightDownMouse;
+            MouseMiddleDownSquare -= ConstructorArea_MouseMiddleDownSquare;
+            EndDragDrop -= EndDrop;
+            DragEnterSquare -= EnterSquare;
+            base.Dispose(); 
+        }
+
 
         private void InitSubscribers()
         {

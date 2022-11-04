@@ -5,13 +5,11 @@ using System.Windows.Forms;
 
 namespace GasStation.GraphicEngine.Common
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class Square
+    public class Square : IDisposable
     {
-        protected readonly PictureBox _pictureBox;
-        protected readonly Label _label;
+        protected PictureBox _pictureBox;
+        protected Label _label;
 
-        [JsonProperty]
         public int Id { get; set; }
 
         public Control Control
@@ -43,10 +41,21 @@ namespace GasStation.GraphicEngine.Common
             #endif
         }
 
+        public Square()
+        {
+
+        }
+
         public Square(PictureBox pictureBox)
         {
             _pictureBox = pictureBox;
             _pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-        }   
+        }
+
+        public virtual void Dispose()
+        {
+            _pictureBox.Dispose();
+            _label.Dispose();
+        }
     }
 }
