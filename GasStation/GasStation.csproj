@@ -141,9 +141,6 @@
     <None Include="Resources\танкер.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\cassandra-brown-brickwork-1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\brick.png" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\arrow_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cassandra-brown-brickwork-1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

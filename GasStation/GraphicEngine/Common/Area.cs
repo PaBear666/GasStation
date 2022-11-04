@@ -15,7 +15,6 @@ namespace GasStation.GraphicEngine.Common
         where D : class
     {
         private readonly Panel _panel;
-        private readonly int _squareLength;
         public event EventHandler<SquareArgs<S>> MouseLeftDownSquare;
         public event EventHandler<SquareArgs<S>> MouseMiddleDownSquare;
         public event EventHandler<SquareArgs<S>> MouseRightDownSquare;
@@ -29,14 +28,13 @@ namespace GasStation.GraphicEngine.Common
         private S[] Squares { get; }
         public Size SquareSize { get; }
 
-        public Area(Panel panel, Size squareSize, int length)
+        public Area(Panel panel, int widthLength, int heightLength)
         {
             _panel = panel;
-            SquareSize = squareSize;
-            WidthLength = length;
-            Heightength = length;
-            _squareLength = length;
-            Squares = new S[length * length];
+            SquareSize = new Size(_panel.Width / widthLength, _panel.Height / heightLength);
+            WidthLength = widthLength;
+            Heightength = heightLength;
+            Squares = new S[widthLength * heightLength];
         }
 
         protected void AddSquare(int index, S square)
@@ -129,7 +127,7 @@ namespace GasStation.GraphicEngine.Common
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    var index = square.Id + i * WidthLength + j;
+                    var index = square.Id + i * Heightength + j;
                     if(index < WidthLength * Heightength 
                         && index >= 0 
                         && index / Heightength - squareIdDes == i)

@@ -13,11 +13,11 @@ namespace GasStation.LifeEngine
         private bool _showedAvailableZone;
         readonly EditorProvider _editorProvider;
         
-        public ConstructorArea(Panel panel, Side roadSide, EditorProvider editorProvider, int size, int length) : base(panel, new Size(size, size), length)
+        public ConstructorArea(Panel panel, Side roadSide, EditorProvider editorProvider, int widthLength,int heightLength) : base(panel, widthLength, heightLength)
         {
             _editorProvider = editorProvider;
 
-            InitArea(size, length, roadSide);
+            InitArea(SquareSize, widthLength, heightLength, roadSide);
 
             SuccessDragDropSquare += SuccessDropSquare;
             DragOverSquare += OverSquare;
@@ -95,7 +95,7 @@ namespace GasStation.LifeEngine
                     return square.Surface.Type == SurfaceType.Service;
 
                 case ApplianceType.Bridge:
-                    return square.Surface.Type == SurfaceType.GasStation 
+                    return (square.Surface.Type == SurfaceType.GasStation || square.Surface.Type == SurfaceType.Service) 
                         && GetArroundSquares(square).Any(s => s?.Surface.Type == SurfaceType.Road);
 
                 default:
@@ -103,19 +103,35 @@ namespace GasStation.LifeEngine
             }
 
         }
-        private void InitArea(int size, int length, Side roadSide)
+        private void InitArea(Size size, int widthLength, int heightLength, Side roadSide)
         {
             int id = 0;
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < widthLength; i++)
             {
-                for (int j = 0; j < length; j++)
+                for (int j = 0; j < heightLength; j++)
                 {
-                    var square = new LifeSquare(id, new Point(i * size, j * size), new Size(size, size), _editorProvider.Surfaces[SurfaceType.GasStation]);
+                    var square = new LifeSquare(id, new Point(i * size.Width, j * size.Height), size, _editorProvider.Surfaces[SurfaceType.GasStation]);
                     AddSquare(id, square);
                     id++;
                 }
             }
 
+            var length = 0;
+            switch (roadSide)
+            {
+                case Side.Top:
+                case Side.Bottom:
+                    length = heightLength;
+                    break;
+
+                case Side.Left:
+                case Side.Right:
+                    length = widthLength;
+                    break;
+
+                default:
+                    break;
+            }
 
             // Строим сервисную часть АЗС
             int serviceGasStationWidth = 4;
@@ -127,12 +143,14 @@ namespace GasStation.LifeEngine
 
                     switch (roadSide)
                     {
-                        case Side.Top | Side.Bottom:
-                            square = GetSquare(length * (length - j) - i - 1);
+                        case Side.Top:
+                        case Side.Bottom:
+                            square = GetSquare(length * (widthLength - j) - i - 1);
                             break;
 
-                        case Side.Left | Side.Right:
-                            square = GetSquare(i * length + j);
+                        case Side.Left:
+                        case Side.Right:
+                            square = GetSquare(i * heightLength + j);
                             break;
 
                         default:
@@ -143,6 +161,22 @@ namespace GasStation.LifeEngine
                 }
             }
 
+            switch (roadSide)
+            {
+                case Side.Top:
+                case Side.Bottom:
+                    length = widthLength;
+                    break;
+
+                case Side.Left:
+                case Side.Right:
+                    length = heightLength;
+                    break;
+
+                default:
+                    break;
+            }
+
             // Строим дороги
             for (int i = 0; i < length; i++)
             {
@@ -150,15 +184,15 @@ namespace GasStation.LifeEngine
                 switch (roadSide)
                 {
                     case Side.Top:
-                        square = GetSquare(i * length);
+                        square = GetSquare(i * heightLength);
                         break;
 
                     case Side.Right:
-                        square = GetSquare(length * length - i - 1);
+                        square = GetSquare(widthLength * length - i - 1);
                         break;
 
                     case Side.Bottom:
-                        square = GetSquare((length - i) * length - 1);
+                        square = GetSquare(heightLength * i + heightLength - 1);
                         break;
 
                     case Side.Left:
@@ -169,6 +203,7 @@ namespace GasStation.LifeEngine
                 square.Surface = _editorProvider.Surfaces[SurfaceType.Road];
             }
         }
+
         private void LeftDownMouse(object sender, SquareArgs<LifeSquare> e)
         {
             if (e.Square.LifeAppliance != null)

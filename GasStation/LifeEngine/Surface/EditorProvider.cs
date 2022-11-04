@@ -13,11 +13,12 @@ namespace GasStation.LifeEngine
             Surfaces = new Dictionary<SurfaceType, Surface>()
                 {
                     { SurfaceType.Road, new Surface(SurfaceType.Road, new ViewComponent(Control.DefaultBackColor, Resource.road))},
-                    { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Control.DefaultBackColor, Resource.gasStation_2))},
+                    { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Control.DefaultBackColor, Resource.gasStation))},
                     { SurfaceType.Service, new Surface(SurfaceType.Service, new ViewComponent(Control.DefaultBackColor, Resource.gasStationService)) }
                 };
 
             Appliance = new Dictionary<Appliance, LifeAppliance>();
+
             AddAppliance(ApplianceType.Shop,
                 new ViewComponent(Control.DefaultBackColor, Resource.shop_top),
                 new ViewComponent(Control.DefaultBackColor, Resource.shop_right),
