@@ -137,9 +137,8 @@ namespace GasStation.GraphicEngine.Common
 
         public void ForSquares(Action<S> action)
         {
-            Squares.AsParallel().ForAll(action);
+            Parallel.ForEach(Squares, action);
         }
-
         public virtual void Dispose()
         {
             foreach (var square in Squares)

@@ -269,7 +269,10 @@ namespace GasStation.LifeEngine
 
         private void EnterSquare(object sender, SquareDragDropArgs<LifeAppliance, LifeSquare> e)
         {
-            e.Square.SetFrontImage(e.Data.DragDropComponent.ViewComponent.Image);
+            if(IsAvailableSquare(e.Data.DragDropComponent.Appliance.Type, e.Square))
+            {
+                e.Square.SetFrontImage(e.Data.DragDropComponent.ViewComponent.Image);
+            }
         }
 
         private void SuccessDropSquare(object sender, SquareDragDropArgs<LifeAppliance, LifeSquare> e)
