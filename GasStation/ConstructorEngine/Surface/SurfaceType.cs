@@ -1,4 +1,4 @@
-﻿namespace GasStation.LifeEngine
+﻿namespace GasStation.ConstructorEngine
 {
     public enum SurfaceType
     {

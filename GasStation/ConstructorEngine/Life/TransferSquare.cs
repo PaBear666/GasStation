@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace GasStation.LifeEngine.Life
+namespace GasStation.ConstructorEngine.Life
 {
     [JsonObject]
     public class TransferSquare

@@ -1,11 +1,11 @@
 ﻿using GasStation.GraphicEngine.Common;
-using GasStation.LifeEngine.Life;
+using GasStation.ConstructorEngine.Life;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     class ConstructorArea : Area<LifeSquare, LifeAppliance>
     {

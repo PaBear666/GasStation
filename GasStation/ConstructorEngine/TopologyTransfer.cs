@@ -1,9 +1,9 @@
 ﻿using GasStation.GraphicEngine.Common;
-using GasStation.LifeEngine.Life;
+using GasStation.ConstructorEngine.Life;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     [JsonObject]
     public class TopologyTransfer

@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     public class AppliancePictureBox : Square, IDisposable
     {
