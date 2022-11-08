@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,8 +55,37 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphicEngine\Common\DragAndDrop\DragAndDropData.cs" />
+    <Compile Include="GraphicEngine\Common\SquareArgs.cs" />
+    <Compile Include="GraphicEngine\Common\DragAndDrop\SquareDragDropArgs.cs" />
+    <Compile Include="GraphicEngine\Common\ViewComponent.cs" />
+    <Compile Include="GraphicEngine\Common\Area.cs" />
+    <Compile Include="GraphicEngine\Common\Square.cs" />
+    <Compile Include="GraphicEngine\ColorSquare.cs" />
+    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
+    <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
+    <Compile Include="LifeEngine\ConstructorArea.cs" />
+    <Compile Include="LifeEngine\Life\LifeComponent.cs" />
+    <Compile Include="LifeEngine\Life\LifeEngine.cs" />
+    <Compile Include="LifeEngine\Life\LifeSquare.cs" />
+    <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
+    <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
+    <Compile Include="LifeEngine\Life\TransferSquare.cs" />
+    <Compile Include="LifeEngine\Side.cs" />
+    <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
+    <Compile Include="LifeEngine\Surface\Surface.cs" />
+    <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
+    <Compile Include="LifeEngine\TopologyTransfer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +94,13 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +113,90 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\137831-top-ferrari-pixel-view-free-transparent-image-hd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\01bfa6926cdfddf55b9605252d6e7efe.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\642a33fac18a5e7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Entry.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\outer.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pixel-art-gas-pump-vector-icon-8bit-game-white-background_360488-529.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pixel-art-shop-store-front-with-awning-vector-build-for-8bit-game-on-white-background_360488-575.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\танкер.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GraphicEngine\Common\Abstract\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gasstation_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shop_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tanker_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_bottom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cassandra-brown-brickwork-1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
