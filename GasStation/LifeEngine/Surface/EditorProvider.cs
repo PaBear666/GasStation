@@ -8,6 +8,7 @@ namespace GasStation.LifeEngine
     {
         public IDictionary<SurfaceType, Surface> Surfaces { get; private set; }
         public IDictionary<Appliance, LifeAppliance> Appliance { get; private set; }
+        public IDictionary<ApplianceType, int> MaxAplianceOnMap { get; private set; }
         public EditorProvider()
         {
             Surfaces = new Dictionary<SurfaceType, Surface>()
@@ -16,6 +17,14 @@ namespace GasStation.LifeEngine
                     { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Control.DefaultBackColor, Resource.gasStation))},
                     { SurfaceType.Service, new Surface(SurfaceType.Service, new ViewComponent(Control.DefaultBackColor, Resource.gasStationService)) }
                 };
+
+            MaxAplianceOnMap = new Dictionary<ApplianceType, int>()
+            {
+                { ApplianceType.Bridge, 4 },
+                { ApplianceType.GasStation, 10 },
+                { ApplianceType.Shop, 1 },
+                { ApplianceType.Tanker, 10 }
+            };
 
             Appliance = new Dictionary<Appliance, LifeAppliance>();
 

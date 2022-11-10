@@ -1,6 +1,7 @@
 ﻿using GasStation.GraphicEngine.Common;
 using GasStation.LifeEngine.Life;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -12,35 +13,109 @@ namespace GasStation.LifeEngine
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;
         readonly EditorProvider _editorProvider;
-
-        public ConstructorArea(Panel panel, Side roadSide, EditorProvider editorProvider, int widthLength,int heightLength) : base(panel, widthLength, heightLength)
+        public  IDictionary<ApplianceType, int> ApplianceCount 
         {
-            _editorProvider = editorProvider;
-            InitSubscribers();
-
-            InitArea(SquareSize, widthLength, heightLength, roadSide);
-        }
-
-
-        public ConstructorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider) : base(panel, topology.WidthLength, topology.HeightLength)
-        {
-            _editorProvider = editorProvider;
-            InitSubscribers();
-
-            InitArea(SquareSize, topology);
-        }
-
-        private void ConstructorArea_MouseMiddleDownSquare(object sender, SquareArgs<LifeSquare> e)
-        {
-            if (e.Square.LifeAppliance != null)
+            get
             {
-                e.Square.LifeAppliance = null;
+                var applianceCount = new Dictionary<ApplianceType, int>()
+                {
+                    { ApplianceType.Bridge, 0 },
+                    { ApplianceType.Shop, 0},
+                    { ApplianceType.GasStation, 0 },
+                    { ApplianceType.Tanker, 0 }
+                };
+
+                ForSquares(s =>
+                {
+                    if (s.LifeAppliance != null)
+                    {
+                        applianceCount[s.LifeAppliance.Appliance.Type] += 1;
+                    }
+                });
+
+                return applianceCount;
             }
         }
 
-        private void RightDownMouse(object sender, SquareArgs<LifeSquare> e)
+        public event EventHandler<IDictionary<ApplianceType, int>> ApplianceUpdate;
+        public ConstructorArea(
+            Panel panel,
+            Side roadSide,
+            EditorProvider editorProvider,
+            EventHandler<IDictionary<ApplianceType, int>> applianceUpdate,
+            int widthLength,
+            int heightLength) 
+            : base(panel,
+                  widthLength,
+                  heightLength)
         {
-            if (e.Square.LifeAppliance != null) 
+            _editorProvider = editorProvider;
+            InitSubscribers();
+            ApplianceUpdate += applianceUpdate;
+            InitArea(SquareSize, widthLength, heightLength, roadSide);
+            ApplianceUpdate?.Invoke(this, ApplianceCount);        
+        }
+
+
+        public ConstructorArea(
+            Panel panel,
+            TopologyTransfer topology,
+            EventHandler<IDictionary<ApplianceType, int>> applianceUpdate,
+            EditorProvider editorProvider) 
+            : base(panel,
+                  topology.WidthLength,
+                  topology.HeightLength)
+        {
+            _editorProvider = editorProvider;
+            ApplianceUpdate += applianceUpdate;
+            InitSubscribers();
+            InitArea(SquareSize, topology);
+            ApplianceUpdate?.Invoke(this, ApplianceCount);
+        }
+
+        public void EndDrop(object sender, EventArgs e)
+        {
+            ShowNormalZone();
+        }
+
+        public void ShowAvailableZone(object sender, DragAndDropData<LifeAppliance> data)
+        {
+            ShowAvailableZone(data.DragDropComponent.Appliance.Type);
+        }
+
+        public void ShowNormalZone()
+        {
+            _showedAvailableZone = false;
+            ForSquares((square) =>
+            {
+                square.ResetDesign();
+            });       
+        }
+
+        public TopologyTransfer GetTransfer(string topologyName)
+        {
+            return new TopologyTransfer()
+            {
+                Name = topologyName,
+                HeightLength = Heightength,
+                WidthLength = WidthLength,
+                Squares = Squares.Select(s => s.GetTransferSquare())
+            };
+        }
+
+        private void DeleteAppliance(object sender, SquareArgs<LifeSquare> e)
+        {
+            if (e.Square.LifeAppliance != null)
+            {
+                var type = e.Square.LifeAppliance.Appliance.Type;
+                e.Square.LifeAppliance = null;
+                ApplianceUpdate?.Invoke(this, ApplianceCount);
+            }
+        }
+
+        private void TurnAppliance(object sender, SquareArgs<LifeSquare> e)
+        {
+            if (e.Square.LifeAppliance != null)
             {
                 switch (e.Square.LifeAppliance.Appliance.Side)
                 {
@@ -61,37 +136,6 @@ namespace GasStation.LifeEngine
                 }
             }
 
-        }
-
-        public void EndDrop(object sender, EventArgs e)
-        {
-            ShowNormalZone();
-        }
-
-        public void ShowAvailableZone(object sender, DragAndDropData<LifeAppliance> data)
-        {
-            ShowAvailableZone(data.DragDropComponent.Appliance.Type);
-        }
-      
-        public void ShowNormalZone()
-        {
-            _showedAvailableZone = false;
-            ForSquares((square) =>
-            {
-                square.ResetDesign();
-            });       
-        }
-
-
-        public TopologyTransfer GetTransfer(string topologyName)
-        {
-            return new TopologyTransfer()
-            {
-                Name = topologyName,
-                HeightLength = Heightength,
-                WidthLength = WidthLength,
-                Squares = Squares.Select(s => s.GetTransferSquare())
-            };
         }
 
         private bool IsAvailableSquare(ApplianceType appliance, LifeSquare square)
@@ -281,13 +325,15 @@ namespace GasStation.LifeEngine
             {
                 e.Data.FinishDragDrop?.Invoke();
                 e.Square.LifeAppliance = e.Data.DragDropComponent;
+                ApplianceUpdate?.Invoke(this, ApplianceCount);
+
             }
             else
             {
                 e.Square.ResetDesign();
             }
-
         }
+
         private void ShowAvailableZone(ApplianceType appliance)
         {
             if (_showedAvailableZone)
@@ -345,10 +391,11 @@ namespace GasStation.LifeEngine
             DragOverSquare -= OverSquare;
             DragLeaveSquare -= LeaveSquare;
             MouseLeftDownSquare -= LeftDownMouse;
-            MouseRightDownSquare -= RightDownMouse;
-            MouseMiddleDownSquare -= ConstructorArea_MouseMiddleDownSquare;
+            MouseRightDownSquare -= TurnAppliance;
+            MouseMiddleDownSquare -= DeleteAppliance;
             EndDragDrop -= EndDrop;
             DragEnterSquare -= EnterSquare;
+            ApplianceUpdate = null;
             base.Dispose(); 
         }
 
@@ -359,8 +406,8 @@ namespace GasStation.LifeEngine
             DragOverSquare += OverSquare;
             DragLeaveSquare += LeaveSquare;
             MouseLeftDownSquare += LeftDownMouse;
-            MouseRightDownSquare += RightDownMouse;
-            MouseMiddleDownSquare += ConstructorArea_MouseMiddleDownSquare;
+            MouseRightDownSquare += TurnAppliance;
+            MouseMiddleDownSquare += DeleteAppliance;
             EndDragDrop += EndDrop;
             DragEnterSquare += EnterSquare;
         }

@@ -8,6 +8,7 @@ namespace GasStation.LifeEngine
     {
         private LifeAppliance _appliance;
         private EditorProvider _editorProvider;
+        public Func<ApplianceType, bool> CanDoDrag { get; set; }
         public LifeAppliance Appliance
         {
             get
@@ -22,16 +23,22 @@ namespace GasStation.LifeEngine
                 _pictureBox.BackColor = value.ViewComponent.Color;
             }
         }
+        public event EventHandler<ApplianceType> EndDragDropApplianceType;
         public event EventHandler<EventArgs> EndDragDrop;
         public event EventHandler<DragAndDropData<LifeAppliance>> StartDrop;
 
-        public AppliancePictureBox(EditorProvider editorProvider, Appliance appliance, PictureBox pictureBox) : base(pictureBox)
+        public AppliancePictureBox(
+            EditorProvider editorProvider,
+            Func<ApplianceType, bool> canDoDrag,
+            Appliance appliance,
+            PictureBox pictureBox) : base(pictureBox)
         {
             _editorProvider = editorProvider;
             Appliance = editorProvider.Appliance[appliance];
             _pictureBox.Image = Appliance.ViewComponent.Image;
             _pictureBox.BackColor = Appliance.ViewComponent.Color;
 
+            CanDoDrag = canDoDrag;
             Control.AllowDrop = true;
             Control.MouseUp += MouseUp;
             Control.MouseDown += MouseDown;
@@ -40,7 +47,7 @@ namespace GasStation.LifeEngine
 
         private void MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left && CanDoDrag(Appliance.Appliance.Type))
             {
                 Control.DoDragDrop(new DragAndDropData<LifeAppliance>(Appliance, null), DragDropEffects.Move);
             }
@@ -87,7 +94,7 @@ namespace GasStation.LifeEngine
 
             if(e.Action == DragAction.Drop)
             {
-                EndDragDrop.Invoke(sender, e);
+                EndDragDrop.Invoke(sender, e);         
             }
         }
     }

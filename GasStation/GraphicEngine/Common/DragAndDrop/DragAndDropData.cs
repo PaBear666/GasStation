@@ -3,7 +3,6 @@
 namespace GasStation.GraphicEngine.Common
 {
     public class DragAndDropData<T>
-        where T : class
     {
         public T DragDropComponent { get; set; }
 

@@ -2,6 +2,7 @@
 using GasStation.LifeEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GasStation
@@ -9,22 +10,23 @@ namespace GasStation
     public partial class Form1 : Form
     {
         private ConstructorArea _constructor;
-        private List<AppliancePictureBox> _appliancePicturesBoxes;
-        private EditorProvider _editorProvider;
+        private ICollection<AppliancePictureBox> _appliancePicturesBoxes;
+        private readonly EditorProvider _editorProvider;
         private string _lastSaved;
 
         public Form1()
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
-
-
-    }
+        }
 
         private void SaveTopology(object sender, System.EventArgs e)
         {
-            var a = _constructor.GetTransfer("as");
-            _lastSaved = JsonConvert.SerializeObject(a);
+            if(_constructor != null)
+            {
+                var a = _constructor.GetTransfer("as");
+                _lastSaved = JsonConvert.SerializeObject(a);
+            }
         }
 
         private void InitAppliacnePictureBox()
@@ -40,7 +42,11 @@ namespace GasStation
 
         public AppliancePictureBox AddAppliancePictureBox(EditorProvider editorProvider, Appliance appliance, PictureBox pictureBox)
         {
-            return new AppliancePictureBox(editorProvider, appliance, pictureBox);
+            return new AppliancePictureBox(
+                editorProvider,
+                (a) => _constructor.ApplianceCount[a] < _editorProvider.MaxAplianceOnMap[a],
+                appliance,
+                pictureBox);
         }
 
         public void RemoveAppliacneEventcPictureBox()
@@ -62,6 +68,14 @@ namespace GasStation
             }
         }
 
+        private void ApplianceUpdate(object sender, IDictionary<ApplianceType, int> e)
+        {
+            label1.Text = (_editorProvider.MaxAplianceOnMap[ApplianceType.Shop] - e[ApplianceType.Shop]).ToString();
+            label2.Text = (_editorProvider.MaxAplianceOnMap[ApplianceType.Tanker] - e[ApplianceType.Tanker]).ToString();
+            label3.Text = (_editorProvider.MaxAplianceOnMap[ApplianceType.GasStation] - e[ApplianceType.GasStation]).ToString();
+            label4.Text = (_editorProvider.MaxAplianceOnMap[ApplianceType.Bridge] - e[ApplianceType.Bridge]).ToString();
+        }
+
         private void UploadTopology(object sender, System.EventArgs e)
         {
             if(_lastSaved != null)
@@ -76,7 +90,7 @@ namespace GasStation
                 InitAppliacnePictureBox();
               
                 var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
-                _constructor = new ConstructorArea(panel1, topology, _editorProvider);
+                _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
             }
         }
@@ -91,7 +105,7 @@ namespace GasStation
 
             InitAppliacnePictureBox();
 
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, 10, 7);
+            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, 10, 7);
             SetAppliacneEventcPictureBox();
         }
     }
