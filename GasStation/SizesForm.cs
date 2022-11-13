@@ -12,23 +12,20 @@ namespace GasStation
 {
     public partial class SizesForm : Form
     {
-        private bool ok;
-        private int width;
-        private int heigth;
+        public bool Ok { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
-        public SizesForm(ref bool Ok, ref int Width, int Heigth)
+        public SizesForm()
         {
             InitializeComponent();
-            ok = Ok;
-            width = Width;
-            heigth = Heigth;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ok = true;
-            width = (int)numericUpDown1.Value;
-            heigth = (int)numericUpDown2.Value;
+            Ok = true;
+            Width = (int)numericUpDown1.Value;
+            Height = (int)numericUpDown2.Value;
             Close();
         }
     }

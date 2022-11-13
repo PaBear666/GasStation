@@ -97,12 +97,9 @@ namespace GasStation
 
         private void NewConstructor(object sender, System.EventArgs e)
         {
-            bool ok = false;
-            int width = 0;
-            int heigth = 0;
-            SizesForm sizesForm = new SizesForm(ref ok, ref width, heigth);
-            sizesForm.Show();
-            if (ok)
+            SizesForm sizesForm = new SizesForm();
+            sizesForm.ShowDialog();
+            if (sizesForm.Ok)
             {
                 if (_constructor != null)
                 {
@@ -112,7 +109,7 @@ namespace GasStation
 
                 InitAppliacnePictureBox();
 
-                _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, width, heigth);
+                _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, sizesForm.Width, sizesForm.Height);
                 SetAppliacneEventcPictureBox();
             }
         }
