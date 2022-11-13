@@ -22,7 +22,7 @@ namespace GasStation
 
         private void SaveTopology(object sender, System.EventArgs e)
         {
-            if(_constructor != null)
+            if (_constructor != null)
             {
                 var a = _constructor.GetTransfer("as");
                 _lastSaved = JsonConvert.SerializeObject(a);
@@ -78,17 +78,17 @@ namespace GasStation
 
         private void UploadTopology(object sender, System.EventArgs e)
         {
-            if(_lastSaved != null)
+            if (_lastSaved != null)
             {
-                
-                if(_constructor != null)
+
+                if (_constructor != null)
                 {
                     RemoveAppliacneEventcPictureBox();
                     _constructor.Dispose();
                 }
 
                 InitAppliacnePictureBox();
-              
+
                 var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
                 _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
@@ -97,16 +97,24 @@ namespace GasStation
 
         private void NewConstructor(object sender, System.EventArgs e)
         {
-            if(_constructor != null)
+            bool ok = false;
+            int width = 0;
+            int heigth = 0;
+            SizesForm sizesForm = new SizesForm(ref ok, ref width, heigth);
+            sizesForm.Show();
+            if (ok)
             {
-                RemoveAppliacneEventcPictureBox();
-                _constructor.Dispose();
+                if (_constructor != null)
+                {
+                    RemoveAppliacneEventcPictureBox();
+                    _constructor.Dispose();
+                }
+
+                InitAppliacnePictureBox();
+
+                _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, width, heigth);
+                SetAppliacneEventcPictureBox();
             }
-
-            InitAppliacnePictureBox();
-
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, 10, 7);
-            SetAppliacneEventcPictureBox();
         }
     }
 }
