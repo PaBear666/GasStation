@@ -87,6 +87,7 @@
     <Compile Include="SimulatorEngine\ApplianceSimulator.cs" />
     <Compile Include="SimulatorEngine\Cars\SimulatorCar.cs" />
     <Compile Include="SimulatorEngine\SimulatorSquare.cs" />
+    <Compile Include="SimulatorEngine\Wave.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

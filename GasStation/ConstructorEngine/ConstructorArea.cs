@@ -109,7 +109,7 @@ namespace GasStation.ConstructorEngine
 
                 case ApplianceType.Bridge:
                     return (square.Surface.Type == SurfaceType.GasStation || square.Surface.Type == SurfaceType.Service) 
-                        && GetArroundSquares(square).Any(s => s?.Surface.Type == SurfaceType.Road);
+                        && SquareHelper.GetArroundSquares(Squares,square, Heightength, WidthLength).Any(s => s?.Surface.Type == SurfaceType.Road);
 
                 default:
                     throw new Exception();
@@ -316,7 +316,7 @@ namespace GasStation.ConstructorEngine
 
         private LifeSquare GetSideSquare(Side side, LifeSquare e)
         {
-            var arround = GetArroundSquares(e);
+            var arround = SquareHelper.GetArroundSquares(Squares,e ,Heightength, WidthLength);
             switch (side)
             {
                 case Side.Top:

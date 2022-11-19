@@ -6,11 +6,21 @@ namespace GasStation.SimulatorEngine
 {
     public class SimulatorSquare : LifeSquare
     {
-        public bool WillBeAvailable { get; set; }
-        public SimulatorCar Car { get; set; }
+        private SimulatorCar _car;
+        public SimulatorCar Car
+        {
+            get
+            {
+                return _car;
+            }
+            set
+            {
+
+            }
+        }
         public SimulatorSquare(int id, Point location, Size size, Surface surface) : base(id, location, size, surface)
         {
-            WillBeAvailable = true;
+
         }
     }
 }
