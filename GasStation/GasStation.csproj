@@ -58,6 +58,7 @@
     <Compile Include="GraphicEngine\Common\DragAndDrop\DragAndDropData.cs" />
     <Compile Include="GraphicEngine\Common\SquareArgs.cs" />
     <Compile Include="GraphicEngine\Common\DragAndDrop\SquareDragDropArgs.cs" />
+    <Compile Include="GraphicEngine\Common\SquareHelper.cs" />
     <Compile Include="GraphicEngine\Common\ViewComponent.cs" />
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
