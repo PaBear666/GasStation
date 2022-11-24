@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace GasStation.ConstructorEngine
 {
-    class ConstructorArea : Area<LifeSquare, LifeAppliance>
+    class ConstructorArea : DragDropArea<LifeSquare, LifeAppliance>
     {
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;

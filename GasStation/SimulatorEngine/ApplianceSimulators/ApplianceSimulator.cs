@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GasStation.SimulatorEngine
+namespace GasStation.SimulatorEngine.ApplianceSimulators
 {
     public abstract class ApplianceSimulator
     {

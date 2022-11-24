@@ -7,51 +7,33 @@ namespace GasStation.SimulatorEngine
 {
     public class Wave
     {
-        public SurfaceType AvailableSurface { get; set; }
-        public int BridgeId { get; set; }
+        private int[] _sideSquareIndexs = new int[] { 1, 3, 5, 7 };
+        public bool TryGetSide(SimulatorSquare[] simulatorSquares, int from, int to, int bridgeId,int height, int width, out Side side)
+        {
+            if(TryGetWay(simulatorSquares, from, bridgeId, height, width, out var result))
+            {
 
-        //public bool TryGetWay(SimulatorSquare[] simulatorSquares, int from, int to, out Side side)
-        //{
-        //    ICollection<SimulatorSquare> bridgeAfterSurface = new List<SimulatorSquare>();
-        //    WaveSqaure[] waveSqaures = new WaveSqaure[simulatorSquares.Length];
+            }
 
-        //    foreach (var item in waveSqaures)
-        //    {
-        //        if (item.SimulatorSquare.Car != null
-        //            || (item.SimulatorSquare.LifeAppliance != null 
-        //                && item.SimulatorSquare.Id != BridgeId)
-        //            || (item.SimulatorSquare.Surface.Type == AvailableSurface
-        //                && item.SimulatorSquare.Surface.Type != SurfaceType.Road))
-        //        {
-        //            item.Weigth = -1;
-        //        }
-        //        else
-        //        {
-        //            item.Weigth = 0;
-        //        }
-        //    }
+            side = Side.Left;
+            return false;
+        }
 
-        //    for (int i = 0; i < waveSqaures.Length; i++)
-        //    {
-
-        //    }
-        //}
-
-        private bool TryGetWayByBridge(SimulatorSquare[] simulatorSquares, int from, int height, int width, out WaveSqaure[] resultSquares)
+        private bool TryGetWay(SimulatorSquare[] simulatorSquares, int from, int to, int height, int width, out WaveSqaure[] resultSquares)
         {
             var waveSquares = FillByAvailable(simulatorSquares, new SurfaceType[] { simulatorSquares[from].Surface.Type });
             waveSquares[from].MainSquare = true;
             Stack<WaveSqaure> squaresForCheckedArround = new Stack<WaveSqaure>();
             squaresForCheckedArround.Push(waveSquares[from]);
-            var sideSquareIndexs = new int[] { 1, 3, 5, 7 };
-            bool isBridgeFounded = false;
+            
+            bool isFoundingAppliance = false;
 
             while(squaresForCheckedArround.Count > 0)
             {
                 var currentSquare = squaresForCheckedArround.Pop();
                 var arroundSquares = SquareHelper.GetArroundSquares(simulatorSquares, currentSquare.SimulatorSquare, height, width);
 
-                foreach (var sideIndex in sideSquareIndexs)
+                foreach (var sideIndex in _sideSquareIndexs)
                 {
                     var sideSquare = arroundSquares[sideIndex];
                     if (sideSquare.Surface.Type == simulatorSquares[from].Surface.Type
@@ -61,14 +43,14 @@ namespace GasStation.SimulatorEngine
                         waveSquares[sideSquare.Id] = new WaveSqaure(sideSquare, currentSquare.Weigth + 1);
                     }
 
-                    if(sideSquare.Id == BridgeId)
+                    if(sideSquare.Id == to)
                     {
-                        isBridgeFounded = true;
+                        isFoundingAppliance = true;
                     }
                 }
             }
             resultSquares = waveSquares;
-            return isBridgeFounded;
+            return isFoundingAppliance;
         }
 
         private WaveSqaure[] FillByAvailable(SimulatorSquare[] simulatorSquares, SurfaceType[] surfaceTypes)
