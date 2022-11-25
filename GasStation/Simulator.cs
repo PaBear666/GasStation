@@ -26,7 +26,7 @@ namespace GasStation
 
             if (!simulatorArea.IsCorrect)
             {
-                richTextBox1.AppendText("Ошибка долбаеб");
+                richTextBox1.AppendText("Ошибка!!!");
                 richTextBox1.AppendText(Environment.NewLine);
                 richTextBox1.AppendText(b);
             }

@@ -92,7 +92,7 @@ namespace GasStation
 
             InitAppliacnePictureBox();
 
-            _constructor = new ConstructorArea(panel1, Side.Left, _editorProvider, 10, 7);
+            _constructor = new ConstructorArea(panel1, Side.Left, _editorProvider, 10, 10);
             SetAppliacneEventcPictureBox();
         }
 

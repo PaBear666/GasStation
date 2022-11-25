@@ -118,9 +118,14 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             topologyIsCorrect = _tankerProvider.IsCorrect(out var tankerErrorMessage) && topologyIsCorrect;
             topologyIsCorrect = _bridgeIsCorrect && topologyIsCorrect;
 
-            stringBuilder.AppendLine(gasStatonErrorMessage);
-            stringBuilder.AppendLine(shopErrorMessage);
-            stringBuilder.AppendLine(tankerErrorMessage);
+            if(gasStatonErrorMessage != string.Empty)
+                stringBuilder.AppendLine(gasStatonErrorMessage);
+
+            if (shopErrorMessage != string.Empty)
+                stringBuilder.AppendLine(shopErrorMessage);
+
+            if (tankerErrorMessage != string.Empty)
+                stringBuilder.AppendLine(tankerErrorMessage);
 
             message = stringBuilder.ToString();
             return topologyIsCorrect;
