@@ -8,13 +8,13 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
     public class ApplianceManager
     {
         private bool _bridgeIsCorrect;
-        ApplianceProvider<GasStationSimulator> _gasStationProvider;
-        ApplianceProvider<ShopSimulator> _shopProvider;
-        ApplianceProvider<TankerSimulator> _tankerProvider;
-        ICollection<LifeSquare> _bridgeCollection;
+        readonly ApplianceProvider<GasStationSimulator> _gasStationProvider;
+        readonly ApplianceProvider<ShopSimulator> _shopProvider;
+        readonly ApplianceProvider<TankerSimulator> _tankerProvider;
+        readonly ICollection<LifeSquare> _bridgeCollection;
 
-        IDictionary<Appliance, int> _bridgeCheckerService;
-        IDictionary<Appliance, int> _bridgeCheckerGasStation;
+        readonly IDictionary<Appliance, int> _bridgeCheckerService;
+        readonly IDictionary<Appliance, int> _bridgeCheckerGasStation;
 
         public ApplianceManager(Side rowSide)
         {
@@ -25,8 +25,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
             _bridgeCheckerService = new Dictionary<Appliance, int>();
             _bridgeCheckerGasStation = new Dictionary<Appliance, int>();
+            _bridgeCollection = new List<LifeSquare>();
 
-            if(rowSide == Side.Top || rowSide == Side.Bottom)
+            if (rowSide == Side.Top || rowSide == Side.Bottom)
             {
                 _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Top), 0);
                 _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Bottom), 0);

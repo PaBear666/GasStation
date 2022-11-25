@@ -14,9 +14,9 @@ namespace GasStation.GraphicEngine.Common
         where S : Square
     {
         private readonly Panel _panel;
-        public event EventHandler<SquareArgs<S>> MouseLeftDownSquare;
-        public event EventHandler<SquareArgs<S>> MouseMiddleDownSquare;
-        public event EventHandler<SquareArgs<S>> MouseRightDownSquare;
+        protected event EventHandler<SquareArgs<S>> MouseLeftDownSquare;
+        protected event EventHandler<SquareArgs<S>> MouseMiddleDownSquare;
+        protected event EventHandler<SquareArgs<S>> MouseRightDownSquare;
         public int WidthLength { get; }
         public int Heightength { get; }
         protected S[] Squares { get; }

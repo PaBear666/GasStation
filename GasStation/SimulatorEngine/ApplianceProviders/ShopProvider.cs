@@ -2,6 +2,7 @@
 using GasStation.SimulatorEngine.ApplianceSimulators;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
         public override bool IsCorrect(out string message)
         {
-            throw new NotImplementedException();
+            var baseCorrect = base.IsCorrect(out string errorusedMessage);
+            message = errorusedMessage;
+            return baseCorrect;
         }
     }
 }

@@ -55,6 +55,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Simulator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Simulator.Designer.cs">
+      <DependentUpon>Simulator.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphicEngine\Common\DragAndDrop\DragAndDropData.cs" />
     <Compile Include="GraphicEngine\Common\SquareArgs.cs" />
     <Compile Include="GraphicEngine\Common\DragAndDrop\SquareDragDropArgs.cs" />
@@ -85,7 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceChecker.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceManager.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\GasStationProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ShopProvider.cs" />
@@ -114,6 +120,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simulator.resx">
+      <DependentUpon>Simulator.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

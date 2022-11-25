@@ -85,7 +85,7 @@ namespace GasStation.ConstructorEngine
         }
 
 
-        public TopologyTransfer GetTransfer(string topologyName)
+        public TopologyTransfer GetTransfer()
         {
             return new TopologyTransfer()
             {

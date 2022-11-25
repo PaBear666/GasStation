@@ -11,7 +11,7 @@ namespace GasStation.SimulatorEngine
     public class SimulatorArea : Area<SimulatorSquare>
     {
         public bool IsCorrect { get; }
-        public string ErrorMessage { get; private set; }
+        public string ErrorMessage { get; }
         readonly ApplianceManager _applianceManager;
         readonly EditorProvider _editorProvider;
         public SimulatorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider) : base(panel, topology.WidthLength, topology.HeightLength)
@@ -58,7 +58,5 @@ namespace GasStation.SimulatorEngine
                 }
             }
         }
-
-
     }
 }

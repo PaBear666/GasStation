@@ -35,6 +35,12 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                 }
             }
 
+            if(Appliances.Count == 0)
+            {
+                stringBulder.AppendLine($"Должене быть хотя бы один объект типа {ApplianceType}");
+                absCorrected = false;
+            }
+
             message = stringBulder.ToString();
             return absCorrected;
         }

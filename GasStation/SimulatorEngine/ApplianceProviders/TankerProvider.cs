@@ -16,7 +16,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
         public override bool IsCorrect(out string message)
         {
-            throw new NotImplementedException();
+            var baseCorrect = base.IsCorrect(out string errorusedMessage);
+            message = errorusedMessage;
+            return baseCorrect;
         }
     }
 }

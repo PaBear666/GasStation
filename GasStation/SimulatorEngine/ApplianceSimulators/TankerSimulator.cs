@@ -15,7 +15,7 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
 
         public override void UseSquare()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

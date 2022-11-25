@@ -1,5 +1,6 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -17,13 +18,11 @@ namespace GasStation
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
-
-
-    }
+        }
 
         private void SaveTopology(object sender, System.EventArgs e)
         {
-            var a = _constructor.GetTransfer("as");
+            var a = _constructor.GetTransfer();
             _lastSaved = JsonConvert.SerializeObject(a);
         }
 
@@ -81,6 +80,8 @@ namespace GasStation
             }
         }
 
+        
+
         private void NewConstructor(object sender, System.EventArgs e)
         {
             if(_constructor != null)
@@ -91,8 +92,18 @@ namespace GasStation
 
             InitAppliacnePictureBox();
 
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, 10, 7);
+            _constructor = new ConstructorArea(panel1, Side.Left, _editorProvider, 10, 7);
             SetAppliacneEventcPictureBox();
+        }
+
+        private void Simulation(object sender, System.EventArgs e)
+        {
+            if (_lastSaved != null)
+            {
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
+                var simulatorWindow = new Simulator(topology);
+                simulatorWindow.ShowDialog();
+            }
         }
     }
 }
