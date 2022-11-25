@@ -11,11 +11,13 @@ namespace GasStation.ConstructorEngine
     {
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;
+        private Side _roadSide;
         readonly EditorProvider _editorProvider;
 
         public ConstructorArea(Panel panel, Side roadSide, EditorProvider editorProvider, int widthLength,int heightLength) : base(panel, widthLength, heightLength)
         {
             _editorProvider = editorProvider;
+            _roadSide = roadSide;
             InitSubscribers();
 
             InitArea(SquareSize, widthLength, heightLength, roadSide);
@@ -87,9 +89,9 @@ namespace GasStation.ConstructorEngine
         {
             return new TopologyTransfer()
             {
-                Name = topologyName,
                 HeightLength = Heightength,
                 WidthLength = WidthLength,
+                RowSide = _roadSide,
                 Squares = Squares.Select(s => s.GetTransferSquare())
             };
         }

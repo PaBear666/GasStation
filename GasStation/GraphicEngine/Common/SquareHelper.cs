@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GasStation.ConstructorEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,6 +46,26 @@ namespace GasStation.GraphicEngine.Common
                 }
             }
             return squares;
+        }
+
+        static public T GetArroundSquare<T>(T[] areaSquares, Square square, int height, int width, Side side)
+            where T : Square
+        {
+           var arroundSqaures = GetArroundSquares(areaSquares, square, height, width);
+
+            switch (side)
+            {
+                case Side.Top:
+                    return arroundSqaures[3];
+                case Side.Right:
+                    return arroundSqaures[7];
+                case Side.Bottom:
+                    return arroundSqaures[5];
+                case Side.Left:
+                    return arroundSqaures[1];
+                default:
+                    return null;
+            }
         }
     }
 }

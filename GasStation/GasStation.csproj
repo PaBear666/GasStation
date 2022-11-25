@@ -85,12 +85,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceChecker.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\GasStationProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ShopProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\TankerProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceSimulators\ApplianceSimulator.cs" />
     <Compile Include="SimulatorEngine\ApplianceSimulators\GasStationSimulator.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\ShopSimulator.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\TankerSimulator.cs" />
     <Compile Include="SimulatorEngine\Cars\SimulatorCar.cs" />
     <Compile Include="SimulatorEngine\SimulatorArea.cs" />
     <Compile Include="SimulatorEngine\SimulatorSquare.cs" />
