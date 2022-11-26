@@ -2,6 +2,7 @@
 using GasStation.SimulatorEngine.ApplianceSimulators;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms.VisualStyles;
 
 namespace GasStation.SimulatorEngine.ApplianceProviders
 {
@@ -103,7 +104,28 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                     }
                     if (_bridges.ContainsKey((bridge, current.LifeAppliance.Appliance.Side))){
                         _bridges[(bridge, current.LifeAppliance.Appliance.Side)] = current;
-                        Bridges.Add(bridge, current);
+                        if(_rowSide == Side.Bottom && current.LifeAppliance.Appliance.Side == Side.Bottom)
+                        {
+                            Bridges.Add(bridge, usedSquare);
+                        }
+                        else if (_rowSide == Side.Top && current.LifeAppliance.Appliance.Side == Side.Top)
+                        {
+                            Bridges.Add(bridge, usedSquare);
+                        }
+                        else if (_rowSide == Side.Right && current.LifeAppliance.Appliance.Side == Side.Right)
+                        {
+                            Bridges.Add(bridge, usedSquare);
+                        }
+                        else if (_rowSide == Side.Left && current.LifeAppliance.Appliance.Side == Side.Left)
+                        {
+                            Bridges.Add(bridge, usedSquare);
+                        }
+                        else
+                        {
+                            Bridges.Add(bridge, current);
+                        }
+
+
                     }
                     else
                     {

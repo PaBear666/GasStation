@@ -30,7 +30,6 @@ namespace GasStation.SimulatorEngine
         {
             int successWay;
             WaveSqaure[] waveSqaures;
-            to = 51;
             if (_simulatorSquares[from].Surface.Type != _simulatorSquares[to].Surface.Type)
             {
                 var bridge = _bridges[new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)];
@@ -177,7 +176,9 @@ namespace GasStation.SimulatorEngine
             {
                 if ((carIsGo || square.Car == null)
                     && surfaceTypes.Any(s => s == square.Surface.Type)
-                    && square.LifeAppliance == null)
+                    && (square.LifeAppliance == null
+                       || (square.LifeAppliance != null 
+                       && square.LifeAppliance.Appliance.Type == ApplianceType.Bridge)))
                 {
                     waveSqaures[square.Id] = new WaveSqaure(square, 0);
                 }

@@ -124,13 +124,13 @@ namespace GasStation.SimulatorEngine
         {
             try
             {
-                
+                _carProvider.SpawnCar(CarType.CommonCar);
                 while (true)
                 {
                     _carProvider.SimulateCar();
                     var random = new Random();
                     if(random.NextDouble() > 0.5)
-                    _carProvider.SpawnCar(CarType.CommonCar);
+                        _carProvider.SpawnCar(CarType.CommonCar);
                     Thread.Sleep(1000 / Acceleration);
                 }
             }
