@@ -11,10 +11,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
         readonly ApplianceProvider<GasStationSimulator> _gasStationProvider;
         readonly ApplianceProvider<ShopSimulator> _shopProvider;
         readonly ApplianceProvider<TankerSimulator> _tankerProvider;
-        readonly ICollection<LifeSquare> _bridgeCollection;
+        readonly Side _rowSide;
 
-        readonly IDictionary<Appliance, int> _bridgeCheckerService;
-        readonly IDictionary<Appliance, int> _bridgeCheckerGasStation;
+        public IDictionary<BridgeWay, LifeSquare> Bridges { get; private set; }
 
         public ApplianceManager(Side rowSide)
         {
@@ -22,28 +21,38 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             _shopProvider = new ShopProvider();
             _tankerProvider = new TankerProvider();
             _bridgeIsCorrect = true;
+            _rowSide = rowSide;
 
-            _bridgeCheckerService = new Dictionary<Appliance, int>();
-            _bridgeCheckerGasStation = new Dictionary<Appliance, int>();
-            _bridgeCollection = new List<LifeSquare>();
+            Bridges = new Dictionary<BridgeWay, LifeSquare>();
 
-            if (rowSide == Side.Top || rowSide == Side.Bottom)
+            switch (rowSide)
             {
-                _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Top), 0);
-                _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Bottom), 0);
+                case Side.Top:
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.Service, Side.Bottom), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Service, SurfaceType.Road, Side.Top), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.GasStation, Side.Bottom), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.GasStation, SurfaceType.Road, Side.Top), null);
+                    break;
+                case Side.Right:
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.Service, Side.Left), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Service, SurfaceType.Road, Side.Right), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.GasStation, Side.Left), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.GasStation, SurfaceType.Road, Side.Right), null);
+                    break;
+                case Side.Bottom:
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.Service, Side.Top), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Service, SurfaceType.Road, Side.Bottom), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.GasStation, Side.Top), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.GasStation, SurfaceType.Road, Side.Bottom), null);
+                    break;
+                case Side.Left:
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.Service, Side.Right), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Service, SurfaceType.Road, Side.Left), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.Road, SurfaceType.GasStation, Side.Right), null);
+                    Bridges.Add(new BridgeWay(SurfaceType.GasStation, SurfaceType.Road, Side.Left), null);
+                    break;
 
-                _bridgeCheckerService.Add(new Appliance(ApplianceType.Bridge, Side.Top), 0);
-                _bridgeCheckerService.Add(new Appliance(ApplianceType.Bridge, Side.Bottom), 0);
             }
-            else
-            {
-                _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Left), 0);
-                _bridgeCheckerGasStation.Add(new Appliance(ApplianceType.Bridge, Side.Right), 0);
-
-                _bridgeCheckerService.Add(new Appliance(ApplianceType.Bridge, Side.Left), 0);
-                _bridgeCheckerService.Add(new Appliance(ApplianceType.Bridge, Side.Right), 0);
-            }
-
         }
 
         public void AddAppliance(LifeSquare lifeSquare, SimulatorSquare usedSquare)
@@ -60,33 +69,38 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                     _tankerProvider.Appliances.Add(new TankerSimulator(lifeSquare, usedSquare));
                     break;
                 case ApplianceType.Bridge:
-                    switch (lifeSquare.Surface.Type)
+                    var bridge = new BridgeWay(lifeSquare.Surface.Type, usedSquare.Surface.Type, lifeSquare.LifeAppliance.Appliance.Side);
+                    if(bridge.To == bridge.From)
                     {
-                        case SurfaceType.Service:
-                            if (_bridgeCheckerService.TryGetValue(lifeSquare.LifeAppliance.Appliance, out int value))
-                            {
-                                _bridgeCheckerService[lifeSquare.LifeAppliance.Appliance] = value + 1;
-                                _bridgeCollection.Add(lifeSquare);
-                            }
-                            else
-                            {
-                                _bridgeIsCorrect = false;
-                            }
-                            break;
-
-                        case SurfaceType.GasStation:
-                            if (_bridgeCheckerGasStation.TryGetValue(lifeSquare.LifeAppliance.Appliance, out int value1))
-                            {
-                                _bridgeCheckerGasStation[lifeSquare.LifeAppliance.Appliance] = value1 + 1;
-                                _bridgeCollection.Add(lifeSquare);
-                            }
-                            else
-                            {
-                                _bridgeIsCorrect = false;
-                            }
-                            break;
+                        switch (_rowSide)
+                        {
+                            case Side.Top:
+                                if(bridge.Side == Side.Bottom)
+                                    bridge.From = SurfaceType.Road;
+                                break;
+                            case Side.Right:
+                                if (bridge.Side == Side.Left)
+                                    bridge.From = SurfaceType.Road;
+                                break;
+                            case Side.Bottom:
+                                if (bridge.Side == Side.Top)
+                                    bridge.From = SurfaceType.Road;
+                                break;
+                            case Side.Left:
+                                if (bridge.Side == Side.Right)
+                                    bridge.From = SurfaceType.Road;
+                                break;
+                        }
+                        
                     }
-                    break;
+                    if (Bridges.ContainsKey(bridge)){
+                        Bridges[bridge] = lifeSquare;
+                    }
+                    else
+                    {
+                        _bridgeIsCorrect = false;
+                    }
+                break;
             }
         }
 
@@ -95,20 +109,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             var stringBuilder = new StringBuilder();
             bool topologyIsCorrect = true;
 
-            foreach (var serviceBridge in _bridgeCheckerService)
+            foreach (var bridge in Bridges)
             {
-                if(serviceBridge.Value != 1)
+                if (bridge.Value == null)
                 {
-                    stringBuilder.AppendLine($"Топология должна иметь один переезд на сервисной часте в сторону {serviceBridge.Key.Side}");
-                    topologyIsCorrect = false;
-                }
-            }
-
-            foreach (var bridge in _bridgeCheckerGasStation)
-            {
-                if (bridge.Value != 1)
-                {
-                    stringBuilder.AppendLine($"Топология должна иметь один переезд на заправочной часте в сторону {bridge.Key.Side}");
+                    stringBuilder.AppendLine($"Топология должна иметь один переезд на {bridge.Key.From} часте в сторону {bridge.Key.To}");
                     topologyIsCorrect = false;
                 }
             }

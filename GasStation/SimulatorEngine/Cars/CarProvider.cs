@@ -18,6 +18,7 @@ namespace GasStation.SimulatorEngine.Cars
         int _width;
         int _height;
         Form _form;
+        Wave _wave;
 
         public SimulatorSquare SpawnSquare
         {
@@ -60,7 +61,8 @@ namespace GasStation.SimulatorEngine.Cars
             SimulatorSquare[] squares,
             int width,
             int height,
-            Form form)
+            Form form,
+            Wave wave)
         {
             SpawnSquare = spawnSquare;
             DisspawnSquare = disspawnSquare;
@@ -70,6 +72,7 @@ namespace GasStation.SimulatorEngine.Cars
             _width = width;
             _height = height;
             _form = form;
+            _wave = wave;
         }
 
         public void SpawnCar(CarType carType)
@@ -83,8 +86,8 @@ namespace GasStation.SimulatorEngine.Cars
             {
                 case CarType.CommonCar:
                     var car = new CommonCar(_carViewProvider.Car[carType], DisspawnSquare, SpawnSquare);
-                    _spawnSquare.Car = car;
                     _сars.Add(car);
+                    _form.BeginInvoke(new Action(() => _spawnSquare.Car = car));
                     break;
                 case CarType.Сollector:
                     break;

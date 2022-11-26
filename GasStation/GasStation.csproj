@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceManager.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceProvider.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\BridgeWay.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\GasStationProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ShopProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\TankerProvider.cs" />

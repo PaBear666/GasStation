@@ -56,9 +56,13 @@ namespace GasStation.SimulatorEngine
             {
                 var currentSquare = GetSquare(square.Id);
                 currentSquare.Surface = _editorProvider.Surfaces[square.Surface.Type];
+            }
 
+            foreach(var square in topology.Squares)
+            {
                 if (square.LifeAppliance != null)
                 {
+                    var currentSquare = GetSquare(square.Id);
                     currentSquare.LifeAppliance = _editorProvider.Appliance[square.LifeAppliance.Appliance];
                     _applianceManager.AddAppliance(currentSquare,
                         SquareHelper.GetArroundSquare(Squares,
@@ -91,7 +95,7 @@ namespace GasStation.SimulatorEngine
                     disspawnSquare = GetSquare(0);
                     break;
             }
-            _carProvider = new CarProvider(spawnSquare, disspawnSquare, Squares, WidthLength, Heightength, _form);
+            _carProvider = new CarProvider(spawnSquare, disspawnSquare, Squares, WidthLength, Heightength, _form, new Wave(Squares, Heightength, WidthLength));
         }
 
         public void Run()
