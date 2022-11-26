@@ -30,7 +30,7 @@ namespace GasStation.SimulatorEngine
             _editorProvider = editorProvider;
             _applianceManager = new ApplianceManager(topology.RowSide);
             _simulation = new Task(Examine);
-            Acceleration = 1;
+            Acceleration = 5;
             _form = form;
 
             InitArea(SquareSize, topology);
@@ -124,13 +124,13 @@ namespace GasStation.SimulatorEngine
         {
             try
             {
-               
+                
                 while (true)
                 {
                     _carProvider.SimulateCar();
                     var random = new Random();
                     if(random.NextDouble() > 0.5)
-                        _carProvider.SpawnCar(CarType.CommonCar);
+                    _carProvider.SpawnCar(CarType.CommonCar);
                     Thread.Sleep(1000 / Acceleration);
                 }
             }

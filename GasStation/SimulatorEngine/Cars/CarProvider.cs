@@ -106,12 +106,13 @@ namespace GasStation.SimulatorEngine.Cars
                 DeleteCar(car);
             }
 
-            var movingCars = _сars.Where(c => c.State == CarState.Stand).ToList();
+            var movingCars = _сars.Where(c => c.State == CarState.Move).ToList();
             foreach (var car in movingCars)
             {
                 if(_wave.TryGetSide(car.CurrentSquare.Id, DisspawnSquare.Id, true, out var side))
                 {
-                    MoveCar(car, side);
+                    if(side.HasValue)
+                        MoveCar(car, side.Value);
                 }             
             }
         }

@@ -27,7 +27,7 @@ namespace GasStation.SimulatorEngine.Cars
             AvailableSurfaceType = surfaceType;
             Appliance = appliance;
             Type = carType;
-            State = CarState.Stand;
+            State = CarState.Move;
             ToSquare = to;
             CurrentSquare = current;
         }

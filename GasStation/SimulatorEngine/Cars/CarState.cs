@@ -9,7 +9,6 @@ namespace GasStation.SimulatorEngine.Cars
     public enum CarState
     {
         Move,
-        Stand,
         UseAppliance
     }
 }

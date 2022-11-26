@@ -71,6 +71,12 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                     _tankerProvider.Appliances.Add(new TankerSimulator(current, usedSquare));
                     break;
                 case ApplianceType.Bridge:
+                    if(usedSquare == null)
+                    {
+                        _bridgeIsCorrect = false;
+                        return;
+                    }
+
                     var bridge = new BridgeWay(current.Surface.Type, usedSquare.Surface.Type);
                     if(bridge.To == bridge.From)
                     {
