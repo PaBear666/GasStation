@@ -1,5 +1,7 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine.Cars;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,18 +12,22 @@ namespace GasStation.SimulatorEngine
         private int[] _sideSquareIndexs = new int[] { 1, 3, 5, 7 };
         public bool TryGetSide(SimulatorSquare[] simulatorSquares, int from, int to, int bridgeId,int height, int width, out Side side)
         {
-            if(TryGetWay(simulatorSquares, from, bridgeId, height, width, out var result))
+            var needDriveThrowBridge = simulatorSquares[from].Surface.Type == simulatorSquares[to].Surface.Type;
+
+            if (needDriveThrowBridge)
             {
 
             }
+            else
+            {
 
-            side = Side.Left;
-            return false;
+            }
+            throw new NotImplementedException();
         }
 
         private bool TryGetWay(SimulatorSquare[] simulatorSquares, int from, int to, int height, int width, out WaveSqaure[] resultSquares)
         {
-            var waveSquares = FillByAvailable(simulatorSquares, new SurfaceType[] { simulatorSquares[from].Surface.Type });
+            var waveSquares = FillByAvailable(simulatorSquares, new SurfaceType[] { simulatorSquares[from].Surface.Type }, false);
             waveSquares[from].MainSquare = true;
             Stack<WaveSqaure> squaresForCheckedArround = new Stack<WaveSqaure>();
             squaresForCheckedArround.Push(waveSquares[from]);
@@ -53,12 +59,13 @@ namespace GasStation.SimulatorEngine
             return isFoundingAppliance;
         }
 
-        private WaveSqaure[] FillByAvailable(SimulatorSquare[] simulatorSquares, SurfaceType[] surfaceTypes)
+        private WaveSqaure[] FillByAvailable(SimulatorSquare[] simulatorSquares, SurfaceType[] surfaceTypes, bool carIsGo)
         {
             WaveSqaure[] waveSqaures = new WaveSqaure[simulatorSquares.Length];
+
             foreach (var square in simulatorSquares)
             {
-                if(square.Car == null 
+                if ((carIsGo || square.Car == null)
                     && surfaceTypes.Any(s => s == square.Surface.Type)
                     && square.LifeAppliance == null)
                 {

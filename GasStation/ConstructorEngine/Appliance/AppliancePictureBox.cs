@@ -18,8 +18,8 @@ namespace GasStation.ConstructorEngine
             set
             {
                 _appliance = value;
-                _pictureBox.Image = value.ViewComponent.Image;
-                _pictureBox.BackColor = value.ViewComponent.Color;
+                PictureBox.Image = value.ViewComponent.Image;
+                PictureBox.BackColor = value.ViewComponent.Color;
             }
         }
         public event EventHandler<EventArgs> EndDragDrop;
@@ -29,8 +29,8 @@ namespace GasStation.ConstructorEngine
         {
             _editorProvider = editorProvider;
             Appliance = editorProvider.Appliance[appliance];
-            _pictureBox.Image = Appliance.ViewComponent.Image;
-            _pictureBox.BackColor = Appliance.ViewComponent.Color;
+            PictureBox.Image = Appliance.ViewComponent.Image;
+            PictureBox.BackColor = Appliance.ViewComponent.Color;
 
             Control.AllowDrop = true;
             Control.MouseUp += MouseUp;

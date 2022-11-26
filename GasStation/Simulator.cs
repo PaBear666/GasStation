@@ -15,21 +15,32 @@ namespace GasStation
     public partial class Simulator : Form
     {
         private EditorProvider _editorProvider;
+        private SimulatorArea area;
         public Simulator(TopologyTransfer topology)
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
-            var simulatorArea = new SimulatorArea(panel1, topology, _editorProvider);
+            area = new SimulatorArea(panel1, topology, _editorProvider, this);
 
-            var a = simulatorArea.IsCorrect;
-            var b = simulatorArea.ErrorMessage;
+            var a = area.IsCorrect;
+            var b = area.ErrorMessage;
 
-            if (!simulatorArea.IsCorrect)
+            if (!area.IsCorrect)
             {
                 richTextBox1.AppendText("Ошибка!!!");
                 richTextBox1.AppendText(Environment.NewLine);
                 richTextBox1.AppendText(b);
             }
+
+        }
+
+        private void Simulate(object sender, EventArgs e)
+        {
+            area.Run();
+        }
+
+        private void CreateCar(object sender, EventArgs e)
+        {
 
         }
     }

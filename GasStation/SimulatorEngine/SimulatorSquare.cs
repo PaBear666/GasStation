@@ -16,7 +16,15 @@ namespace GasStation.SimulatorEngine
             }
             set
             {
-
+                if(value == null)
+                {
+                    base.ResetDesign();
+                }
+                else
+                {
+                    SetFrontImage(value.Image);
+                }
+                _car = value;
             }
         }
         public SimulatorSquare(int id, Point location, Size size, Surface surface) : base(id, location, size, surface)

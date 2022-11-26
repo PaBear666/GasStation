@@ -21,7 +21,7 @@ namespace GasStation.GraphicEngine
             set
             {
                 _baseBackgroundColor = value;
-                _pictureBox.BackColor = value;
+                PictureBox.BackColor = value;
             }
         }
 
@@ -34,8 +34,9 @@ namespace GasStation.GraphicEngine
 
             set
             {
-                _baseBackgroundImage = value;
-                _pictureBox.BackgroundImage = value;
+                var clone = (Image)value.Clone();
+                _baseBackgroundImage = clone;
+                PictureBox.BackgroundImage = clone;
             }
         }
 
@@ -48,8 +49,9 @@ namespace GasStation.GraphicEngine
 
             set
             {
-                _baseFontImage = value;
-                _pictureBox.Image = value;
+                var clone = (Image)value.Clone();
+                _baseFontImage = clone;
+                PictureBox.Image = clone;
             }
         }
 
@@ -65,24 +67,24 @@ namespace GasStation.GraphicEngine
 
         public virtual void ResetDesign()
         {
-            _pictureBox.BackColor = BaseBackgroundColor;
-            _pictureBox.Image = BaseFrontImage;
-            _pictureBox.BackgroundImage = BaseBackgroundImage;
+            PictureBox.BackColor = BaseBackgroundColor;
+            PictureBox.Image = BaseFrontImage;
+            PictureBox.BackgroundImage = BaseBackgroundImage;
         }
 
         public void SetBackgroundColor(Color color)
         {
-            _pictureBox.BackColor = color;
+            PictureBox.BackColor = color;
         }
 
         public void SetBackgroundImage(Image image)
         {
-            _pictureBox.BackgroundImage = image;
+            PictureBox.BackgroundImage = (Image)image.Clone();
         }
 
         public void SetFrontImage(Image image)
         {
-            _pictureBox.Image = image;
+            PictureBox.Image = (Image)image.Clone();
         }
     }
 }

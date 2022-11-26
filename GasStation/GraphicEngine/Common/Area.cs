@@ -69,7 +69,7 @@ namespace GasStation.GraphicEngine.Common
 
         public void ForSquares(Action<S> action)
         {
-            Squares.AsParallel().ForAll(action);
+            Task.Run(() => Squares.AsParallel().ForAll(action));
         }
 
         public virtual void Dispose()

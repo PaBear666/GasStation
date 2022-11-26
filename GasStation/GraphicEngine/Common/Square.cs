@@ -7,15 +7,35 @@ namespace GasStation.GraphicEngine.Common
 {
     public class Square : IDisposable
     {
-        protected PictureBox _pictureBox;
+        private PictureBox _pictureBox;
         protected Label _label;
+        private object lockObject = new object();
+        private object pictLockObject = new object();
 
         public int Id { get; set; }
 
         public Control Control
         {
-            get => _pictureBox;
+            get
+            {
+                lock (lockObject)
+                {
+                    return _pictureBox;
+                }
+            }
         }
+
+        protected PictureBox PictureBox
+        {
+            get
+            {
+                lock (pictLockObject)
+                {
+                    return _pictureBox;
+                }
+            }
+        }
+
 
         public Square(int id, Point location, Size size)
         {

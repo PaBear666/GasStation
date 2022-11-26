@@ -100,7 +100,13 @@
     <Compile Include="SimulatorEngine\ApplianceSimulators\GasStationSimulator.cs" />
     <Compile Include="SimulatorEngine\ApplianceSimulators\ShopSimulator.cs" />
     <Compile Include="SimulatorEngine\ApplianceSimulators\TankerSimulator.cs" />
-    <Compile Include="SimulatorEngine\CarProvider.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarProvider.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarState.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarType.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarViewProvider.cs" />
+    <Compile Include="SimulatorEngine\Cars\CollectorCar.cs" />
+    <Compile Include="SimulatorEngine\Cars\CommonCar.cs" />
+    <Compile Include="SimulatorEngine\Cars\GaslineTankerCar.cs" />
     <Compile Include="SimulatorEngine\Cars\SimulatorCar.cs" />
     <Compile Include="SimulatorEngine\SimulatorArea.cs" />
     <Compile Include="SimulatorEngine\SimulatorSquare.cs" />
