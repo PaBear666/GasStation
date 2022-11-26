@@ -10,13 +10,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
     public struct BridgeWay
     {
         public SurfaceType To { get; set; }
-        public Side Side { get; set; }
         public SurfaceType From { get; set; }
 
-        public BridgeWay(SurfaceType from, SurfaceType to, Side side)
+        public BridgeWay(SurfaceType from, SurfaceType to)
         {
             To = to;
-            Side = side;
             From = from;
         }
     }

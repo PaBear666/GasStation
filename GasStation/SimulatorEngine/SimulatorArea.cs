@@ -95,7 +95,16 @@ namespace GasStation.SimulatorEngine
                     disspawnSquare = GetSquare(0);
                     break;
             }
-            _carProvider = new CarProvider(spawnSquare, disspawnSquare, Squares, WidthLength, Heightength, _form, new Wave(Squares, Heightength, WidthLength));
+            _carProvider = new CarProvider(spawnSquare,
+                disspawnSquare,
+                Squares,
+                WidthLength,
+                Heightength,
+                _form,
+                new Wave(Squares,
+                    _applianceManager.Bridges,
+                    Heightength,
+                    WidthLength));
         }
 
         public void Run()
@@ -115,11 +124,12 @@ namespace GasStation.SimulatorEngine
         {
             try
             {
+               
                 while (true)
                 {
                     _carProvider.SimulateCar();
                     var random = new Random();
-                    if (random.NextDouble() > 0.5)
+                    if(random.NextDouble() > 0.5)
                         _carProvider.SpawnCar(CarType.CommonCar);
                     Thread.Sleep(1000 / Acceleration);
                 }

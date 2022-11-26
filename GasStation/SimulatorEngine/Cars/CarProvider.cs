@@ -109,7 +109,10 @@ namespace GasStation.SimulatorEngine.Cars
             var movingCars = _сars.Where(c => c.State == CarState.Stand).ToList();
             foreach (var car in movingCars)
             {
-                MoveCar(car, Side.Left);
+                if(_wave.TryGetSide(car.CurrentSquare.Id, DisspawnSquare.Id, true, out var side))
+                {
+                    MoveCar(car, side);
+                }             
             }
         }
 
