@@ -57,5 +57,6 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
             return false;
         }
+
     }
 }

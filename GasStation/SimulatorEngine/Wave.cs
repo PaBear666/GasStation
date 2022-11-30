@@ -26,22 +26,22 @@ namespace GasStation.SimulatorEngine
             _bridges = Bridges;
         }
 
-        public bool TryGetSide(int from, int to, bool carIsGo, out Side? side)
+        public bool TryGetSide(SurfaceType availableSurface, int from, int to, out Side? side)
         {
             int successWay;
             WaveSqaure[] waveSqaures;
             if (_simulatorSquares[from].Surface.Type != _simulatorSquares[to].Surface.Type)
             {
                 var bridge = _bridges[new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)];
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, carIsGo);
-                successWay = TryGetWay(availableMap, from, bridge.Id, carIsGo, out waveSqaures, bridge.Id);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, true);
+                successWay = TryGetWay(availableMap, from, bridge.Id, true, out waveSqaures, bridge.Id);
                 to = bridge.Id;
 
             }
             else
             {
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, carIsGo);
-                successWay = TryGetWay(availableMap, from, to, carIsGo, out waveSqaures);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type, availableSurface }, true);
+                successWay = TryGetWay(availableMap, from, to, true, out waveSqaures);
 
             }
          

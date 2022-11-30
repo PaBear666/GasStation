@@ -17,7 +17,6 @@ namespace GasStation.SimulatorEngine.Cars
         SimulatorSquare[] _squares;
         int _width;
         int _height;
-        Form _form;
         Wave _wave;
 
         public SimulatorSquare SpawnSquare
@@ -53,7 +52,7 @@ namespace GasStation.SimulatorEngine.Cars
             }
         }
 
-        public ICollection<SimulatorCar> _сars;
+        public ICollection<SimulatorCar> _cars;
 
         public CarProvider(
             SimulatorSquare spawnSquare,
@@ -61,21 +60,19 @@ namespace GasStation.SimulatorEngine.Cars
             SimulatorSquare[] squares,
             int width,
             int height,
-            Form form,
             Wave wave)
         {
             SpawnSquare = spawnSquare;
             DisspawnSquare = disspawnSquare;
             _carViewProvider = new CarViewProvider();
-            _сars = new List<SimulatorCar>();
+            _cars = new List<SimulatorCar>();
             _squares = squares;
             _width = width;
             _height = height;
-            _form = form;
             _wave = wave;
         }
 
-        public void SpawnCar(CarType carType)
+        public void SpawnCar(CarType carType,SimulatorSquare simulatorSquare, CarState state)
         {
             if(_spawnSquare.Car != null)
             {
@@ -85,9 +82,12 @@ namespace GasStation.SimulatorEngine.Cars
             switch (carType)
             {
                 case CarType.CommonCar:
-                    var car = new CommonCar(_carViewProvider.Car[carType], DisspawnSquare, SpawnSquare);
-                    _сars.Add(car);
-                    _form.BeginInvoke(new Action(() => _spawnSquare.Car = car));
+                    var car = new CommonCar(_carViewProvider.Car[carType], simulatorSquare, SpawnSquare)
+                    {
+                        State = state
+                    };
+                    _cars.Add(car);
+                    _spawnSquare.Car = car;
                     break;
                 case CarType.Сollector:
                     break;
@@ -100,32 +100,30 @@ namespace GasStation.SimulatorEngine.Cars
 
         public void SimulateCar()
         {
-            var disspawnCars = _сars.Where(c => c.CurrentSquare.Id == DisspawnSquare.Id).ToList();
+            var disspawnCars = _cars.Where(c => c.CurrentSquare.Id == DisspawnSquare.Id && c.State == CarState.ToEnd).ToList();
             foreach (var car in disspawnCars)
             {
                 DeleteCar(car);
             }
 
-            var movingCars = _сars.Where(c => c.State == CarState.Move).ToList();
-            foreach (var car in movingCars)
+            foreach (var car in _cars)
             {
-                if(_wave.TryGetSide(car.CurrentSquare.Id, DisspawnSquare.Id, true, out var side))
+                if(_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side))
                 {
-                    if(side.HasValue)
+                    if (side.HasValue)
+                    {
                         MoveCar(car, side.Value);
+                    }                      
                 }             
             }
         }
 
         private void DeleteCar(SimulatorCar simulatorCar)
         {
-            _form.BeginInvoke(new Action(() =>
-            {
-                var currentSquare = simulatorCar.CurrentSquare;
-                currentSquare.Car = null;
-            }));
+            var currentSquare = simulatorCar.CurrentSquare;
+            currentSquare.Car = null;
 
-            _сars.Remove(simulatorCar);
+            _cars.Remove(simulatorCar);
         }
 
         private void MoveCar(SimulatorCar simulatorCar,Side side)
@@ -135,12 +133,9 @@ namespace GasStation.SimulatorEngine.Cars
 
             if(sideSquare != null && sideSquare.Car == null)
             {
-                _form.BeginInvoke(new Action(() =>
-                {
-                    sideSquare.Car = simulatorCar;
-                    simulatorCar.CurrentSquare = sideSquare;
-                    currentSquare.Car = null;
-                }));
+                sideSquare.Car = simulatorCar;
+                simulatorCar.CurrentSquare = sideSquare;
+                currentSquare.Car = null;
             }  
         }
     }

@@ -11,6 +11,13 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
     {
         public LifeSquare ApplianceSquare { get; set; }
         public SimulatorSquare UsedSquare { get; set; }
+        public bool IsFree
+        {
+            get
+            {
+                return UsedSquare.Car == null || UsedSquare.Car.State == Cars.CarState.UseAppliance;
+            }
+        }
         public ApplianceSimulator(LifeSquare applianceSquare, SimulatorSquare usedSquare)
         {
             ApplianceSquare = applianceSquare;

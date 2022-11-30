@@ -9,9 +9,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
     public class ApplianceManager
     {
         private bool _bridgeIsCorrect;
-        readonly ApplianceProvider<GasStationSimulator> _gasStationProvider;
-        readonly ApplianceProvider<ShopSimulator> _shopProvider;
-        readonly ApplianceProvider<TankerSimulator> _tankerProvider;
+        public ApplianceProvider<GasStationSimulator> GasStationProvider { get; private set; }
+        public ApplianceProvider<ShopSimulator> ShopProvider { get; private set; }
+        public ApplianceProvider<TankerSimulator> TankerProvider { get; private set; }
         readonly Side _rowSide;
 
         public IDictionary<BridgeWay, SimulatorSquare> Bridges { get; private set; }
@@ -19,9 +19,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
         public ApplianceManager(Side rowSide)
         {
-            _gasStationProvider = new GasStationProvider();
-            _shopProvider = new ShopProvider();
-            _tankerProvider = new TankerProvider();
+            GasStationProvider = new GasStationProvider();
+            ShopProvider = new ShopProvider();
+            TankerProvider = new TankerProvider();
             _bridgeIsCorrect = true;
             _rowSide = rowSide;
 
@@ -63,13 +63,13 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             switch (current.LifeAppliance.Appliance.Type)
             {
                 case ApplianceType.Shop:
-                    _shopProvider.Appliances.Add(new ShopSimulator(current, usedSquare));
+                    ShopProvider.Appliances.Add(new ShopSimulator(current, usedSquare));
                     break;
                 case ApplianceType.GasStation:
-                    _gasStationProvider.Appliances.Add(new GasStationSimulator(current, usedSquare));
+                    GasStationProvider.Appliances.Add(new GasStationSimulator(current, usedSquare));
                     break;
                 case ApplianceType.Tanker:
-                    _tankerProvider.Appliances.Add(new TankerSimulator(current, usedSquare));
+                    TankerProvider.Appliances.Add(new TankerSimulator(current, usedSquare));
                     break;
                 case ApplianceType.Bridge:
                     if(usedSquare == null)
@@ -102,7 +102,7 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                         }
                         
                     }
-                    if (_bridges.ContainsKey((bridge, current.LifeAppliance.Appliance.Side))){
+                    if (_bridges.ContainsKey((bridge, current.LifeAppliance.Appliance.Side)) && !Bridges.ContainsKey(bridge)){
                         _bridges[(bridge, current.LifeAppliance.Appliance.Side)] = current;
                         if(_rowSide == Side.Bottom && current.LifeAppliance.Appliance.Side == Side.Bottom)
                         {
@@ -149,9 +149,9 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                 }
             }
 
-            topologyIsCorrect = _gasStationProvider.IsCorrect(out var gasStatonErrorMessage) && topologyIsCorrect;
-            topologyIsCorrect = _shopProvider.IsCorrect(out var shopErrorMessage) && topologyIsCorrect;
-            topologyIsCorrect = _tankerProvider.IsCorrect(out var tankerErrorMessage) && topologyIsCorrect;
+            topologyIsCorrect = GasStationProvider.IsCorrect(out var gasStatonErrorMessage) && topologyIsCorrect;
+            topologyIsCorrect = ShopProvider.IsCorrect(out var shopErrorMessage) && topologyIsCorrect;
+            topologyIsCorrect = TankerProvider.IsCorrect(out var tankerErrorMessage) && topologyIsCorrect;
             topologyIsCorrect = _bridgeIsCorrect && topologyIsCorrect;
 
             if(gasStatonErrorMessage != string.Empty)
@@ -165,6 +165,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
 
             message = stringBuilder.ToString();
             return topologyIsCorrect;
+        }
+
+        public void Simulate()
+        {
+      
         }
     }
 }

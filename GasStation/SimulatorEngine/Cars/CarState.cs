@@ -8,7 +8,8 @@ namespace GasStation.SimulatorEngine.Cars
 {
     public enum CarState
     {
-        Move,
-        UseAppliance
+        ToAppliance,
+        UseAppliance,
+        ToEnd
     }
 }
