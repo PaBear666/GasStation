@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,11 +36,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +61,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB\Controller\FuelController.cs" />
+    <Compile Include="DB\Controller\UserController.cs" />
+    <Compile Include="DB\DataBaseContext.cs" />
+    <Compile Include="DB\MD5.cs" />
+    <Compile Include="DB\Models\Fuel.cs" />
+    <Compile Include="DB\Models\Transport.cs" />
+    <Compile Include="DB\Models\User.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +95,29 @@
     <Compile Include="LifeEngine\Surface\Surface.cs" />
     <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
     <Compile Include="LifeEngine\TopologyTransfer.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211271742485_AddGasStationMigration1.cs" />
+    <Compile Include="Migrations\202211271742485_AddGasStationMigration1.designer.cs">
+      <DependentUpon>202211271742485_AddGasStationMigration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211271820031_AddGasStationMigration.cs" />
+    <Compile Include="Migrations\202211271820031_AddGasStationMigration.designer.cs">
+      <DependentUpon>202211271820031_AddGasStationMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211271831152_AddGasStationMigration2.cs" />
+    <Compile Include="Migrations\202211271831152_AddGasStationMigration2.designer.cs">
+      <DependentUpon>202211271831152_AddGasStationMigration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211271836363_AddGasStationMigration3.cs" />
+    <Compile Include="Migrations\202211271836363_AddGasStationMigration3.designer.cs">
+      <DependentUpon>202211271836363_AddGasStationMigration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
@@ -83,8 +125,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="DB\Models\Topology.cs" />
+    <Compile Include="UserControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControl.Designer.cs">
+      <DependentUpon>UserControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211271742485_AddGasStationMigration1.resx">
+      <DependentUpon>202211271742485_AddGasStationMigration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211271820031_AddGasStationMigration.resx">
+      <DependentUpon>202211271820031_AddGasStationMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211271831152_AddGasStationMigration2.resx">
+      <DependentUpon>202211271831152_AddGasStationMigration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211271836363_AddGasStationMigration3.resx">
+      <DependentUpon>202211271836363_AddGasStationMigration3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +163,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControl.resx">
+      <DependentUpon>UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -199,4 +266,12 @@
     <None Include="Resources\cassandra-brown-brickwork-1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>
