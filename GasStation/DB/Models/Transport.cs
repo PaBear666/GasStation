@@ -10,6 +10,7 @@ namespace GasStation.DB
 {
     public class Transport
     {
+        
         public int ID { get; set; }
         [Required]
        
@@ -17,11 +18,11 @@ namespace GasStation.DB
         [Required]
         [Index(IsUnique = true)]
         public string Name { get; set; }
-        [Required]
-      
-        public int FuelID { get; set; }
-        [ForeignKey("FuelID")]
-        public Fuel Fuel { get; set; }
+
+
+
+        public int? FuelId { get; set; }
+        public virtual Fuel Fuel { get; set; }
 
 
     }

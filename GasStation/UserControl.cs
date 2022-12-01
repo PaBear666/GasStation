@@ -163,12 +163,18 @@ namespace GasStation
 
         private void dataGridView1_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
-            if (canDelete)
-            {
-                UserController.Remove(users[e.RowIndex]);
-                FillDataGride();
+            try { 
+                if (canDelete)
+                {
+                    UserController.Remove(users[e.RowIndex]);
+                    FillDataGride();
+                }
             }
-        }
+            catch (Exception ex)
+            {
+                    dataGridView1.Rows.Add( 1);
+            }
+}
 
         private void AddUser()
         {
@@ -209,5 +215,10 @@ namespace GasStation
                 MessageBox.Show("Не все поля заполнены для создания пользователя");
             }
         }
+
+
+        
+
+      
     }
 }
