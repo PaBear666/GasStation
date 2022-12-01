@@ -1,4 +1,5 @@
-﻿using GasStation.GraphicEngine.Common;
+﻿using GasStation.DB.Controller;
+using GasStation.GraphicEngine.Common;
 using GasStation.LifeEngine;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace GasStation
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
+            Form1ViewTapologyDb.ViewTopologys(listBox1);
         }
 
         private void SaveTopology(object sender, System.EventArgs e)
@@ -26,7 +28,10 @@ namespace GasStation
             {
                 var a = _constructor.GetTransfer("as");
                 _lastSaved = JsonConvert.SerializeObject(a);
+                
+                TopologyController.createTopology("ss", _lastSaved);
             }
+            
         }
 
         private void InitAppliacnePictureBox()
@@ -78,7 +83,7 @@ namespace GasStation
 
         private void UploadTopology(object sender, System.EventArgs e)
         {
-            if(_lastSaved != null)
+            if(listBox1.SelectedIndex!=-1)
             {
                 
                 if(_constructor != null)
@@ -89,7 +94,7 @@ namespace GasStation
 
                 InitAppliacnePictureBox();
               
-                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(Form1ViewTapologyDb.LoadTopology(listBox1.SelectedIndex));
                 _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
             }

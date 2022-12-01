@@ -42,6 +42,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -50,6 +53,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,6 +74,7 @@
       <DependentUpon>AdminPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="DB\Controller\FuelController.cs" />
+    <Compile Include="DB\Controller\TopologyController.cs" />
     <Compile Include="DB\Controller\TransportController.cs" />
     <Compile Include="DB\Controller\UserController.cs" />
     <Compile Include="DB\DataBaseContext.cs" />
@@ -81,6 +88,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form1ViewTapologyDb.cs" />
     <Compile Include="FuelControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +122,7 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MathLogic\RandomDistribution.cs" />
     <Compile Include="Migrations\202211271742485_AddGasStationMigration1.cs" />
     <Compile Include="Migrations\202211271742485_AddGasStationMigration1.designer.cs">
       <DependentUpon>202211271742485_AddGasStationMigration1.cs</DependentUpon>
@@ -147,6 +156,12 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="DB\Models\Topology.cs" />
+    <Compile Include="TopologyCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TopologyCreationForm.Designer.cs">
+      <DependentUpon>TopologyCreationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TransportControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +217,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TopologyCreationForm.resx">
+      <DependentUpon>TopologyCreationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TransportControlForm.resx">
       <DependentUpon>TransportControlForm.cs</DependentUpon>
