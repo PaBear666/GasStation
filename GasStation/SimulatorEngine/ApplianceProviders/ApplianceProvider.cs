@@ -1,13 +1,15 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.SimulatorEngine.ApplianceSimulators;
+using GasStation.SimulatorEngine.Cars;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace GasStation.SimulatorEngine.ApplianceProviders
 {
-    abstract public class ApplianceProvider<A>
-        where A : ApplianceSimulator
+    abstract public class ApplianceProvider<A,C>
+        where A : ApplianceSimulator<C>
+        where C : SimulatorCar
     {
         public ApplianceType ApplianceType { get; }
 
@@ -45,17 +47,12 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             return absCorrected;
         }
 
-        public virtual bool TryUseAppliance(int usedSquareByApplianceId)
+        public void UseAppliances()
         {
-            var usedSquare = Appliances.FirstOrDefault(a => a.UsedSquare.Id == usedSquareByApplianceId);
-
-            if(usedSquare != null)
+            foreach (var appliance in Appliances)
             {
-                usedSquare.UseSquare();
-                return true;
+                appliance.UseSquare();
             }
-
-            return false;
         }
 
     }

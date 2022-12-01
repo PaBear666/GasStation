@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,6 +19,7 @@ namespace GasStation.SimulatorEngine
         readonly EditorProvider _editorProvider;
         CarProvider _carProvider;
         readonly Task _simulation;
+        readonly CarViewProvider _carViewProvider;
         Form _form;
 
         public int Acceleration { get; set; }
@@ -30,14 +32,13 @@ namespace GasStation.SimulatorEngine
             _editorProvider = editorProvider;
             _applianceManager = new ApplianceManager(topology.RowSide);
             _simulation = new Task(Examine);
+            _carViewProvider = new CarViewProvider();
             Acceleration = 5;
             _form = form;
 
             InitArea(SquareSize, topology);
             IsCorrect = _applianceManager.IsCorrect(out var errorMessage);
             ErrorMessage = errorMessage;
-           
-
         }
         private void InitArea(Size size, TopologyTransfer topology)
         {
@@ -123,12 +124,22 @@ namespace GasStation.SimulatorEngine
         {
             try
             {
-                while (true)
+                while (!_form.IsDisposed)
                 {
+
                     _carProvider.SimulateCar();
                     var random = new Random();
-                    if(random.NextDouble() > 0.5)
-                        _carProvider.SpawnCar(CarType.CommonCar, Squares[41], CarState.ToEnd);
+                    if (random.NextDouble() > 0.1)
+                    {
+                        var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
+                        var car = new CommonCar(_carViewProvider.Car[CarType.CommonCar], null, _carProvider.SpawnSquare);
+
+                        if(_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
+                        {
+                            car.ToSquare = availableAppliance.UsedSquare;
+                            availableAppliance.Cars.Enqueue(car);
+                        }
+                    }
                     _applianceManager.Simulate();
                     Thread.Sleep(1000 / Acceleration);
                 }

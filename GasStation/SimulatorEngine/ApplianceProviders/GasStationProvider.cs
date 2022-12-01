@@ -1,9 +1,10 @@
 ﻿using GasStation.SimulatorEngine.ApplianceSimulators;
 using GasStation.ConstructorEngine;
+using GasStation.SimulatorEngine.Cars;
 
 namespace GasStation.SimulatorEngine.ApplianceProviders
 {
-    public class GasStationProvider : ApplianceProvider<GasStationSimulator>
+    public class GasStationProvider : ApplianceProvider<GasStationSimulator, CommonCar>
     {
         
         public GasStationProvider() : base(ApplianceType.GasStation)

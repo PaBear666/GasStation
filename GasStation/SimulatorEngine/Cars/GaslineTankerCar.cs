@@ -19,5 +19,7 @@ namespace GasStation.SimulatorEngine.Cars
                 viewComponent)
         {
         }
+
+        public override CarState State => throw new NotImplementedException();
     }
 }

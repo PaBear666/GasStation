@@ -1,6 +1,8 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.SimulatorEngine.ApplianceSimulators;
+using GasStation.SimulatorEngine.Cars;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms.VisualStyles;
 
@@ -9,10 +11,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
     public class ApplianceManager
     {
         private bool _bridgeIsCorrect;
-        public ApplianceProvider<GasStationSimulator> GasStationProvider { get; private set; }
-        public ApplianceProvider<ShopSimulator> ShopProvider { get; private set; }
-        public ApplianceProvider<TankerSimulator> TankerProvider { get; private set; }
+        public ApplianceProvider<GasStationSimulator, CommonCar> GasStationProvider { get; private set; }
+        public ApplianceProvider<ShopSimulator, CollectorCar> ShopProvider { get; private set; }
+        public ApplianceProvider<TankerSimulator, GaslineTankerCar> TankerProvider { get; private set; }
         readonly Side _rowSide;
+        private bool _isCorrect;
 
         public IDictionary<BridgeWay, SimulatorSquare> Bridges { get; private set; }
         private IDictionary<(BridgeWay, Side), LifeSquare> _bridges;
@@ -164,12 +167,16 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                 stringBuilder.AppendLine(tankerErrorMessage);
 
             message = stringBuilder.ToString();
+            _isCorrect = topologyIsCorrect;
             return topologyIsCorrect;
         }
 
         public void Simulate()
         {
-      
+
+                GasStationProvider.UseAppliances();
+                ShopProvider.UseAppliances();
+                TankerProvider.UseAppliances();
         }
     }
 }

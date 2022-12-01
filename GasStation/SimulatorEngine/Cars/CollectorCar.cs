@@ -15,5 +15,7 @@ namespace GasStation.SimulatorEngine.Cars
         {
 
         }
+
+        public override CarState State => throw new System.NotImplementedException();
     }
 }

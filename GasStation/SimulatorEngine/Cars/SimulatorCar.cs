@@ -9,10 +9,11 @@ namespace GasStation.SimulatorEngine.Cars
         public SurfaceType AvailableSurfaceType { get; }
         public ApplianceType Appliance { get; }
         public CarType Type { get; }
-        public CarState State { get; set; }
+        public abstract CarState State { get; }
         public SimulatorSquare ToSquare { get; set; }
-
         public SimulatorSquare CurrentSquare { get; set; }
+
+        public bool NeedDispawn { get; set; }
 
         public SimulatorCar(
             SimulatorSquare current,
@@ -27,7 +28,6 @@ namespace GasStation.SimulatorEngine.Cars
             AvailableSurfaceType = surfaceType;
             Appliance = appliance;
             Type = carType;
-            State = CarState.ToAppliance;
             ToSquare = to;
             CurrentSquare = current;
         }

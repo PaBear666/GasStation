@@ -13,11 +13,11 @@ namespace GasStation.SimulatorEngine.Cars
     {
         SimulatorSquare _spawnSquare;
         SimulatorSquare _disspawnSqaure;
-        CarViewProvider _carViewProvider;
-        SimulatorSquare[] _squares;
-        int _width;
-        int _height;
-        Wave _wave;
+        readonly CarViewProvider _carViewProvider;
+        readonly SimulatorSquare[] _squares;
+        readonly int _width;
+        readonly int _height;
+        readonly Wave _wave;
 
         public SimulatorSquare SpawnSquare
         {
@@ -72,35 +72,22 @@ namespace GasStation.SimulatorEngine.Cars
             _wave = wave;
         }
 
-        public void SpawnCar(CarType carType,SimulatorSquare simulatorSquare, CarState state)
+        public bool SpawnCar(SimulatorCar car)
         {
-            if(_spawnSquare.Car != null)
+            var isSpawn = _spawnSquare.Car == null;
+            if (!isSpawn)
             {
-                return;
+                return false;
             }
 
-            switch (carType)
-            {
-                case CarType.CommonCar:
-                    var car = new CommonCar(_carViewProvider.Car[carType], simulatorSquare, SpawnSquare)
-                    {
-                        State = state
-                    };
-                    _cars.Add(car);
-                    _spawnSquare.Car = car;
-                    break;
-                case CarType.Сollector:
-                    break;
-                case CarType.GasolineTanker:
-                    break;
-                default:
-                    break;
-            }
+            _cars.Add(car);
+            _spawnSquare.Car = car;
+            return true;
         }
 
         public void SimulateCar()
         {
-            var disspawnCars = _cars.Where(c => c.CurrentSquare.Id == DisspawnSquare.Id && c.State == CarState.ToEnd).ToList();
+            var disspawnCars = _cars.Where(c => c.CurrentSquare.Id == DisspawnSquare.Id && c.NeedDispawn).ToList();
             foreach (var car in disspawnCars)
             {
                 DeleteCar(car);
@@ -108,13 +95,22 @@ namespace GasStation.SimulatorEngine.Cars
 
             foreach (var car in _cars)
             {
-                if(_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side))
+                if(car.ToSquare != null)
                 {
-                    if (side.HasValue)
+                    if (_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side))
                     {
-                        MoveCar(car, side.Value);
-                    }                      
-                }             
+                        if (side.HasValue)
+                        {
+                            MoveCar(car, side.Value);
+                        }
+                    }
+                }
+
+                if(car.ToSquare == null || car.NeedDispawn)
+                {
+                    car.ToSquare = DisspawnSquare;
+                    car.NeedDispawn = true;
+                }
             }
         }
 

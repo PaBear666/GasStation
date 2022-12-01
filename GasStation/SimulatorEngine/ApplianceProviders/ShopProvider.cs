@@ -1,5 +1,6 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.SimulatorEngine.ApplianceSimulators;
+using GasStation.SimulatorEngine.Cars;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GasStation.SimulatorEngine.ApplianceProviders
 {
-    public class ShopProvider : ApplianceProvider<ShopSimulator>
+    public class ShopProvider : ApplianceProvider<ShopSimulator, CollectorCar>
     {
         public ShopProvider() : base(ApplianceType.Shop)
         {

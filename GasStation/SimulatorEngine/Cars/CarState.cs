@@ -10,6 +10,5 @@ namespace GasStation.SimulatorEngine.Cars
     {
         ToAppliance,
         UseAppliance,
-        ToEnd
     }
 }
