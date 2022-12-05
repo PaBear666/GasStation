@@ -27,9 +27,9 @@ namespace GasStation
             if(_constructor != null)
             {
                 var a = _constructor.GetTransfer("as");
-                _lastSaved = JsonConvert.SerializeObject(a);
                 
-                TopologyController.createTopology("ss", _lastSaved);
+                _lastSaved = JsonConvert.SerializeObject(a);
+                Form1ViewTapologyDb.SaveTopology(listBox1, _lastSaved);
             }
             
         }
@@ -102,16 +102,30 @@ namespace GasStation
 
         private void NewConstructor(object sender, System.EventArgs e)
         {
-            if(_constructor != null)
+            TopologyCreationForm form = new TopologyCreationForm();
+            form.ShowDialog();
+            Form1ViewTapologyDb.ViewTopologys(listBox1);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
             {
-                RemoveAppliacneEventcPictureBox();
-                _constructor.Dispose();
+
+                if (_constructor != null)
+                {
+                    RemoveAppliacneEventcPictureBox();
+                    _constructor.Dispose();
+                }
+
+                InitAppliacnePictureBox();
+
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(Form1ViewTapologyDb.LoadTopology(listBox1.SelectedIndex));
+                
+                _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
+               
+                SetAppliacneEventcPictureBox();
             }
-
-            InitAppliacnePictureBox();
-
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, 10, 7);
-            SetAppliacneEventcPictureBox();
         }
     }
 }

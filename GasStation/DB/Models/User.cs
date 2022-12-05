@@ -22,6 +22,7 @@ namespace GasStation.DB
     public enum UserType
     {
         Admin,
-        Moderator
+        Moderator,
+        NoN
     }
 }

@@ -40,7 +40,6 @@ namespace GasStation
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -53,7 +52,7 @@ namespace GasStation
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(16, 15);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1439, 706);
             this.panel1.TabIndex = 0;
@@ -61,7 +60,7 @@ namespace GasStation
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(49, 26);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(99, 76);
             this.pictureBox1.TabIndex = 1;
@@ -70,7 +69,7 @@ namespace GasStation
             // pictureBox2
             // 
             this.pictureBox2.Location = new System.Drawing.Point(156, 26);
-            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(99, 76);
             this.pictureBox2.TabIndex = 2;
@@ -79,7 +78,7 @@ namespace GasStation
             // pictureBox3
             // 
             this.pictureBox3.Location = new System.Drawing.Point(263, 26);
-            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(99, 76);
             this.pictureBox3.TabIndex = 3;
@@ -97,9 +96,9 @@ namespace GasStation
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Location = new System.Drawing.Point(964, 730);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(491, 123);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
@@ -148,7 +147,7 @@ namespace GasStation
             // pictureBox4
             // 
             this.pictureBox4.Location = new System.Drawing.Point(369, 26);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(99, 76);
             this.pictureBox4.TabIndex = 4;
@@ -157,7 +156,7 @@ namespace GasStation
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(55, 743);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(292, 89);
             this.button1.TabIndex = 5;
@@ -165,21 +164,10 @@ namespace GasStation
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.SaveTopology);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(395, 743);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(287, 89);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Загрузить";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.UploadTopology);
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(689, 743);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(267, 89);
             this.button3.TabIndex = 7;
@@ -195,6 +183,7 @@ namespace GasStation
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(399, 708);
             this.listBox1.TabIndex = 8;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -203,11 +192,10 @@ namespace GasStation
             this.ClientSize = new System.Drawing.Size(1896, 890);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -229,7 +217,6 @@ namespace GasStation
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace GasStation.DB
 {
+    [Serializable]
     public class Fuel
     {
         [Key]
         public int ID { get; set; }
-        [Required]
-        [Index(IsUnique = true)]
+        
         public string Type { get; set; }
         [Required]
         public double  Cost { get; set; }

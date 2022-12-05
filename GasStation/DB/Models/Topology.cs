@@ -11,8 +11,7 @@ namespace GasStation
     public class Topology
     {
         public int ID { get; set; }
-        [Required]
-        [Index(IsUnique = true)]
+      
         public string Name { get; set; }
         [Required]
         public string Construction { get; set; }

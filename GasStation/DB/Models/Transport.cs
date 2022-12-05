@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace GasStation.DB
 {
+    [Serializable]
     public class Transport
     {
-        
+        [Key]
         public int ID { get; set; }
         [Required]
        
         public int FuelVolume { get; set; }
-        [Required]
-        [Index(IsUnique = true)]
+      
         public string Name { get; set; }
 
-
-
+     
         public int? FuelId { get; set; }
+
         public virtual Fuel Fuel { get; set; }
 
 

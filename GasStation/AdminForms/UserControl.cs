@@ -192,7 +192,7 @@ namespace GasStation
                 }
                 if (flag)
                 {
-                    if (dataGridView1.Rows[i].Cells[2].Value.ToString().Length > 4)
+                    if (dataGridView1.Rows[i].Cells[2].Value!=null && dataGridView1.Rows[i].Cells[2].Value.ToString().Length > 4)
                     {
                         string error = UserController.createUser(dataGridView1.Rows[i].Cells[0].Value.ToString(), (UserType)dataGridView1.Rows[i].Cells[1].Value, dataGridView1.Rows[i].Cells[2].Value.ToString());
                         if (error != null)

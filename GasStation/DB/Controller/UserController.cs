@@ -29,19 +29,19 @@ namespace GasStation.DB.Controller
                 return ex.Message;
             }
         }
-        public static bool LogUser(string username, string password)
+        public static UserType LogUser(string username, string password)
         {
             DataBaseContext context = new DataBaseContext();
             User user = context.Users.Where(x => x.Name == username).FirstOrDefault();
             if (user == null)
-                return false;
+                return UserType.NoN;
             else
             {
                 password = Md5.hashPassword(password);
                 if (user.Password == password)
-                    return true;
+                    return user.UserRole;
                 else
-                    return false;
+                    return UserType.NoN;
             }
         }
 

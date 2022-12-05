@@ -130,9 +130,11 @@
             // 
             this.trackBar1.Location = new System.Drawing.Point(92, 237);
             this.trackBar1.Maximum = 200;
+            this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(314, 56);
             this.trackBar1.TabIndex = 7;
+            this.trackBar1.Value = 1;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // label3
@@ -159,9 +161,11 @@
             // 
             this.trackBar2.Location = new System.Drawing.Point(92, 378);
             this.trackBar2.Maximum = 200;
+            this.trackBar2.Minimum = 1;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(314, 56);
             this.trackBar2.TabIndex = 9;
+            this.trackBar2.Value = 1;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
             // 
             // Wcounterlabel
@@ -172,7 +176,7 @@
             this.Wcounterlabel.Name = "Wcounterlabel";
             this.Wcounterlabel.Size = new System.Drawing.Size(23, 25);
             this.Wcounterlabel.TabIndex = 11;
-            this.Wcounterlabel.Text = "0";
+            this.Wcounterlabel.Text = "1";
             // 
             // LcounterLabel
             // 
@@ -182,14 +186,14 @@
             this.LcounterLabel.Name = "LcounterLabel";
             this.LcounterLabel.Size = new System.Drawing.Size(23, 25);
             this.LcounterLabel.TabIndex = 12;
-            this.LcounterLabel.Text = "0";
+            this.LcounterLabel.Text = "1";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(58, 466);
+            this.button1.Location = new System.Drawing.Point(17, 473);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(368, 110);
+            this.button1.Size = new System.Drawing.Size(943, 110);
             this.button1.TabIndex = 13;
             this.button1.Text = "Принять";
             this.button1.UseVisualStyleBackColor = true;

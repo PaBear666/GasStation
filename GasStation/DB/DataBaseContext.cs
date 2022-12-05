@@ -18,12 +18,8 @@ namespace GasStation.DB
         public DbSet<Transport> Transports { get; set; }
         public DbSet<Topology> Topologies { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            // ...
-            modelBuilder.Entity<User>().HasIndex(u => u.Name).IsUnique();
-            // ...
-        }
+    
+   
     }
 
 }
