@@ -97,11 +97,21 @@ namespace GasStation.SimulatorEngine.Cars
             {
                 if(car.ToSquare != null)
                 {
-                    if (_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side))
+                    if (_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side, false))
                     {
                         if (side.HasValue)
                         {
                             MoveCar(car, side.Value);
+                        }
+                    }
+                    else
+                    {
+                        if (_wave.TryGetSide(car.AvailableSurfaceType, car.CurrentSquare.Id, car.ToSquare.Id, out var side2))
+                        {
+                            if (side2.HasValue)
+                            {
+                                MoveCar(car, side2.Value);
+                            }
                         }
                     }
                 }
@@ -132,7 +142,8 @@ namespace GasStation.SimulatorEngine.Cars
                 sideSquare.Car = simulatorCar;
                 simulatorCar.CurrentSquare = sideSquare;
                 currentSquare.Car = null;
-            }  
+            }
+            Task.Delay(50);
         }
     }
 }

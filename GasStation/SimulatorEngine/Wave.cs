@@ -26,28 +26,28 @@ namespace GasStation.SimulatorEngine
             _bridges = Bridges;
         }
 
-        public bool TryGetSide(SurfaceType availableSurface, int from, int to, out Side? side)
+        public bool TryGetSide(SurfaceType availableSurface, int from, int to, out Side? side, bool carIsGo = true)
         {
             int successWay;
             WaveSqaure[] waveSqaures;
             if (_simulatorSquares[from].Surface.Type != _simulatorSquares[to].Surface.Type)
             {
                 var bridge = _bridges[new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)];
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, false, from);
-                successWay = TryGetWay(availableMap, from, bridge.Id, false, out waveSqaures, bridge.Id);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, carIsGo, from);
+                successWay = TryGetWay(availableMap, from, bridge.Id, carIsGo, out waveSqaures, bridge.Id);
                 to = bridge.Id;
 
             }
             else
             {
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type, availableSurface }, true, from);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type}, true, from);
                 successWay = TryGetWay(availableMap, from, to, true, out waveSqaures);
 
             }
          
             if(successWay != -1)
             {
-                return GetSide(waveSqaures, from, to, false, out side);
+                return GetSide(waveSqaures, from, to, out side);
             }
             else
             {
@@ -56,7 +56,7 @@ namespace GasStation.SimulatorEngine
             }
         }
 
-        private bool GetSide(WaveSqaure[] currentWave, int from, int to, bool carIsGo,out Side? side)
+        private bool GetSide(WaveSqaure[] currentWave, int from, int to,out Side? side)
         {
             if(from == to)
             {
@@ -108,7 +108,7 @@ namespace GasStation.SimulatorEngine
                             }
                         }
                         
-                        if (arroundSquare.Weigth > 0 && currentSquare.Weigth > arroundSquare.Weigth)
+                        if (arroundSquare.Weigth > 0 && (currentSquare.Weigth - 1) == arroundSquare.Weigth)
                         {
                             currentSquare = arroundSquare;
                             break;
@@ -146,11 +146,12 @@ namespace GasStation.SimulatorEngine
                     var sideSquare = arroundSquares[sideIndex];
                     if(sideSquare != null)
                     {
-                        if (
-                            sideSquare.Id == bridgeId                          
+                        if (sideSquare.Id == bridgeId                          
                             || (sideSquare.Surface.Type == _simulatorSquares[from].Surface.Type
                             && waveSquares[sideSquare.Id].Weigth == 0               
-                            && !waveSquares[sideSquare.Id].MainSquare))
+                            && !waveSquares[sideSquare.Id].MainSquare
+                            && (carIsGo || sideSquare.Car == null))
+                            )
                         {
                             waveSquares[sideSquare.Id] = new WaveSqaure(sideSquare, currentSquare.Weigth + 1);
                             squaresForCheckedArround.Enqueue(waveSquares[sideSquare.Id]);
@@ -181,7 +182,7 @@ namespace GasStation.SimulatorEngine
                 }
 
                 if ((carIsGo || square.Car == null)
-                    && surfaceTypes.Any(s => s == square.Surface.Type)
+                   && surfaceTypes.Any(s => s == square.Surface.Type)
                     && (square.LifeAppliance == null
                        || (square.LifeAppliance != null 
                        && square.LifeAppliance.Appliance.Type == ApplianceType.Bridge)))

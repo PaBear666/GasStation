@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,11 +17,13 @@ namespace GasStation
     {
         private EditorProvider _editorProvider;
         private SimulatorArea area;
+        private CancellationTokenSource _cancellation;
         public Simulator(TopologyTransfer topology)
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
-            area = new SimulatorArea(panel1, topology, _editorProvider, this);
+            _cancellation = new CancellationTokenSource();
+            area = new SimulatorArea(panel1, topology, _editorProvider, _cancellation.Token);
 
             var a = area.IsCorrect;
             var b = area.ErrorMessage;
@@ -32,16 +35,18 @@ namespace GasStation
                 richTextBox1.AppendText(b);
             }
 
+            this.FormClosing += (e, c) => _cancellation.Cancel();
         }
+
+        
 
         private void Simulate(object sender, EventArgs e)
         {
             area.Run();
         }
-
-        private void CreateCar(object sender, EventArgs e)
+        private void Stop(object sender, EventArgs e)
         {
-
+            area.Stop();
         }
     }
 }
