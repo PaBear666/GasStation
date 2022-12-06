@@ -154,8 +154,12 @@ namespace GasStation.SimulatorEngine
             }
             catch (InvalidOperationException e)
             {
-                Debug.WriteLine(e);
-            }       
+                Debug.WriteLine(e.ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
     }
 }
