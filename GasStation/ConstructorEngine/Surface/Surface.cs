@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Drawing;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     [JsonObject(MemberSerialization.OptIn)]
     public class Surface : LifeComponent

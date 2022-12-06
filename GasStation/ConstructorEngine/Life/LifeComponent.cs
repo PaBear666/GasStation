@@ -1,6 +1,6 @@
 ﻿using GasStation.GraphicEngine.Common;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     public abstract class LifeComponent
     {

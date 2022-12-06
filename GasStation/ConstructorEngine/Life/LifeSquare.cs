@@ -1,9 +1,9 @@
 ﻿using GasStation.GraphicEngine;
-using GasStation.LifeEngine.Life;
+using GasStation.ConstructorEngine.Life;
 using Newtonsoft.Json;
 using System.Drawing;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
     public class LifeSquare : ColorSquare
     {

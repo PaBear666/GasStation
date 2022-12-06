@@ -55,27 +55,35 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Simulator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Simulator.Designer.cs">
+      <DependentUpon>Simulator.cs</DependentUpon>
+    </Compile>
     <Compile Include="GraphicEngine\Common\DragAndDrop\DragAndDropData.cs" />
     <Compile Include="GraphicEngine\Common\SquareArgs.cs" />
     <Compile Include="GraphicEngine\Common\DragAndDrop\SquareDragDropArgs.cs" />
+    <Compile Include="GraphicEngine\Common\SquareHelper.cs" />
     <Compile Include="GraphicEngine\Common\ViewComponent.cs" />
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
-    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
-    <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
-    <Compile Include="LifeEngine\ConstructorArea.cs" />
-    <Compile Include="LifeEngine\Life\LifeComponent.cs" />
-    <Compile Include="LifeEngine\Life\LifeEngine.cs" />
-    <Compile Include="LifeEngine\Life\LifeSquare.cs" />
-    <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
-    <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
-    <Compile Include="LifeEngine\Life\TransferSquare.cs" />
-    <Compile Include="LifeEngine\Side.cs" />
-    <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
-    <Compile Include="LifeEngine\Surface\Surface.cs" />
-    <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
-    <Compile Include="LifeEngine\TopologyTransfer.cs" />
+    <Compile Include="ConstructorEngine\Appliance\Appliance.cs" />
+    <Compile Include="ConstructorEngine\Appliance\AppliancePictureBox.cs" />
+    <Compile Include="ConstructorEngine\ConstructorArea.cs" />
+    <Compile Include="ConstructorEngine\Life\LifeComponent.cs" />
+    <Compile Include="ConstructorEngine\Life\LifeEngine.cs" />
+    <Compile Include="ConstructorEngine\Life\LifeSquare.cs" />
+    <Compile Include="ConstructorEngine\Appliance\LifeAppliance.cs" />
+    <Compile Include="ConstructorEngine\Appliance\ApplianceType.cs" />
+    <Compile Include="ConstructorEngine\Life\TransferSquare.cs" />
+    <Compile Include="ConstructorEngine\Side.cs" />
+    <Compile Include="ConstructorEngine\Surface\EditorProvider.cs" />
+    <Compile Include="ConstructorEngine\Surface\Surface.cs" />
+    <Compile Include="ConstructorEngine\Surface\SurfaceType.cs" />
+    <Compile Include="ConstructorEngine\TopologyTransfer.cs" />
+    <Compile Include="GraphicEngine\Common\DragAndDrop\DragDropArea.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
@@ -83,6 +91,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceManager.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceProvider.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\BridgeWay.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\GasStationProvider.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\ShopProvider.cs" />
+    <Compile Include="SimulatorEngine\ApplianceProviders\TankerProvider.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\ApplianceSimulator.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\GasStationSimulator.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\ShopSimulator.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\TankerSimulator.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarProvider.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarState.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarType.cs" />
+    <Compile Include="SimulatorEngine\Cars\CarViewProvider.cs" />
+    <Compile Include="SimulatorEngine\Cars\CollectorCar.cs" />
+    <Compile Include="SimulatorEngine\Cars\CommonCar.cs" />
+    <Compile Include="SimulatorEngine\Cars\GaslineTankerCar.cs" />
+    <Compile Include="SimulatorEngine\Cars\SimulatorCar.cs" />
+    <Compile Include="SimulatorEngine\SimulatorArea.cs" />
+    <Compile Include="SimulatorEngine\SimulatorSquare.cs" />
+    <Compile Include="SimulatorEngine\Wave.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,6 +128,9 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simulator.resx">
+      <DependentUpon>Simulator.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

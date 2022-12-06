@@ -1,17 +1,18 @@
 ﻿using GasStation.GraphicEngine.Common;
-using GasStation.LifeEngine.Life;
+using GasStation.ConstructorEngine.Life;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace GasStation.LifeEngine
+namespace GasStation.ConstructorEngine
 {
-    class ConstructorArea : Area<LifeSquare, LifeAppliance>
+    class ConstructorArea : DragDropArea<LifeSquare, LifeAppliance>
     {
         private ApplianceType _currentApplicane;
         private bool _showedAvailableZone;
+        private Side _roadSide;
         readonly EditorProvider _editorProvider;
         public  IDictionary<ApplianceType, int> ApplianceCount 
         {
@@ -50,6 +51,7 @@ namespace GasStation.LifeEngine
                   heightLength)
         {
             _editorProvider = editorProvider;
+            _roadSide = roadSide;
             InitSubscribers();
             ApplianceUpdate += applianceUpdate;
             InitArea(SquareSize, widthLength, heightLength, roadSide);
@@ -92,13 +94,13 @@ namespace GasStation.LifeEngine
             });       
         }
 
-        public TopologyTransfer GetTransfer(string topologyName)
+        public TopologyTransfer GetTransfer()
         {
             return new TopologyTransfer()
             {
-                Name = topologyName,
                 HeightLength = Heightength,
                 WidthLength = WidthLength,
+                RowSide = _roadSide,
                 Squares = Squares.Select(s => s.GetTransferSquare())
             };
         }
@@ -153,7 +155,7 @@ namespace GasStation.LifeEngine
 
                 case ApplianceType.Bridge:
                     return (square.Surface.Type == SurfaceType.GasStation || square.Surface.Type == SurfaceType.Service) 
-                        && GetArroundSquares(square).Any(s => s?.Surface.Type == SurfaceType.Road);
+                        && SquareHelper.GetArroundSquares(Squares,square, Heightength, WidthLength).Any(s => s?.Surface.Type == SurfaceType.Road);
 
                 default:
                     throw new Exception();
@@ -365,7 +367,7 @@ namespace GasStation.LifeEngine
 
         private LifeSquare GetSideSquare(Side side, LifeSquare e)
         {
-            var arround = GetArroundSquares(e);
+            var arround = SquareHelper.GetArroundSquares(Squares,e ,Heightength, WidthLength);
             switch (side)
             {
                 case Side.Top:

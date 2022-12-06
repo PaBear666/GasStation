@@ -42,6 +42,7 @@ namespace GasStation
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -120,7 +121,7 @@ namespace GasStation
             // 
             this.button2.Location = new System.Drawing.Point(296, 604);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(215, 72);
+            this.button2.Size = new System.Drawing.Size(78, 71);
             this.button2.TabIndex = 6;
             this.button2.Text = "Загрузить";
             this.button2.UseVisualStyleBackColor = true;
@@ -172,11 +173,22 @@ namespace GasStation
             this.label4.TabIndex = 8;
             this.label4.Text = "label4";
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(380, 604);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(93, 71);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "Симуляций";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.Simulation);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1157, 705);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -209,6 +221,7 @@ namespace GasStation
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button4;
     }
 }
 
