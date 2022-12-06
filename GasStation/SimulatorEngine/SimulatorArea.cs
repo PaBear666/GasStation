@@ -20,21 +20,23 @@ namespace GasStation.SimulatorEngine
         CarProvider _carProvider;
         readonly Task _simulation;
         readonly CarViewProvider _carViewProvider;
-        Form _form;
+        readonly CancellationToken _cancellation;
+        bool _wasStarted;
+        public bool IsStop { get; set; }
 
         public int Acceleration { get; set; }
         public bool IsCorrect { get; }
         public string ErrorMessage { get; }
 
 
-        public SimulatorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider, Form form) : base(panel, topology.WidthLength, topology.HeightLength)
+        public SimulatorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider, CancellationToken cancellation) : base(panel, topology.WidthLength, topology.HeightLength)
         {
             _editorProvider = editorProvider;
             _applianceManager = new ApplianceManager(topology.RowSide);
-            _simulation = new Task(Examine);
+            _simulation = new Task(Examine, cancellation);
             _carViewProvider = new CarViewProvider();
             Acceleration = 5;
-            _form = form;
+            _cancellation = cancellation;
 
             InitArea(SquareSize, topology);
             IsCorrect = _applianceManager.IsCorrect(out var errorMessage);
@@ -109,24 +111,30 @@ namespace GasStation.SimulatorEngine
 
         public void Run()
         {
-            _simulation.Start();
+            if (!_wasStarted)
+            {
+                _simulation.Start();
+                _wasStarted = true;
+            }
+            
+            IsStop = false;
         }
 
         public void Stop()
         {
-            if (IsCorrect)
-            {
-                _simulation.Wait();
-            }
+            IsStop = true;
         }
 
         private void Examine()
         {
             try
             {
-                while (!_form.IsDisposed)
+                while (!_cancellation.IsCancellationRequested)
                 {
-
+                    while (IsStop && !_cancellation.IsCancellationRequested) 
+                    { 
+                        Thread.Sleep(1000); 
+                    }
                     _carProvider.SimulateCar();
                     var random = new Random();
                     if (random.NextDouble() > 0.1)
@@ -146,8 +154,12 @@ namespace GasStation.SimulatorEngine
             }
             catch (InvalidOperationException e)
             {
-                Debug.WriteLine(e);
-            }       
+                Debug.WriteLine(e.ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
         }
     }
 }
