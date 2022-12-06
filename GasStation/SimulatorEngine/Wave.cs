@@ -33,14 +33,14 @@ namespace GasStation.SimulatorEngine
             if (_simulatorSquares[from].Surface.Type != _simulatorSquares[to].Surface.Type)
             {
                 var bridge = _bridges[new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)];
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, true);
-                successWay = TryGetWay(availableMap, from, bridge.Id, true, out waveSqaures, bridge.Id);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, false, from);
+                successWay = TryGetWay(availableMap, from, bridge.Id, false, out waveSqaures, bridge.Id);
                 to = bridge.Id;
 
             }
             else
             {
-                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type, availableSurface }, true);
+                var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type, availableSurface }, true, from);
                 successWay = TryGetWay(availableMap, from, to, true, out waveSqaures);
 
             }
@@ -168,12 +168,18 @@ namespace GasStation.SimulatorEngine
             return isFoundingAppliance;
         }
 
-        public WaveSqaure[] GetAvialableMap(SurfaceType[] surfaceTypes, bool carIsGo)
+        public WaveSqaure[] GetAvialableMap(SurfaceType[] surfaceTypes, bool carIsGo, int main)
         {
             WaveSqaure[] waveSqaures = new WaveSqaure[_simulatorSquares.Length];
 
             foreach (var square in _simulatorSquares)
             {
+                if(square.Id == main)
+                {
+                    waveSqaures[square.Id] = new WaveSqaure(square, 0);
+                    continue;
+                }
+
                 if ((carIsGo || square.Car == null)
                     && surfaceTypes.Any(s => s == square.Surface.Type)
                     && (square.LifeAppliance == null
