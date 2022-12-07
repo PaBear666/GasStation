@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,6 +13,23 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,11 +51,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,11 +82,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminForms\AdminPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminForms\AdminPanel.Designer.cs">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DB\Controller\FuelController.cs" />
+    <Compile Include="DB\Controller\TopologyController.cs" />
+    <Compile Include="DB\Controller\TransportController.cs" />
+    <Compile Include="DB\Controller\UserController.cs" />
+    <Compile Include="DB\DataBaseContext.cs" />
+    <Compile Include="DB\MD5.cs" />
+    <Compile Include="DB\Models\Fuel.cs" />
+    <Compile Include="DB\Models\Transport.cs" />
+    <Compile Include="DB\Models\User.cs" />
+    <Compile Include="DescTopologyClass.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1ViewTapologyDb.cs" />
+    <Compile Include="AdminForms\FuelControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminForms\FuelControlForm.Designer.cs">
+      <DependentUpon>FuelControlForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulator.cs">
       <SubType>Form</SubType>
@@ -69,6 +125,39 @@
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
+    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
+    <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
+    <Compile Include="LifeEngine\ConstructorArea.cs" />
+    <Compile Include="LifeEngine\Life\LifeComponent.cs" />
+    <Compile Include="LifeEngine\Life\LifeEngine.cs" />
+    <Compile Include="LifeEngine\Life\LifeSquare.cs" />
+    <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
+    <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
+    <Compile Include="LifeEngine\Life\TransferSquare.cs" />
+    <Compile Include="LifeEngine\Side.cs" />
+    <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
+    <Compile Include="LifeEngine\Surface\Surface.cs" />
+    <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
+    <Compile Include="LifeEngine\TopologyTransfer.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MathLogic\RandomDistribution.cs" />
+    <Compile Include="ModerForms\ModelConrolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModerForms\ModelConrolForm.Designer.cs">
+      <DependentUpon>ModelConrolForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModerForms\ModerContorolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModerForms\ModerContorolForm.Designer.cs">
+      <DependentUpon>ModerContorolForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConstructorEngine\Appliance\Appliance.cs" />
     <Compile Include="ConstructorEngine\Appliance\AppliancePictureBox.cs" />
     <Compile Include="ConstructorEngine\ConstructorArea.cs" />
@@ -91,6 +180,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="DB\Models\Topology.cs" />
+    <Compile Include="ModerForms\TopologyCreationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModerForms\TopologyCreationForm.Designer.cs">
+      <DependentUpon>TopologyCreationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminForms\TransportControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminForms\TransportControlForm.Designer.cs">
+      <DependentUpon>TransportControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AdminForms\UserControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminForms\UserControl.Designer.cs">
+      <DependentUpon>UserControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AdminForms\AdminPanel.resx">
+      <DependentUpon>AdminPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceManager.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\ApplianceProvider.cs" />
     <Compile Include="SimulatorEngine\ApplianceProviders\BridgeWay.cs" />
@@ -115,6 +226,18 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AdminForms\FuelControlForm.resx">
+      <DependentUpon>FuelControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModerForms\ModelConrolForm.resx">
+      <DependentUpon>ModelConrolForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModerForms\ModerContorolForm.resx">
+      <DependentUpon>ModerContorolForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -128,6 +251,15 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModerForms\TopologyCreationForm.resx">
+      <DependentUpon>TopologyCreationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminForms\TransportControlForm.resx">
+      <DependentUpon>TransportControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminForms\UserControl.resx">
+      <DependentUpon>UserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulator.resx">
       <DependentUpon>Simulator.cs</DependentUpon>
@@ -230,5 +362,25 @@
   <ItemGroup>
     <None Include="Resources\cassandra-brown-brickwork-1.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Используйте восстановление пакетов NuGet, чтобы скачать их.  Дополнительную информацию см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>
