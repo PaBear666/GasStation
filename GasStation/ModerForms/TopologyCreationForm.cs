@@ -1,6 +1,6 @@
 ﻿using GasStation.DB;
 using GasStation.DB.Controller;
-using GasStation.LifeEngine;
+using GasStation.ConstructorEngine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -61,7 +61,7 @@ namespace GasStation
             try
             {
                 ConstructorArea _constructor = new ConstructorArea(panel, side, _editorProvider, null, trackBar1.Value, trackBar2.Value); ;
-                var a = _constructor.GetTransfer("as");
+                var a = _constructor.GetTransfer();
                 string _lastSaved = JsonConvert.SerializeObject(a);
                 DataBaseContext context = new DataBaseContext();
                 List<Topology> t = context.Topologies.ToList();
