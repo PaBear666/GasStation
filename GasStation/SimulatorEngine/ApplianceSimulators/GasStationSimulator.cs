@@ -14,6 +14,7 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
         CommonCar _currentCar;
         public GasStationSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare) : base(applianceSquare, usedSquare)
         {
+            MaxCar = 3;
         }
 
         public override void UseSquare()

@@ -69,6 +69,7 @@ namespace GasStation.ConstructorEngine
                   topology.HeightLength)
         {
             _editorProvider = editorProvider;
+            _roadSide = topology.RowSide;
             ApplianceUpdate += applianceUpdate;
             InitSubscribers();
             InitArea(SquareSize, topology);

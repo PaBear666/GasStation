@@ -34,7 +34,7 @@ namespace GasStation
             fuels = context.Fuels.ToList();
             dbTransports = context.Transports.ToList();
             InitializeComponent();
-            ReadFile();
+            SelectedRadioButton = 0;
             Determ.Checked = true;
             FuelContarinerLength = fuelContarinerLength;
             ShopsLength = shopsLength;
@@ -58,8 +58,9 @@ namespace GasStation
             {
                 CashBox[i] = 10000;
             }
-         
-            
+
+            Random.Checked=true;
+            Determ.Checked = true;
             fillDataGrid();
         }
 
@@ -184,7 +185,7 @@ namespace GasStation
           
             string s = textBox1.Text;
             if (e.KeyChar != 8)
-                if (!((char.IsDigit(e.KeyChar)) || (e.KeyChar == ',' && !s.Contains(",") && s.Length > 0)))
+                if (!((char.IsDigit(e.KeyChar))))
                     e.Handled = true;
                 else
                     writeChagesToFile();
@@ -251,13 +252,7 @@ namespace GasStation
             }
             writeChagesToFile();
         }
-        void ReadFile()
-        {
-            fileStream = new FileStream("descriptor", FileMode.Open);
-            BinaryFormatter formatter = new BinaryFormatter();
-           DescTopologyClass desc= (DescTopologyClass)formatter.Deserialize(fileStream);
-            fileStream.Close();
-        }
+       
         void writeChagesToFile()
         {
             DataGridToArrays();
@@ -340,6 +335,17 @@ namespace GasStation
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            
+            if (textBox1.Text != "")
+            {
+                if (Double.Parse(textBox1.Text) > 60 || Double.Parse(textBox1.Text) < 1)
+                {
+                    textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length-1,1);
+                    textBox1.SelectionStart = textBox1.Text.Length;
+                }
+            }
+            else
+                textBox1.Text = "1";
             writeChagesToFile();
         }
 
@@ -423,12 +429,131 @@ namespace GasStation
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+
+            if (textBox2.Text != "")
+            {
+                if (Double.Parse(textBox2.Text) > 60 || Double.Parse(textBox2.Text) < 1)
+                {
+                    textBox2.Text = textBox2.Text.Remove(textBox2.Text.Length - 1, 1);
+                    textBox2.SelectionStart = textBox2.Text.Length;
+                }
+            }
+            else
+                textBox2.Text = "1";
+            writeChagesToFile();
             writeChagesToFile();
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedIndex != 2)
+            {
+                if (textBox3.Text != "")
+                {
+                    if (Double.Parse(textBox3.Text) > 60 || Double.Parse(textBox3.Text) < 1d / 3)
+                    {
+                        textBox3.Text = textBox3.Text.Remove(textBox3.Text.Length - 1, 1);
+                        textBox3.SelectionStart = textBox3.Text.Length;
+                    }
+                }
+                else
+                    textBox3.Text = "1";
+            }
+            else
+            {
+                if (textBox3.Text != "")
+                {
+                    if (Double.Parse(textBox3.Text) > 60 || Double.Parse(textBox3.Text) < 1)
+                    {
+                        textBox3.Text = textBox3.Text.Remove(textBox3.Text.Length - 1, 1);
+                        textBox3.SelectionStart = textBox3.Text.Length;
+                    }
+                }
+                else
+                    textBox3.Text = "1";
+            }
             writeChagesToFile();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool flag = true;
+            if (SelectedRadioButton == 0)
+            {
+
+
+                if (textBox1.Text == "")
+                {
+                    MessageBox.Show("Нет значения для детерминорованного закона распределния");
+                    flag = false;
+                }
+                
+            }
+            if (SelectedRadioButton == 1)
+            {
+                switch (comboBox1.SelectedIndex)
+                {
+                    case 0:
+                        {
+                            descTopologyClass.destributionType = DescTopologyClass.DestributionType.Normal;
+
+                            if (textBox2.Text == "")
+                            {
+                                MessageBox.Show("Нет Мат ожидания для нормального закона распределния");
+                                flag = false;
+                            }
+
+                            if (textBox3.Text == "")
+                            {
+                                MessageBox.Show("Нет диспресии для нормального закона распределния");
+                                flag = false;
+                            }
+                            break;
+                        }
+                    case 1:
+                        {
+                            descTopologyClass.destributionType = DescTopologyClass.DestributionType.Exp;
+
+                            if (textBox2.Text == "")
+                            {
+                                MessageBox.Show("Нет λ для показательного закона распределния");
+                                flag = false;
+                            }
+                            break;
+                        }
+                    case 2:
+                        {
+                            descTopologyClass.destributionType = DescTopologyClass.DestributionType.Equels;
+
+                            if (textBox2.Text == "")
+                            {
+                                MessageBox.Show("Нет левой границы для равномерного закона распределния");
+                                flag = false;
+                            }
+
+                            if (textBox3.Text == "")
+                            {
+                                MessageBox.Show("Нет правой границы для детерминорованного закона распределния");
+                                flag = false;
+                            }
+                            break;
+                        }
+                    default:
+                        {
+
+                            break;
+                        }
+                        
+
+                }
+
+            }
+            if (listBox1.Items.Count <= 0)
+            {
+                flag = false;
+                MessageBox.Show("Вы не выбрали модели авто для моделирования");
+            }
+            if (flag) this.Close();
         }
     }
 }

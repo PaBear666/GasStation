@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GasStation.ConstructorEngine;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,13 +16,14 @@ namespace GasStation
     {
         public ModerContorolForm()
         {
-            ModelConrolForm userControl = new ModelConrolForm(7,2);
            
+            ModelConrolForm userControl = new ModelConrolForm(7,2);
+            Form1 form1 = new Form1();
             InitializeComponent();
+            ViewTapologyDb.ViewTopologys(listBox1);
             userControl = (ModelConrolForm)this.SetupForm(userControl);
-            
-            this.tabControl1.TabPages[0].Controls.Add(userControl);
-            
+            listBox1.SelectedIndex = 0; 
+           
         }
         private Form SetupForm(Form form)
         {
@@ -35,6 +38,27 @@ namespace GasStation
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
+        }
+
+ 
+
+        private void listBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(ViewTapologyDb.LoadTopology(listBox1.SelectedIndex));
+                var simulatorWindow = new Simulator(topology);
+                Simulator form1 = new Simulator(topology);
+                form1 = (Simulator)this.SetupForm(form1);
+                this.tabControl1.TabPages[0].Controls.Clear();
+                this.tabControl1.TabPages[0].Controls.Add(form1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                this.Close();
+                
+            }
         }
     }
 }

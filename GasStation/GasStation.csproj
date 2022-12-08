@@ -104,7 +104,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1ViewTapologyDb.cs" />
+    <Compile Include="ViewTapologyDb.cs" />
     <Compile Include="AdminForms\FuelControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,20 +125,6 @@
     <Compile Include="GraphicEngine\Common\Area.cs" />
     <Compile Include="GraphicEngine\Common\Square.cs" />
     <Compile Include="GraphicEngine\ColorSquare.cs" />
-    <Compile Include="LifeEngine\Appliance\Appliance.cs" />
-    <Compile Include="LifeEngine\Appliance\AppliancePictureBox.cs" />
-    <Compile Include="LifeEngine\ConstructorArea.cs" />
-    <Compile Include="LifeEngine\Life\LifeComponent.cs" />
-    <Compile Include="LifeEngine\Life\LifeEngine.cs" />
-    <Compile Include="LifeEngine\Life\LifeSquare.cs" />
-    <Compile Include="LifeEngine\Appliance\LifeAppliance.cs" />
-    <Compile Include="LifeEngine\Appliance\ApplianceType.cs" />
-    <Compile Include="LifeEngine\Life\TransferSquare.cs" />
-    <Compile Include="LifeEngine\Side.cs" />
-    <Compile Include="LifeEngine\Surface\EditorProvider.cs" />
-    <Compile Include="LifeEngine\Surface\Surface.cs" />
-    <Compile Include="LifeEngine\Surface\SurfaceType.cs" />
-    <Compile Include="LifeEngine\TopologyTransfer.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,10 +167,10 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="DB\Models\Topology.cs" />
-    <Compile Include="ModerForms\TopologyCreationForm.cs">
+    <Compile Include="AdminForms\TopologyCreationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModerForms\TopologyCreationForm.Designer.cs">
+    <Compile Include="AdminForms\TopologyCreationForm.Designer.cs">
       <DependentUpon>TopologyCreationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="AdminForms\TransportControlForm.cs">
@@ -252,7 +238,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModerForms\TopologyCreationForm.resx">
+    <EmbeddedResource Include="AdminForms\TopologyCreationForm.resx">
       <DependentUpon>TopologyCreationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AdminForms\TransportControlForm.resx">

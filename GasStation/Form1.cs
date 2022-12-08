@@ -1,4 +1,5 @@
 ﻿using GasStation.ConstructorEngine;
+using GasStation.DB;
 using GasStation.GraphicEngine.Common;
 using GasStation.SimulatorEngine;
 using Newtonsoft.Json;
@@ -15,18 +16,23 @@ namespace GasStation
         private readonly EditorProvider _editorProvider;
         private string _lastSaved;
 
+
         public Form1()
         {
             InitializeComponent();
             _editorProvider = new EditorProvider();
+
+            ViewTapologyDb.ViewTopologys(listBox1);
+            listBox1.SelectedIndex = 0;
         }
 
         private void SaveTopology(object sender, System.EventArgs e)
         {
-            if(_constructor != null) 
+            if (_constructor != null)
             {
                 var a = _constructor.GetTransfer();
                 _lastSaved = JsonConvert.SerializeObject(a);
+                ViewTapologyDb.SaveTopology(listBox1, _lastSaved);
             }
         }
 
@@ -79,36 +85,44 @@ namespace GasStation
 
         private void UploadTopology(object sender, System.EventArgs e)
         {
-            if(_lastSaved != null)
+            if (_lastSaved != null)
             {
-                
-                if(_constructor != null)
+
+                if (_constructor != null)
                 {
                     RemoveAppliacneEventcPictureBox();
                     _constructor.Dispose();
                 }
 
                 InitAppliacnePictureBox();
-              
-                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
+
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(ViewTapologyDb.LoadTopology(listBox1.SelectedIndex));
                 _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
             }
         }
 
-        
+
 
         private void NewConstructor(object sender, System.EventArgs e)
         {
-            if(_constructor != null)
+
+            if (_constructor != null)
             {
                 RemoveAppliacneEventcPictureBox();
                 _constructor.Dispose();
             }
-
+            
             InitAppliacnePictureBox();
-
-            _constructor = new ConstructorArea(panel1, Side.Bottom, _editorProvider, ApplianceUpdate, 10, 7);
+            TopologyCreationForm form = new TopologyCreationForm();
+            form.ShowDialog();
+            //while (form.ShowDialog() == DialogResult.OK) ;    
+            _constructor = new ConstructorArea(panel1, form.side, _editorProvider, ApplianceUpdate, form.W, form.H);
+            var a = _constructor.GetTransfer();
+            _lastSaved = JsonConvert.SerializeObject(a);
+            ViewTapologyDb.AddTopologytoNew(listBox1, _lastSaved);
+            ViewTapologyDb.ViewTopologys(listBox1);
+            listBox1.SelectedIndex=listBox1.Items.Count-1;
             SetAppliacneEventcPictureBox();
         }
 
@@ -119,6 +133,34 @@ namespace GasStation
                 var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
                 var simulatorWindow = new Simulator(topology);
                 simulatorWindow.ShowDialog();
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            if (listBox1.SelectedIndex != -1)
+            {
+
+                if (_constructor != null)
+                {
+                    RemoveAppliacneEventcPictureBox();
+                    _constructor.Dispose();
+                }
+
+                InitAppliacnePictureBox();
+                _lastSaved = ViewTapologyDb.LoadTopology(listBox1.SelectedIndex);
+                var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
+               
+                _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
+                SetAppliacneEventcPictureBox();
+            }
+        }
+
+        private void listBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                ViewTapologyDb.RemoveTopology(listBox1);
             }
         }
     }

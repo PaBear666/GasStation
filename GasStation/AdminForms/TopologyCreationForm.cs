@@ -1,6 +1,6 @@
 ﻿using GasStation.DB;
 using GasStation.DB.Controller;
-using GasStation.LifeEngine;
+using GasStation.ConstructorEngine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,21 +16,27 @@ namespace GasStation
 {
     public partial class TopologyCreationForm : Form
     {
-        Side side;
+        public Side side { get; set; }
+        public int W { get; set; }
+        public int H { get; set; }
         public TopologyCreationForm()
         {
             InitializeComponent();
             down.Checked = true;
+            W = trackBar1.Value;
+            H = trackBar2.Value;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             Wcounterlabel.Text = trackBar1.Value.ToString();
+            W=trackBar1.Value;
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
            LcounterLabel.Text = trackBar2.Value.ToString();
+            H=trackBar2.Value;
         }
 
         private void left_CheckedChanged(object sender, EventArgs e)
@@ -61,7 +67,7 @@ namespace GasStation
             try
             {
                 ConstructorArea _constructor = new ConstructorArea(panel, side, _editorProvider, null, trackBar1.Value, trackBar2.Value); ;
-                var a = _constructor.GetTransfer("as");
+                var a = _constructor.GetTransfer();
                 string _lastSaved = JsonConvert.SerializeObject(a);
                 DataBaseContext context = new DataBaseContext();
                 List<Topology> t = context.Topologies.ToList();

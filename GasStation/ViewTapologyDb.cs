@@ -9,18 +9,14 @@ using System.Windows.Forms;
 
 namespace GasStation
 {
-    public class Form1ViewTapologyDb
+    public class ViewTapologyDb
     {
 
-        public static void SaveTopology(string Name, string constraction)
-        {
-
-
-
-        }
+     
 
         public static void ViewTopologys(ListBox list1)
         {
+            
             list1.Items.Clear();
             DataBaseContext context = new DataBaseContext();
             List<Topology> topologyList = context.Topologies.ToList();
@@ -43,7 +39,24 @@ namespace GasStation
             if(topologyList[i].Construction!=newConstrution)
                 TopologyController.EditTopologyConstruction(topologyList[i],newConstrution);
         }
-
+        public static void AddTopologytoNew(ListBox listBox, string newConstrution)
+        {
+            int i = listBox.SelectedIndex;
+            DataBaseContext context = new DataBaseContext();
+            List<Topology> topologyList = context.Topologies.ToList();
+            TopologyController.EditTopologyConstruction(topologyList[topologyList.Count-1], newConstrution);
+        }
+        public static void RemoveTopology(ListBox listBox)
+        {
+            int i = listBox.SelectedIndex;
+            if (listBox.SelectedIndex != -1)
+            {
+                listBox.Items.RemoveAt(i);
+                DataBaseContext context = new DataBaseContext();
+                List<Topology> topologyList = context.Topologies.ToList();
+                TopologyController.Remove(topologyList[i]);
+            }
+        }
 
     }
 }

@@ -1,7 +1,9 @@
 ﻿using GasStation.DB;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +45,19 @@ namespace GasStation
             public Fuel[] Fuels { get; set; }
             public int[] Volume { get; set; }
         }
-
+        public static DescTopologyClass GetDesc(string desc)
+        {
+            try
+            {
+                FileStream fileStream = new FileStream(desc, FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (DescTopologyClass)formatter.Deserialize(fileStream);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
 
 
