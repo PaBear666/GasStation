@@ -146,7 +146,7 @@ namespace GasStation.SimulatorEngine
                     if (counter > carTimer)
                     {
                         var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
-                        var car = new CommonCar(_carViewProvider.Car[CarType.CommonCar], null, _carProvider.SpawnSquare);
+                        var car = new CommonCar(_carViewProvider.GetView(CarType.CommonCar), null, _carProvider.SpawnSquare);
 
                         if(_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
                         {

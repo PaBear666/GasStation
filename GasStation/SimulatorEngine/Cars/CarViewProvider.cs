@@ -21,5 +21,36 @@ namespace GasStation.SimulatorEngine.Cars
                 { CarType.GasolineTanker, new ViewComponent(Color.Blue, Resource.car) },
             };
         }
+
+        public ViewComponent GetView(CarType type) 
+        {
+            var random = new Random().Next(1,4);
+
+            switch (type)
+            {
+                case CarType.CommonCar:
+                    switch (random)
+                    {
+                        case 1:
+                            return new ViewComponent(Color.Red, Resource.car);
+                        case 2:
+                            return new ViewComponent(Color.Red, Resource.GreenCarZombi);
+                        case 3:
+                            return new ViewComponent(Color.Red, Resource.StreetRace);
+                        default:
+                            return null;
+                    }
+
+                    break;
+                case CarType.Сollector:
+                    return null;
+                    
+                case CarType.GasolineTanker:
+                    return null;
+                default:
+                    return null;
+  
+            }
+        }
     }
 }

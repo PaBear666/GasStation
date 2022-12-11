@@ -14,8 +14,8 @@ namespace GasStation.SimulatorEngine.Cars
             }
             set
             {
-                _fuel = value;
-                if(MaxFuel >= _fuel)
+                _fuel += value;
+                if(_fuel >= MaxFuel)
                 {
                     _fuel = MaxFuel;
                     NeedDispawn = true;
@@ -48,7 +48,7 @@ namespace GasStation.SimulatorEngine.Cars
                 CarType.CommonCar,
                 viewComponent)
         {
-            MaxFuel = 100;
+            MaxFuel = 3000;
         }
     }
 }

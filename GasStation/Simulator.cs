@@ -73,7 +73,7 @@ namespace GasStation
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             label1.Text = trackBar1.Value.ToString();
-            area.Acceleration = trackBar1.Value;
+            area.Acceleration = 5+trackBar1.Value;
         }
     }
 }
