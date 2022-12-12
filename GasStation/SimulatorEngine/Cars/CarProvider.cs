@@ -79,7 +79,7 @@ namespace GasStation.SimulatorEngine.Cars
             {
                 return false;
             }
-
+            
             _cars.Add(car);
             _spawnSquare.Car = car;
             return true;
@@ -101,7 +101,7 @@ namespace GasStation.SimulatorEngine.Cars
                     {
                         if (side.HasValue)
                         {
-                            MoveCar(car, side.Value);
+                            MoveCar(car, side.Value,car.CarViewType);
                         }
                     }
                     else
@@ -110,7 +110,8 @@ namespace GasStation.SimulatorEngine.Cars
                         {
                             if (side2.HasValue)
                             {
-                                MoveCar(car, side2.Value);
+                                
+                                MoveCar(car, side2.Value, car.CarViewType);
                             }
                         }
                     }
@@ -132,13 +133,14 @@ namespace GasStation.SimulatorEngine.Cars
             _cars.Remove(simulatorCar);
         }
 
-        private void MoveCar(SimulatorCar simulatorCar,Side side)
+        private void MoveCar(SimulatorCar simulatorCar,Side side, CommnonCarViewType viewType)
         {
             var currentSquare = simulatorCar.CurrentSquare;
             var sideSquare = SquareHelper.GetArroundSquare(_squares, currentSquare, _height, _width, side);
 
             if(sideSquare != null && sideSquare.Car == null)
             {
+                simulatorCar.Image= CarViewProvider.GetSide(simulatorCar.Type,side, viewType);
                 sideSquare.Car = simulatorCar;
                 simulatorCar.CurrentSquare = sideSquare;
                 currentSquare.Car = null;

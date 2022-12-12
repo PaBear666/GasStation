@@ -17,7 +17,7 @@ namespace GasStation.GraphicEngine.Common
                     return _image;
                 }
             }
-            private set
+            set
             {
                 _image = value;
             }

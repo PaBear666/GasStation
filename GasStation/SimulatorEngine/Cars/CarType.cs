@@ -12,4 +12,10 @@ namespace GasStation.SimulatorEngine.Cars
         Сollector,
         GasolineTanker
     }
+    public enum CommnonCarViewType
+    {
+        Red,
+        Green,
+        Blue
+    }
 }

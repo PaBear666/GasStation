@@ -9,10 +9,11 @@ namespace GasStation.SimulatorEngine.Cars
         public SurfaceType AvailableSurfaceType { get; }
         public ApplianceType Appliance { get; }
         public CarType Type { get; }
+        public CommnonCarViewType CarViewType { get; set; }
         public abstract CarState State { get; }
         public SimulatorSquare ToSquare { get; set; }
         public SimulatorSquare CurrentSquare { get; set; }
-
+        
         public bool NeedDispawn { get; set; }
 
         public SimulatorCar(

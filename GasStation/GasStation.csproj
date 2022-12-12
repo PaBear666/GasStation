@@ -366,6 +366,33 @@
   <ItemGroup>
     <None Include="Resources\GreenCarZombi.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GreenCarZombiBot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GreenCarZombiLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GreenCarZombiTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StreetRaceBot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StreetRaceLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StreetRaceTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\carBot.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

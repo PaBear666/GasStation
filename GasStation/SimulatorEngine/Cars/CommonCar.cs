@@ -6,6 +6,7 @@ namespace GasStation.SimulatorEngine.Cars
     public class CommonCar : SimulatorCar
     {
         private int _fuel;
+        
         public int Fuel
         {
             get
@@ -40,7 +41,7 @@ namespace GasStation.SimulatorEngine.Cars
                 return CarState.ToAppliance;
             }
         }
-        public CommonCar(ViewComponent viewComponent, SimulatorSquare to, SimulatorSquare current) : 
+        public CommonCar(ViewComponent viewComponent, SimulatorSquare to, SimulatorSquare current, CommnonCarViewType type) : 
             base(current,
                 to,
                 SurfaceType.GasStation,
@@ -48,6 +49,7 @@ namespace GasStation.SimulatorEngine.Cars
                 CarType.CommonCar,
                 viewComponent)
         {
+            base.CarViewType = type;
             MaxFuel = 3000;
         }
     }

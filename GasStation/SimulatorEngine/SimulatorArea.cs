@@ -146,9 +146,9 @@ namespace GasStation.SimulatorEngine
                     if (counter > carTimer)
                     {
                         var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
-                        var car = new CommonCar(_carViewProvider.GetView(CarType.CommonCar), null, _carProvider.SpawnSquare);
-
-                        if(_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
+                        var car = new CommonCar(_carViewProvider.GetView(CarType.CommonCar), null, _carProvider.SpawnSquare, _carViewProvider.CarVType);
+                       
+                        if (_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
                         {
                             car.ToSquare = availableAppliance.UsedSquare;
                             availableAppliance.Cars.Enqueue(car);
@@ -156,7 +156,9 @@ namespace GasStation.SimulatorEngine
                         carTimer = RandomDistribution.GetTimeValue(topologyClass, random) * 1000;
                         counter = -1000;
                     }
+               
                     _applianceManager.Simulate();
+                    //_applianceManager.TankerProvider.Appliances()
                     counter+=1000;
                     Thread.Sleep(1000 / Acceleration);
                 }
