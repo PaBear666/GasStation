@@ -22,7 +22,20 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
                 return MaxCar > Cars.Count;
             }
         }
-
+        public bool TankerIsFree
+        {
+            get
+            {
+                return 1 > Cars.Count;
+            }
+        }
+        public bool ShopIsFree
+        {
+            get
+            {
+                return 1 > Cars.Count;
+            }
+        }
         public int MaxCar { get; set; }
         public ApplianceSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare)
         {

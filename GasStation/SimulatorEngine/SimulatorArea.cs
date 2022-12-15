@@ -3,6 +3,7 @@ using GasStation.DB;
 using GasStation.GraphicEngine.Common;
 using GasStation.MathLogic;
 using GasStation.SimulatorEngine.ApplianceProviders;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 using GasStation.SimulatorEngine.Cars;
 using MathNet.Numerics.Random;
 using System;
@@ -141,6 +142,18 @@ namespace GasStation.SimulatorEngine
                 topologyClass = DescTopologyClass.GetDesc("descriptor");
                 Transport[] transports = topologyClass.Transports;
                 double carTimer = RandomDistribution.GetTimeValue( topologyClass, random)*1000;
+                TankerConnector.Fuel = topologyClass.fuelContainer.Fuels;
+                TankerConnector.Volume = topologyClass.fuelContainer.Volume;
+                TankerConnector.MaxVolume = new int[TankerConnector.Volume.Length];
+                Array.Copy( topologyClass.fuelContainer.Volume, TankerConnector.MaxVolume, topologyClass.fuelContainer.Volume.Length);
+                TankerConnector.CanFill = new bool[TankerConnector.Volume.Length];
+                TankerConnector.CanSpawnTankerCar = new bool[TankerConnector.Volume.Length];
+                for (int i = 0; i < TankerConnector.Volume.Length; i++) { TankerConnector.CanFill[i] = false; TankerConnector.CanSpawnTankerCar[i] = true; }
+                TankerConnector.CurrentMoney = 0;
+                TankerConnector.MaxMoney = topologyClass.Cashbox[0];
+                TankerConnector.MoneyReplacing = false;
+                TankerConnector.CanSpawnCollectorCar = true;
+                bool flag = true;
                 while (!_cancellation.IsCancellationRequested)
                 {
                     while (IsStop && !_cancellation.IsCancellationRequested) 
@@ -148,7 +161,45 @@ namespace GasStation.SimulatorEngine
                         Thread.Sleep(1000); 
                     }
                     _carProvider.SimulateCar();
-                    
+                    /*   for(int i = 0; i < TankerConnector.Volume.Length; i++)
+                       {
+                           flag = TankerConnector.Volume[i] <= 0;
+                           tankerFlags[i] = flag;
+                       }*/
+                    if (TankerConnector.MoneyReplacing&&TankerConnector.CanSpawnCollectorCar)
+                    {
+                        var availableAppliance = _applianceManager.ShopProvider.Appliances.FirstOrDefault(a => a.ShopIsFree);
+                        var car = new CollectorCar(_carViewProvider.GetView(CarType.Сollector), null, _carProvider.SpawnSquare);
+                        int rd = random.Next(0, transports.Length);
+                        //car.FuelV = TankerConnector.Fuel[i];
+                        //car.MaxFuel = TankerConnector.MaxVolume[i];
+
+                        if (_carProvider.SpawnCar(car) && availableAppliance != null)
+                        {
+                            car.ToSquare = availableAppliance.UsedSquare;
+                            availableAppliance.Cars.Enqueue(car);
+                            TankerConnector.CanSpawnCollectorCar = false;
+                        }
+                        TankerConnector.MoneyReplacing = false;
+                    }
+                    for (int i = 0; i < TankerConnector.Volume.Length; i++)
+                    {
+                        if (TankerConnector.CanFill[i]&& TankerConnector.CanSpawnTankerCar[i])
+                        {
+                            var availableAppliance = _applianceManager.TankerProvider.Appliances.FirstOrDefault(a => a.TankerIsFree);
+                            var car = new GaslineTankerCar(_carViewProvider.GetView(CarType.GasolineTanker), null, _carProvider.SpawnSquare);
+                            int rd = random.Next(0, transports.Length);
+                            car.FuelV = TankerConnector.Fuel[i];
+                            car.MaxFuel = TankerConnector.MaxVolume[i];
+                            if (_carProvider.SpawnCar(car) && availableAppliance != null && topologyClass.ContainsFuel(transports[rd].Fuel))
+                            {
+                                car.ToSquare = availableAppliance.UsedSquare;
+                                availableAppliance.Cars.Enqueue(car);
+                                TankerConnector.CanSpawnTankerCar[i] = false;
+                            }
+                            TankerConnector.CanFill[i] = false;
+                        }
+                    }
                     if (counter > carTimer)
                     {
                         var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
@@ -156,7 +207,7 @@ namespace GasStation.SimulatorEngine
                         int rd = random.Next(0, transports.Length);
                         car.FuelV = transports[rd].Fuel;
                         car.MaxFuel = transports[rd].FuelVolume;
-                        if (_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
+                        if (_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree && topologyClass.ContainsFuel(transports[rd].Fuel) && !Flag(TankerConnector.CanFill)&& !TankerConnector.MoneyReplacing)
                         {
                             car.ToSquare = availableAppliance.UsedSquare;
                             availableAppliance.Cars.Enqueue(car);
@@ -164,7 +215,9 @@ namespace GasStation.SimulatorEngine
                         carTimer = RandomDistribution.GetTimeValue(topologyClass, random) * 1000;
                         counter = -1000;
                     }
-               
+                    
+                  
+                    
                     _applianceManager.Simulate();
                     //_applianceManager.TankerProvider.Appliances()
                     counter+=1000;
@@ -179,6 +232,16 @@ namespace GasStation.SimulatorEngine
             {
                 Debug.WriteLine(e.ToString());
             }
+           
+        }
+        private bool Flag(bool[] f)
+        {
+            for (int i = 0; i < f.Length; i++)
+            {
+                if (!f[i]) { return false; }
+                
+            }
+            return true;   
         }
     }
 }

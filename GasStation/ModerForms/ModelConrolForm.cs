@@ -51,12 +51,12 @@ namespace GasStation
             for (int i = 0; i < FuelContarinerLength; i++)
             {
                 FuelForContainer[i] =fuels[0];
-                FuelForContainerVolume[i] = 30000;
+                FuelForContainerVolume[i] = 400;
             }
             CashBox = new int[shopsLength];
             for (int i = 0; i < ShopsLength; i++)
             {
-                CashBox[i] = 10000;
+                CashBox[i] = 1000000;
             }
 
             Random.Checked=true;

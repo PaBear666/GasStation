@@ -104,6 +104,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="SimulatorEngine\ApplianceSimulators\FuelRate.cs" />
+    <Compile Include="SimulatorEngine\ApplianceSimulators\TankerConnector.cs" />
     <Compile Include="ViewTapologyDb.cs" />
     <Compile Include="AdminForms\FuelControlForm.cs">
       <SubType>Form</SubType>
@@ -392,6 +394,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\carBot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectorCarTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GaslineTankerCarTop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectorCarBot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectorCarLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CollectorCarRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GaslineTankerCarRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GaslineTankerCarBot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GaslineTankerCarLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RoadTopBot.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

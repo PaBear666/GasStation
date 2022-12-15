@@ -49,10 +49,10 @@ namespace GasStation.SimulatorEngine.Cars
 
                     break;
                 case CarType.Сollector:
-                    return null;
-                    
+                    return new ViewComponent(Color.Green, Resource.CollectorCarLeft);
+
                 case CarType.GasolineTanker:
-                    return null;
+                    return new ViewComponent(Color.Blue, Resource.GaslineTankerCarBot);
                 default:
                     return null;
   
@@ -125,10 +125,34 @@ namespace GasStation.SimulatorEngine.Cars
 
                     break;
                 case CarType.Сollector:
-                    return null;
+                    switch (side)
+                    {
+                        case Side.Left:
+                            return Resource.CollectorCarLeft;
+                        case Side.Right:
+                            return Resource.CollectorCarRight;
+                        case Side.Top:
+                            return Resource.CollectorCarTop;
+                        case Side.Bottom:
+                            return Resource.CollectorCarBot;
+                        default:
+                            return Resource.CollectorCarBot;
+                    }
 
                 case CarType.GasolineTanker:
-                    return null;
+                    switch (side)
+                    {
+                        case Side.Left:
+                            return Resource.GaslineTankerCarLeft;
+                        case Side.Right:
+                            return Resource.GaslineTankerCarRight;
+                        case Side.Top:
+                            return Resource.GaslineTankerCarTop;
+                        case Side.Bottom:
+                            return Resource.GaslineTankerCarBot;
+                        default:
+                            return Resource.GaslineTankerCarBot;
+                    }
                 default:
                     return null;
 

@@ -51,12 +51,22 @@ namespace GasStation
             {
                 FileStream fileStream = new FileStream(desc, FileMode.Open);
                 BinaryFormatter formatter = new BinaryFormatter();
-                return (DescTopologyClass)formatter.Deserialize(fileStream);
+                DescTopologyClass c = (DescTopologyClass)formatter.Deserialize(fileStream);
+                fileStream.Close();
+                return c;   
             }
             catch (Exception ex)
             {
                 return null;
             }
+        }
+        public bool ContainsFuel(Fuel fuel)
+        {
+            foreach (Fuel a in fuelContainer.Fuels)
+            {
+                if (a.Type.Equals(fuel.Type)) { return true; }
+            }
+            return false;
         }
 
 

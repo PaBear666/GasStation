@@ -142,6 +142,30 @@
   <data name="carTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\carTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CollectorCarBot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CollectorCarBot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CollectorCarLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CollectorCarLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CollectorCarRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CollectorCarRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CollectorCarTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\CollectorCarTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GaslineTankerCarBot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GaslineTankerCarBot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GaslineTankerCarLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GaslineTankerCarLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GaslineTankerCarRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GaslineTankerCarRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GaslineTankerCarTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\GaslineTankerCarTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gasStation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\01bfa6926cdfddf55b9605252d6e7efe.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -177,6 +201,9 @@
   </data>
   <data name="road" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\642a33fac18a5e7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RoadTopBot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\RoadTopBot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="shop_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\shop_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

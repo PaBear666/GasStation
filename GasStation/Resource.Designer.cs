@@ -143,6 +143,86 @@ namespace GasStation {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap CollectorCarBot {
+            get {
+                object obj = ResourceManager.GetObject("CollectorCarBot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CollectorCarLeft {
+            get {
+                object obj = ResourceManager.GetObject("CollectorCarLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CollectorCarRight {
+            get {
+                object obj = ResourceManager.GetObject("CollectorCarRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap CollectorCarTop {
+            get {
+                object obj = ResourceManager.GetObject("CollectorCarTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GaslineTankerCarBot {
+            get {
+                object obj = ResourceManager.GetObject("GaslineTankerCarBot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GaslineTankerCarLeft {
+            get {
+                object obj = ResourceManager.GetObject("GaslineTankerCarLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GaslineTankerCarRight {
+            get {
+                object obj = ResourceManager.GetObject("GaslineTankerCarRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap GaslineTankerCarTop {
+            get {
+                object obj = ResourceManager.GetObject("GaslineTankerCarTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap gasStation {
             get {
                 object obj = ResourceManager.GetObject("gasStation", resourceCulture);
@@ -256,6 +336,16 @@ namespace GasStation {
         public static System.Drawing.Bitmap road {
             get {
                 object obj = ResourceManager.GetObject("road", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap RoadTopBot {
+            get {
+                object obj = ResourceManager.GetObject("RoadTopBot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

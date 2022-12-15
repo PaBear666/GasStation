@@ -1,5 +1,6 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,7 @@ namespace GasStation.SimulatorEngine.Cars
                 {
                     throw new Exception("Точку исчезноваения можно ставить только на дороге");
                 }
+                TankerConnector.DisspawnSquare=value;
 
                 _disspawnSqaure = value;
             }

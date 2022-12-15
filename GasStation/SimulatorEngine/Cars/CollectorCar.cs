@@ -1,5 +1,6 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 
 namespace GasStation.SimulatorEngine.Cars
 {
@@ -15,7 +16,18 @@ namespace GasStation.SimulatorEngine.Cars
         {
 
         }
+        public double MoneyTaken { set { if (value <= 0) { TankerConnector.MoneyReplacing = false; NeedDispawn = true; TankerConnector.CanSpawnCollectorCar = true; } } }
 
-        public override CarState State => throw new System.NotImplementedException();
+        public override CarState State
+        {
+            get
+            {
+                if (TankerConnector.CurrentMoney > 0 && CurrentSquare.Id == ToSquare.Id)
+                {
+                    return CarState.UseAppliance;
+                }
+                return CarState.ToAppliance;
+            }
+        }
     }
 }

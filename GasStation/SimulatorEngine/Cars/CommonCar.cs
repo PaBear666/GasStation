@@ -1,6 +1,7 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.DB;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 
 namespace GasStation.SimulatorEngine.Cars
 {
@@ -18,7 +19,20 @@ namespace GasStation.SimulatorEngine.Cars
             set
             {
                 _fuel += value;
-                if(_fuel >= MaxFuel)
+                TankerConnector.CurrentMoney += FuelV.Cost;
+                TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] -= value;
+                if (TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] <= 0)
+                {
+                    TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] = 0;
+                    NeedDispawn = true;
+                    TankerConnector.CanFill[TankerConnector.FindFuel(FuelV.Type)] = true;
+                }
+                if (TankerConnector.CurrentMoney >= TankerConnector.MaxMoney*TankerConnector.MoneyPrecent)
+                {
+                    NeedDispawn = true;
+                    TankerConnector.MoneyReplacing = true;
+                }
+                if (_fuel >= MaxFuel)
                 {
                     _fuel = MaxFuel;
                     NeedDispawn = true;
@@ -35,7 +49,8 @@ namespace GasStation.SimulatorEngine.Cars
         {
             get
             {
-                if (Fuel < MaxFuel && CurrentSquare.Id == ToSquare.Id)
+                
+                if ( Fuel < MaxFuel && CurrentSquare.Id == ToSquare.Id)
                 {
                     return CarState.UseAppliance;
                 }
