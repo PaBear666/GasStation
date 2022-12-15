@@ -129,7 +129,7 @@
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(92, 237);
-            this.trackBar1.Maximum = 30;
+            this.trackBar1.Maximum = 12;
             this.trackBar1.Minimum = 8;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(314, 56);
@@ -160,7 +160,7 @@
             // trackBar2
             // 
             this.trackBar2.Location = new System.Drawing.Point(92, 378);
-            this.trackBar2.Maximum = 30;
+            this.trackBar2.Maximum = 12;
             this.trackBar2.Minimum = 3;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(314, 56);
@@ -218,8 +218,9 @@
             this.Controls.Add(this.left);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "TopologyCreationForm";
-            this.Text = "TopologyCreationForm";
+            this.Text = "Создание топологии";
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
             this.ResumeLayout(false);

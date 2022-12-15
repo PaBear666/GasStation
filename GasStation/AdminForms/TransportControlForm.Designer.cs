@@ -39,9 +39,10 @@
             // 
             // addFuelButton
             // 
-            this.addFuelButton.Location = new System.Drawing.Point(1028, 811);
+            this.addFuelButton.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.addFuelButton.Location = new System.Drawing.Point(514, 382);
             this.addFuelButton.Name = "addFuelButton";
-            this.addFuelButton.Size = new System.Drawing.Size(260, 84);
+            this.addFuelButton.Size = new System.Drawing.Size(264, 73);
             this.addFuelButton.TabIndex = 7;
             this.addFuelButton.Text = "Добавить транспорт";
             this.addFuelButton.UseVisualStyleBackColor = true;
@@ -49,9 +50,10 @@
             // 
             // EditTransportButton
             // 
-            this.EditTransportButton.Location = new System.Drawing.Point(12, 817);
+            this.EditTransportButton.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EditTransportButton.Location = new System.Drawing.Point(12, 382);
             this.EditTransportButton.Name = "EditTransportButton";
-            this.EditTransportButton.Size = new System.Drawing.Size(239, 73);
+            this.EditTransportButton.Size = new System.Drawing.Size(264, 73);
             this.EditTransportButton.TabIndex = 6;
             this.EditTransportButton.Text = "Сохранить изменения";
             this.EditTransportButton.UseVisualStyleBackColor = true;
@@ -69,7 +71,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1276, 773);
+            this.dataGridView2.Size = new System.Drawing.Size(762, 364);
             this.dataGridView2.TabIndex = 5;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView2_EditingControlShowing);
@@ -102,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1314, 946);
+            this.ClientSize = new System.Drawing.Size(790, 464);
             this.Controls.Add(this.addFuelButton);
             this.Controls.Add(this.EditTransportButton);
             this.Controls.Add(this.dataGridView2);

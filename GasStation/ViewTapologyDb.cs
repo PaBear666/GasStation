@@ -11,19 +11,15 @@ namespace GasStation
 {
     public class ViewTapologyDb
     {
-
-     
-
         public static void ViewTopologys(ListBox list1)
         {
-            
             list1.Items.Clear();
             DataBaseContext context = new DataBaseContext();
             List<Topology> topologyList = context.Topologies.ToList();
-            for(int i = 0; i < topologyList.Count; i++)
+            for (int i = 0; i < topologyList.Count; i++)
             {
                 list1.Items.Add(topologyList[i].Name);
-            }    
+            }
         }
         public static string LoadTopology(int i)
         {
@@ -31,20 +27,20 @@ namespace GasStation
             List<Topology> topologyList = context.Topologies.ToList();
             return topologyList[i].Construction;
         }
-        public static void SaveTopology(ListBox listBox,string newConstrution)
+        public static void SaveTopology(ListBox listBox, string newConstrution)
         {
             int i = listBox.SelectedIndex;
             DataBaseContext context = new DataBaseContext();
             List<Topology> topologyList = context.Topologies.ToList();
-            if(topologyList[i].Construction!=newConstrution)
-                TopologyController.EditTopologyConstruction(topologyList[i],newConstrution);
+            if (topologyList[i].Construction != newConstrution)
+                TopologyController.EditTopologyConstruction(topologyList[i], newConstrution);
         }
         public static void AddTopologytoNew(ListBox listBox, string newConstrution)
         {
             int i = listBox.SelectedIndex;
             DataBaseContext context = new DataBaseContext();
             List<Topology> topologyList = context.Topologies.ToList();
-            TopologyController.EditTopologyConstruction(topologyList[topologyList.Count-1], newConstrution);
+            TopologyController.EditTopologyConstruction(topologyList[topologyList.Count - 1], newConstrution);
         }
         public static void RemoveTopology(ListBox listBox)
         {

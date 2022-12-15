@@ -84,6 +84,7 @@ namespace GasStation
                 {
                     TopologyController.createTopology(textBox1.Text, _lastSaved);
                     MessageBox.Show("Топология успешно добавлена");
+                    DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
