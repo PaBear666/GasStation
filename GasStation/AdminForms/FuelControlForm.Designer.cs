@@ -47,7 +47,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(776, 375);
+            this.dataGridView2.Size = new System.Drawing.Size(762, 364);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView2_EditingControlShowing);
             this.dataGridView2.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dataGridView2_RowsRemoved);
@@ -68,9 +68,10 @@
             // 
             // addFuelButton
             // 
-            this.addFuelButton.Location = new System.Drawing.Point(563, 415);
+            this.addFuelButton.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.addFuelButton.Location = new System.Drawing.Point(510, 382);
             this.addFuelButton.Name = "addFuelButton";
-            this.addFuelButton.Size = new System.Drawing.Size(211, 23);
+            this.addFuelButton.Size = new System.Drawing.Size(264, 73);
             this.addFuelButton.TabIndex = 4;
             this.addFuelButton.Text = "Добавить топливо";
             this.addFuelButton.UseVisualStyleBackColor = true;
@@ -78,9 +79,10 @@
             // 
             // EditFuelButton
             // 
-            this.EditFuelButton.Location = new System.Drawing.Point(12, 415);
+            this.EditFuelButton.Font = new System.Drawing.Font("Calibri", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.EditFuelButton.Location = new System.Drawing.Point(12, 382);
             this.EditFuelButton.Name = "EditFuelButton";
-            this.EditFuelButton.Size = new System.Drawing.Size(211, 23);
+            this.EditFuelButton.Size = new System.Drawing.Size(264, 73);
             this.EditFuelButton.TabIndex = 3;
             this.EditFuelButton.Text = "Сохранить изменения";
             this.EditFuelButton.UseVisualStyleBackColor = true;
@@ -90,7 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 474);
+            this.ClientSize = new System.Drawing.Size(790, 464);
             this.Controls.Add(this.addFuelButton);
             this.Controls.Add(this.EditFuelButton);
             this.Controls.Add(this.dataGridView2);

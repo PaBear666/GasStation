@@ -310,9 +310,11 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.Random);
             this.Controls.Add(this.Determ);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "ModelConrolForm";
-            this.Text = "ModelConrolForm";
+            this.Text = "Параметры моделирования";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.ТБ.ResumeLayout(false);

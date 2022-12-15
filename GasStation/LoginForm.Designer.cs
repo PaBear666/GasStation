@@ -38,23 +38,25 @@
             // 
             // LoginTextBox
             // 
-            this.LoginTextBox.Location = new System.Drawing.Point(151, 73);
+            this.LoginTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LoginTextBox.Location = new System.Drawing.Point(154, 46);
             this.LoginTextBox.Name = "LoginTextBox";
-            this.LoginTextBox.Size = new System.Drawing.Size(203, 22);
+            this.LoginTextBox.Size = new System.Drawing.Size(203, 26);
             this.LoginTextBox.TabIndex = 0;
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(151, 164);
+            this.PasswordTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PasswordTextBox.Location = new System.Drawing.Point(154, 137);
             this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Size = new System.Drawing.Size(203, 22);
+            this.PasswordTextBox.Size = new System.Drawing.Size(203, 26);
             this.PasswordTextBox.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Modern No. 20", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(201, 32);
+            this.label1.Font = new System.Drawing.Font("Modern No. 20", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(201, 5);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(103, 38);
             this.label1.TabIndex = 2;
@@ -63,17 +65,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Modern No. 20", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(193, 114);
+            this.label2.Font = new System.Drawing.Font("Modern No. 20", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(190, 96);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(120, 34);
+            this.label2.Size = new System.Drawing.Size(130, 38);
             this.label2.TabIndex = 3;
             this.label2.Text = "Пароль";
             // 
             // LoginButton
             // 
-            this.LoginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.LoginButton.Location = new System.Drawing.Point(217, 207);
+            this.LoginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.LoginButton.Location = new System.Drawing.Point(218, 199);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(75, 39);
             this.LoginButton.TabIndex = 4;
@@ -84,9 +86,10 @@
             // ShowPasswordeСheckBox
             // 
             this.ShowPasswordeСheckBox.AutoSize = true;
-            this.ShowPasswordeСheckBox.Location = new System.Drawing.Point(352, 221);
+            this.ShowPasswordeСheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ShowPasswordeСheckBox.Location = new System.Drawing.Point(167, 169);
             this.ShowPasswordeСheckBox.Name = "ShowPasswordeСheckBox";
-            this.ShowPasswordeСheckBox.Size = new System.Drawing.Size(142, 20);
+            this.ShowPasswordeСheckBox.Size = new System.Drawing.Size(177, 24);
             this.ShowPasswordeСheckBox.TabIndex = 5;
             this.ShowPasswordeСheckBox.Text = "Показать пароль";
             this.ShowPasswordeСheckBox.UseVisualStyleBackColor = true;
@@ -104,8 +107,10 @@
             this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.LoginTextBox);
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Text = "Авторизация";
             this.ResumeLayout(false);
             this.PerformLayout();
 

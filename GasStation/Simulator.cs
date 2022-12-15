@@ -21,6 +21,7 @@ namespace GasStation
         private SimulatorArea area;
         private CancellationTokenSource _cancellation;
         private List<Topology> _topology;
+
         public Simulator(TopologyTransfer topology)
         {
             InitializeComponent();
@@ -41,20 +42,19 @@ namespace GasStation
             }
 
             this.FormClosing += (e, c) => _cancellation.Cancel();
+            Width = 1270;
         }
-
-      
 
         private void Simulate(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             area.Run();
         }
+
         private void Stop(object sender, EventArgs e)
         {
             area.Stop();
         }
-
-     
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -63,11 +63,11 @@ namespace GasStation
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            this.Hide();
             ModelConrolForm md = new ModelConrolForm(2, 4);
-            md.ShowDialog();
-            this.Show();
-            button2.Enabled = true;
+            if (md.ShowDialog() == DialogResult.OK)
+            {
+                button2.Enabled = true;
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)

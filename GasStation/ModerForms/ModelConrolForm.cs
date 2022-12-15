@@ -556,7 +556,11 @@ namespace GasStation
                 flag = false;
                 MessageBox.Show("Вы не выбрали модели авто для моделирования");
             }
-            if (flag) this.Close();
+            if (flag)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
         }
     }
 }
