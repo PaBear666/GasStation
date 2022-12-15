@@ -32,6 +32,11 @@ namespace GasStation.SimulatorEngine
             WaveSqaure[] waveSqaures;
             if (_simulatorSquares[from].Surface.Type != _simulatorSquares[to].Surface.Type)
             {
+                if(!_bridges.ContainsKey(new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)))
+                {
+                    side = null;
+                    return false;
+                }
                 var bridge = _bridges[new BridgeWay(_simulatorSquares[from].Surface.Type, _simulatorSquares[to].Surface.Type)];
                 var availableMap = GetAvialableMap(new SurfaceType[] { _simulatorSquares[from].Surface.Type }, carIsGo, from);
                 successWay = TryGetWay(availableMap, from, bridge.Id, carIsGo, out waveSqaures, bridge.Id);

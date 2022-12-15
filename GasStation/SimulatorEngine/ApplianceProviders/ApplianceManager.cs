@@ -138,10 +138,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
             }
         }
 
-        public bool IsCorrect(out string message)
+        public bool IsCorrect(SimulatorSquare[] squares, int height, int widht, out string message)
         {
             var stringBuilder = new StringBuilder();
             bool topologyIsCorrect = true;
+            var wave = new Wave(squares, new Dictionary<BridgeWay, SimulatorSquare>(), height, widht);
 
             foreach (var bridge in _bridges)
             {
@@ -152,10 +153,62 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                 }
             }
 
-            topologyIsCorrect = GasStationProvider.IsCorrect(out var gasStatonErrorMessage) && topologyIsCorrect;
+                // Проверяем корректность провайдеров
+                topologyIsCorrect = GasStationProvider.IsCorrect(out var gasStatonErrorMessage) && topologyIsCorrect;
             topologyIsCorrect = ShopProvider.IsCorrect(out var shopErrorMessage) && topologyIsCorrect;
             topologyIsCorrect = TankerProvider.IsCorrect(out var tankerErrorMessage) && topologyIsCorrect;
             topologyIsCorrect = _bridgeIsCorrect && topologyIsCorrect;
+
+            // Проверяем можем ли мы доехать до клетки взаимодействия
+            if (topologyIsCorrect)
+            {
+                foreach (var bridge in _bridges)
+                {
+                    if (bridge.Value == null)
+                    {
+                        stringBuilder.AppendLine($"Топология должна иметь один переезд на {bridge.Key.Item1.From} часте в сторону {bridge.Key.Item1.To}");
+                        topologyIsCorrect = false;
+                    }
+                    else
+                    {
+                        switch (bridge.Key.Item1.To)
+                        {
+                            case SurfaceType.Service:
+                                foreach (var tanker in TankerProvider.Appliances)
+                                {
+                                    var res = wave.TryGetSide(SurfaceType.Service, bridge.Value.Id, tanker.UsedSquare.Id, out var side);
+                                    if (!res)
+                                    {
+                                        stringBuilder.AppendLine($"Невозможно доехать до клетки взаимодействия {tanker.UsedSquare.Id} от переезда или наоборот");
+                                        topologyIsCorrect = false;
+                                    }
+                                }
+
+                                break;
+                            case SurfaceType.GasStation:
+                                foreach (var gasStation in GasStationProvider.Appliances)
+                                {
+                                    var res = wave.TryGetSide(SurfaceType.Service, bridge.Value.Id, gasStation.UsedSquare.Id, out var side);
+                                    if (!res)
+                                    {
+                                        stringBuilder.AppendLine($"Невозможно доехать до клетки взаимодействия {gasStation.UsedSquare.Id} от переезда или наоборот");
+                                        topologyIsCorrect = false;
+                                    }
+                                }
+                                foreach (var shop in ShopProvider.Appliances)
+                                {
+                                    var res = wave.TryGetSide(SurfaceType.Service, bridge.Value.Id, shop.UsedSquare.Id, out var side);
+                                    if (!res)
+                                    {
+                                        stringBuilder.AppendLine($"Невозможно доехать до клетки взаимодействия {shop.UsedSquare.Id} от переезда или наоборот");
+                                        topologyIsCorrect = false;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
 
             if(gasStatonErrorMessage != string.Empty)
                 stringBuilder.AppendLine(gasStatonErrorMessage);

@@ -42,7 +42,7 @@ namespace GasStation.SimulatorEngine
             _cancellation = cancellation;
 
             InitArea(SquareSize, topology);
-            IsCorrect = _applianceManager.IsCorrect(out var errorMessage);
+            IsCorrect = _applianceManager.IsCorrect(Squares, Heightength, WidthLength, out var errorMessage);
             ErrorMessage = errorMessage;
         }
         private void InitArea(Size size, TopologyTransfer topology)
@@ -114,13 +114,16 @@ namespace GasStation.SimulatorEngine
 
         public void Run()
         {
-            if (!_wasStarted)
+            if (IsCorrect)
             {
-                _simulation.Start();
-                _wasStarted = true;
+                if (!_wasStarted)
+                {
+                    _simulation.Start();
+                    _wasStarted = true;
+                }
+
+                IsStop = false;
             }
-            
-            IsStop = false;
         }
 
         public void Stop()

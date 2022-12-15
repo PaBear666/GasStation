@@ -74,8 +74,8 @@ namespace GasStation.GraphicEngine.Common
 
         public virtual void Dispose()
         {
-            _pictureBox.Dispose();
-            _label.Dispose();
+            _pictureBox?.Dispose();
+            _label?.Dispose();
         }
     }
 }
