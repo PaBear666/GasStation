@@ -28,6 +28,7 @@ namespace GasStation
           button2.Enabled = false;
 
             _editorProvider = new EditorProvider();
+            _editorProvider.side = topology.RowSide;
             _cancellation = new CancellationTokenSource();
             area = new SimulatorArea(panel1, topology, _editorProvider, _cancellation.Token);
             

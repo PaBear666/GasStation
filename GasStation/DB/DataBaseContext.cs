@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GasStation.DB.Controller;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 
@@ -12,7 +13,9 @@ namespace GasStation.DB
     {
         public DataBaseContext()
        : base("DefaultConnection")
-        { }
+        {
+           
+        }
         public DbSet<User> Users { get; set; }
         public DbSet<Fuel> Fuels { get; set; }
         public DbSet<Transport> Transports { get; set; }
