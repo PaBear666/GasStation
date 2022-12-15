@@ -1,8 +1,10 @@
 ﻿using GasStation.ConstructorEngine;
+using GasStation.DB;
 using GasStation.GraphicEngine.Common;
 using GasStation.MathLogic;
 using GasStation.SimulatorEngine.ApplianceProviders;
 using GasStation.SimulatorEngine.Cars;
+using MathNet.Numerics.Random;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -134,6 +136,7 @@ namespace GasStation.SimulatorEngine
                 int counter = -1000;
                 DescTopologyClass topologyClass = new DescTopologyClass();
                 topologyClass = DescTopologyClass.GetDesc("descriptor");
+                Transport[] transports = topologyClass.Transports;
                 double carTimer = RandomDistribution.GetTimeValue( topologyClass, random)*1000;
                 while (!_cancellation.IsCancellationRequested)
                 {
@@ -147,7 +150,9 @@ namespace GasStation.SimulatorEngine
                     {
                         var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
                         var car = new CommonCar(_carViewProvider.GetView(CarType.CommonCar), null, _carProvider.SpawnSquare, _carViewProvider.CarVType);
-                       
+                        int rd = random.Next(0, transports.Length);
+                        car.FuelV = transports[rd].Fuel;
+                        car.MaxFuel = transports[rd].FuelVolume;
                         if (_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree)
                         {
                             car.ToSquare = availableAppliance.UsedSquare;

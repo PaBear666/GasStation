@@ -105,13 +105,16 @@ namespace GasStation
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!listBox1.Items.Contains(listBox2.Items[listBox2.SelectedIndex]))
+            if (listBox2.SelectedIndex != -1)
             {
-                listBox1.Items.Add(listBox2.Items[listBox2.SelectedIndex]);
-              
-                transports.Add(dbTransports[listBox2.SelectedIndex]);
+                if (!listBox1.Items.Contains(listBox2.Items[listBox2.SelectedIndex]))
+                {
+                    listBox1.Items.Add(listBox2.Items[listBox2.SelectedIndex]);
+
+                    transports.Add(dbTransports[listBox2.SelectedIndex]);
+                }
+                writeChagesToFile();
             }
-            writeChagesToFile();
         }
          
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)

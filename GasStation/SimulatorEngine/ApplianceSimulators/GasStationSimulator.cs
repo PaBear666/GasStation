@@ -19,6 +19,7 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
 
         public override void UseSquare()
         {
+
             if(_currentCar == null && Cars.Count > 0)
             {
                 var car = Cars.Peek();

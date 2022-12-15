@@ -1,4 +1,5 @@
 ﻿using GasStation.ConstructorEngine;
+using GasStation.DB;
 using GasStation.GraphicEngine.Common;
 
 namespace GasStation.SimulatorEngine.Cars
@@ -6,6 +7,7 @@ namespace GasStation.SimulatorEngine.Cars
     public class CommonCar : SimulatorCar
     {
         private int _fuel;
+        public Fuel FuelV { get; set; }
         
         public int Fuel
         {
@@ -37,7 +39,6 @@ namespace GasStation.SimulatorEngine.Cars
                 {
                     return CarState.UseAppliance;
                 }
-
                 return CarState.ToAppliance;
             }
         }
