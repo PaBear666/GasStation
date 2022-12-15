@@ -51,7 +51,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 35);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1750, 600);
+            this.tabControl1.Size = new System.Drawing.Size(1750, 650);
             this.tabControl1.TabIndex = 0;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -60,7 +60,7 @@
             this.Пользователи.Location = new System.Drawing.Point(4, 30);
             this.Пользователи.Name = "Пользователи";
             this.Пользователи.Padding = new System.Windows.Forms.Padding(3);
-            this.Пользователи.Size = new System.Drawing.Size(1742, 566);
+            this.Пользователи.Size = new System.Drawing.Size(1742, 616);
             this.Пользователи.TabIndex = 0;
             this.Пользователи.Text = "Пользователи";
             this.Пользователи.UseVisualStyleBackColor = true;
@@ -103,7 +103,7 @@
             this.справкаToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1462, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1462, 29);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -111,7 +111,7 @@
             // 
             this.справкаToolStripMenuItem.Font = new System.Drawing.Font("Calibri", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(83, 26);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(83, 25);
             this.справкаToolStripMenuItem.Text = "Справка";
             this.справкаToolStripMenuItem.Click += new System.EventHandler(this.справкаToolStripMenuItem_Click);
             // 

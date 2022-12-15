@@ -1,5 +1,6 @@
 ﻿using GasStation.GraphicEngine.Common;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace GasStation.ConstructorEngine
@@ -9,6 +10,23 @@ namespace GasStation.ConstructorEngine
         public IDictionary<SurfaceType, Surface> Surfaces { get; private set; }
         public IDictionary<Appliance, LifeAppliance> Appliance { get; private set; }
         public IDictionary<ApplianceType, int> MaxAplianceOnMap { get; private set; }
+      
+        public Side side {
+            set { Image image;
+                if (value == Side.Top || value == Side.Bottom)
+                {
+                    image = Resource.road;
+                }
+                else
+                    image = Resource.RoadTopBot;
+                Surfaces = new Dictionary<SurfaceType, Surface>()
+                {
+                    { SurfaceType.Road, new Surface(SurfaceType.Road, new ViewComponent(Control.DefaultBackColor, image))},
+                    { SurfaceType.GasStation, new Surface(SurfaceType.GasStation, new ViewComponent(Control.DefaultBackColor, Resource.gasStation))},
+                    { SurfaceType.Service, new Surface(SurfaceType.Service, new ViewComponent(Control.DefaultBackColor, Resource.gasStationService)) }
+                };
+            } }
+        
         public EditorProvider()
         {
             Surfaces = new Dictionary<SurfaceType, Surface>()

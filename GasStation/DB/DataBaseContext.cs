@@ -11,7 +11,7 @@ namespace GasStation.DB
     public class DataBaseContext:DbContext
     {
         public DataBaseContext()
-       : base("KCSoccerDataContext")
+       : base("DefaultConnection")
         { }
         public DbSet<User> Users { get; set; }
         public DbSet<Fuel> Fuels { get; set; }

@@ -42,21 +42,25 @@ namespace GasStation
         private void left_CheckedChanged(object sender, EventArgs e)
         {
             side = Side.Left;
+            trackBar2.Minimum = 4;
         }
 
         private void right_CheckedChanged(object sender, EventArgs e)
         {
             side= Side.Right;
+            trackBar2.Minimum = 4;
         }
 
         private void up_CheckedChanged(object sender, EventArgs e)
         {
             side = Side.Top;
+            trackBar2.Minimum = 3;
         }
 
         private void down_CheckedChanged(object sender, EventArgs e)
         {
             side = Side.Bottom;
+            trackBar2.Minimum = 3;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -84,6 +88,16 @@ namespace GasStation
                 {
                     TopologyController.createTopology(textBox1.Text, _lastSaved);
                     MessageBox.Show("Топология успешно добавлена");
+                    if(up.Checked||down.Checked)
+                    {
+                        W += 4;
+                        H ++;
+                    }
+                    else
+                    {
+                        W ++;
+                        H += 4;
+                    }
                     DialogResult = DialogResult.OK;
                     this.Close();
                 }

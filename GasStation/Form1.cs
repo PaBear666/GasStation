@@ -100,6 +100,7 @@ namespace GasStation
                 InitAppliacnePictureBox();
 
                 var topology = JsonConvert.DeserializeObject<TopologyTransfer>(ViewTapologyDb.LoadTopology(listBox1.SelectedIndex));
+                _editorProvider.side = topology.RowSide;
                 _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
             }
@@ -117,6 +118,7 @@ namespace GasStation
             TopologyCreationForm form = new TopologyCreationForm();
             if (form.ShowDialog() == DialogResult.OK)
             {
+                _editorProvider.side = form.side;
                 _constructor = new ConstructorArea(panel1, form.side, _editorProvider, ApplianceUpdate, form.W, form.H);
                 var a = _constructor.GetTransfer();
                 _lastSaved = JsonConvert.SerializeObject(a);
@@ -150,7 +152,7 @@ namespace GasStation
                 InitAppliacnePictureBox();
                 _lastSaved = ViewTapologyDb.LoadTopology(listBox1.SelectedIndex);
                 var topology = JsonConvert.DeserializeObject<TopologyTransfer>(_lastSaved);
-
+                _editorProvider.side = topology.RowSide;
                 _constructor = new ConstructorArea(panel1, topology, ApplianceUpdate, _editorProvider);
                 SetAppliacneEventcPictureBox();
             }
