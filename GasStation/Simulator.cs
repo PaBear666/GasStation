@@ -45,8 +45,13 @@ namespace GasStation
             }
              
             this.FormClosing += (e, c) => _cancellation.Cancel();
-            Width = 1470;
+            Width = 1290;
             _takerCount = area.TankerCount;
+            if (!area.IsCorrect)
+            {
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
         }
         
         private void Simulate(object sender, EventArgs e)

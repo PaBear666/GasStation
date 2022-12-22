@@ -17,14 +17,13 @@ namespace GasStation
     {
         public ModerContorolForm()
         {
-            ModelConrolForm userControl = new ModelConrolForm(7, 2);
-            Form1 form1 = new Form1();
             InitializeComponent();
             ViewTapologyDb.ViewTopologys(listBox1);
-            userControl = (ModelConrolForm)this.SetupForm(userControl);
             if (listBox1.Items.Count > 0)
                 listBox1.SelectedIndex = 0;
             Width = 2200;
+            Height = 940;
+            tabControl1.Width = 1500;
         }
 
         private Form SetupForm(Form form)
