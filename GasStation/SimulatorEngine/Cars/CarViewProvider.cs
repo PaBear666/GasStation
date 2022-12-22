@@ -1,5 +1,6 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.GraphicEngine.Common;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -34,14 +35,50 @@ namespace GasStation.SimulatorEngine.Cars
                 case CarType.CommonCar:
                     switch (random)
                     {
+
                         case 1:
                             CarVType = CommnonCarViewType.Red;
+                            switch (TankerConnector.CarSpawnSide)
+                            {
+                                case Side.Left:
+                                    return new ViewComponent(Color.Red, Resource.carTop);
+                                case Side.Right:
+                                    return new ViewComponent(Color.Red, Resource.carTop);
+                                case Side.Bottom:
+                                    return new ViewComponent(Color.Red, Resource.carLeft);
+                                case Side.Top:
+                                    return new ViewComponent(Color.Red, Resource.carLeft);
+                            }
+                            
                             return new ViewComponent(Color.Red, Resource.car);
                         case 2:
                             CarVType = CommnonCarViewType.Green;
+                            switch (TankerConnector.CarSpawnSide)
+                            {
+                                case Side.Left:
+                                    return new ViewComponent(Color.Red, Resource.GreenCarZombiTop) ;
+                                case Side.Right:
+                                    return new ViewComponent(Color.Red, Resource.GreenCarZombiTop);
+                                case Side.Bottom:
+                                    return new ViewComponent(Color.Red, Resource.GreenCarZombiLeft);
+                                case Side.Top:
+                                    return new ViewComponent(Color.Red, Resource.GreenCarZombiLeft);
+                            }
                             return new ViewComponent(Color.Red, Resource.GreenCarZombi);
+
                         case 3:
                             CarVType = CommnonCarViewType.Blue;
+                            switch (TankerConnector.CarSpawnSide)
+                            {
+                                case Side.Left:
+                                    return new ViewComponent(Color.Red, Resource.StreetRaceTop);
+                                case Side.Right:
+                                    return new ViewComponent(Color.Red, Resource.StreetRaceTop);
+                                case Side.Bottom:
+                                    return new ViewComponent(Color.Red, Resource.StreetRaceLeft);
+                                case Side.Top:
+                                    return new ViewComponent(Color.Red, Resource.StreetRaceLeft);
+                            }
                             return new ViewComponent(Color.Red, Resource.StreetRace);
                         default:
                             return null;
@@ -49,9 +86,31 @@ namespace GasStation.SimulatorEngine.Cars
 
                     break;
                 case CarType.Сollector:
+                    switch (TankerConnector.CarSpawnSide)
+                    {
+                        case Side.Left:
+                            return new ViewComponent(Color.Green, Resource.CollectorCarTop);
+                        case Side.Right:
+                            return new ViewComponent(Color.Green, Resource.CollectorCarTop);
+                        case Side.Bottom:
+                            return new ViewComponent(Color.Green, Resource.CollectorCarLeft);
+                        case Side.Top:
+                            return new ViewComponent(Color.Green, Resource.CollectorCarLeft);
+                    }
                     return new ViewComponent(Color.Green, Resource.CollectorCarLeft);
 
                 case CarType.GasolineTanker:
+                    switch (TankerConnector.CarSpawnSide)
+                    {
+                        case Side.Left:
+                            return new ViewComponent(Color.Blue, Resource.GaslineTankerCarTop);
+                        case Side.Right:
+                            return new ViewComponent(Color.Blue, Resource.GaslineTankerCarTop);
+                        case Side.Bottom:
+                            return new ViewComponent(Color.Blue, Resource.GaslineTankerCarLeft);
+                        case Side.Top:
+                            return new ViewComponent(Color.Blue, Resource.GaslineTankerCarLeft);
+                    }
                     return new ViewComponent(Color.Blue, Resource.GaslineTankerCarBot);
                 default:
                     return null;

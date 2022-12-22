@@ -9,7 +9,8 @@ namespace GasStation.SimulatorEngine.Cars
     {
         private int _fuel;
         public Fuel FuelV { get; set; }
-        
+        public int GasStationIndex { get; set; }
+        bool firstuse = true;
         public int Fuel
         {
             get
@@ -18,14 +19,16 @@ namespace GasStation.SimulatorEngine.Cars
             }
             set
             {
+                //TankerConnector.CurrentMoney -= FuelV.Cost * _fuel;
                 _fuel += value;
-                TankerConnector.CurrentMoney += FuelV.Cost;
-                TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] -= value;
-                if (TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] <= 0)
+                int i = TankerConnector.FindFuel(FuelV.Type);
+                TankerConnector.CurrentMoney += FuelV.Cost * value;
+                TankerConnector.Volume[i] -= value;
+                if (TankerConnector.Volume[i] <= 0)
                 {
-                    TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] = 0;
+                    TankerConnector.Volume[i] = 0;
                     NeedDispawn = true;
-                    TankerConnector.CanFill[TankerConnector.FindFuel(FuelV.Type)] = true;
+                    TankerConnector.CanFill[i] = true;
                 }
                 if (TankerConnector.CurrentMoney >= TankerConnector.MaxMoney*TankerConnector.MoneyPrecent)
                 {
@@ -42,6 +45,9 @@ namespace GasStation.SimulatorEngine.Cars
                 {
                     _fuel = 0;
                 }
+                ViewCounterProvider.LastCheck[GasStationIndex] = _fuel * FuelV.Cost;
+                ViewCounterProvider.LastFill[GasStationIndex] = _fuel;
+                ViewCounterProvider.Fdg();
             }
         }
         public int MaxFuel { get; set; }
@@ -52,6 +58,12 @@ namespace GasStation.SimulatorEngine.Cars
                 
                 if ( Fuel < MaxFuel && CurrentSquare.Id == ToSquare.Id)
                 {
+                    if(firstuse)
+                    {
+                        ViewCounterProvider.LastCheck[GasStationIndex] = 0;
+                        ViewCounterProvider.LastFill[GasStationIndex] = 0;
+                        firstuse = false;
+                    }
                     return CarState.UseAppliance;
                 }
                 return CarState.ToAppliance;
@@ -65,6 +77,7 @@ namespace GasStation.SimulatorEngine.Cars
                 CarType.CommonCar,
                 viewComponent)
         {
+            
             base.CarViewType = type;
             MaxFuel = 3000;
         }

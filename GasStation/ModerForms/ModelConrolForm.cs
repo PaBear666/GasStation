@@ -18,7 +18,8 @@ namespace GasStation
 
 
         DescTopologyClass descTopologyClass;
-        int FuelContarinerLength;
+        int _FuelContarinerLength;
+        bool _int = true;
         int ShopsLength;
         DataBaseContext context = new DataBaseContext();
         List<Fuel> fuels;
@@ -36,43 +37,30 @@ namespace GasStation
             InitializeComponent();
             SelectedRadioButton = 0;
             Determ.Checked = true;
-            FuelContarinerLength = fuelContarinerLength;
+            _FuelContarinerLength = fuelContarinerLength;
             ShopsLength = shopsLength;
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-           
-            
+
             for (int i = 0; i < dbTransports.Count; i++)
             {
                 listBox2.Items.Add(dbTransports[i].Name);
             }
 
-            FuelForContainer = new Fuel[FuelContarinerLength];
-            FuelForContainerVolume = new int[FuelContarinerLength];
-            for (int i = 0; i < FuelContarinerLength; i++)
-            {
-                FuelForContainer[i] =fuels[0];
-                FuelForContainerVolume[i] = 400;
-            }
-            CashBox = new int[shopsLength];
-            for (int i = 0; i < ShopsLength; i++)
-            {
-                CashBox[i] = 1000000;
-            }
-
-            Random.Checked=true;
-            Determ.Checked = true;
-            fillDataGrid();
+            FuelForContainer = new Fuel[_FuelContarinerLength];
+            FuelForContainerVolume = new int[_FuelContarinerLength];
+            readChangesFromFile();
         }
 
         private void fillDataGrid()
         {
             dataGridView1.Rows.Clear();
-            dataGridView1.Rows.Add(FuelContarinerLength);
+            dataGridView1.Rows.Add(_FuelContarinerLength);
+            dataGridView2.Rows.Clear();
             dataGridView2.Rows.Add(ShopsLength);
-            for (int i =0; i< FuelContarinerLength;i++)
+            for (int i =0; i< _FuelContarinerLength;i++)
             {
                 dataGridView1.Rows[i].Cells[0].Value= i+1;
-                dataGridView1.Rows[i].Cells[1].Value = FuelForContainer[0].Type;
+                dataGridView1.Rows[i].Cells[1].Value = FuelForContainer[i].Type;
                 dataGridView1.Rows[i].Cells[2].Value = FuelForContainerVolume[i];
             }
             for (int i = 0; i < ShopsLength; i++)
@@ -152,21 +140,24 @@ namespace GasStation
                     int i = findFuelID(s);
                     if (e.Button == MouseButtons.Left)
                     {
-                        i--;
-                        if (i < 0)
-                        {
-                            dataGridView1.Rows[r].Cells[1].Value = fuels[fuels.Count - 1].Type;
-                            FuelForContainer[r] = fuels[fuels.Count - 1];
-                        }
-                        else
-                        {
-                            FuelForContainer[r] = fuels[i];
-                            dataGridView1.Rows[r].Cells[1].Value = fuels[i].Type;
-                        }
+                       
+                            i--;
+                            if (i < 0)
+                            {
+                                dataGridView1.Rows[r].Cells[1].Value = fuels[fuels.Count - 1].Type;
+                                FuelForContainer[r] = fuels[fuels.Count - 1];
+                            }
+                            else
+                            {
+                                FuelForContainer[r] = fuels[i];
+                                dataGridView1.Rows[r].Cells[1].Value = fuels[i].Type;
+                            }
+                        
                     }
                     if (e.Button == MouseButtons.Right)
                     {
-                        i++;
+                        
+                            i++;
                         if (i >= fuels.Count)
                         {
                             FuelForContainer[r] = fuels[0];
@@ -177,12 +168,21 @@ namespace GasStation
                             FuelForContainer[r] = fuels[i];
                             dataGridView1.Rows[r].Cells[1].Value = fuels[i].Type;
                         }
+                        
                     }
                 }
             }
             writeChagesToFile();
         }
-
+        bool containsFuel(Fuel f)
+        {
+           
+            for(int i = 0; i < FuelForContainer.Length; i++)
+            {
+                if (FuelForContainer[i].Type == f.Type) return true;
+            }
+            return false;
+        }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
           
@@ -258,6 +258,7 @@ namespace GasStation
        
         void writeChagesToFile()
         {
+            if (!_int) { 
             DataGridToArrays();
             descTopologyClass = new DescTopologyClass();
             if (SelectedRadioButton==0)
@@ -269,60 +270,61 @@ namespace GasStation
                 else
                     descTopologyClass.A = Double.Parse(textBox1.Text);
             }
-            if (SelectedRadioButton == 1)
-            {
-                descTopologyClass.randomType = DescTopologyClass.RandomType.Destribution;
-
-                switch (comboBox1.SelectedIndex)
+                if (SelectedRadioButton == 1)
                 {
-                    case 0:
-                        {
-                            descTopologyClass.destributionType=DescTopologyClass.DestributionType.Normal;
-                           
-                            if (textBox2.Text == "")
-                                descTopologyClass.A = 1;
-                            else
-                                descTopologyClass.A = Double.Parse(textBox2.Text);
-                        
-                            if (textBox3.Text == "")
-                                descTopologyClass.B = 1;
-                            else
-                                descTopologyClass.B = Double.Parse(textBox3.Text);
-                            break;
-                        }
-                    case 1:
-                        {
-                            descTopologyClass.destributionType = DescTopologyClass.DestributionType.Exp;
+                    descTopologyClass.randomType = DescTopologyClass.RandomType.Destribution;
 
-                            if (textBox2.Text == "")
-                                descTopologyClass.A = 1;
-                            else
-                                descTopologyClass.A = Double.Parse(textBox2.Text);
-                            break;
-                        }
-                    case 2:
-                        {
-                            descTopologyClass.destributionType = DescTopologyClass.DestributionType.Equels;
+                    switch (comboBox1.SelectedIndex)
+                    {
+                        case 0:
+                            {
+                                descTopologyClass.destributionType = DescTopologyClass.DestributionType.Normal;
 
-                            if (textBox2.Text == "")
-                                descTopologyClass.A = 1;
-                            else
-                                descTopologyClass.A = Double.Parse(textBox2.Text);
+                                if (textBox2.Text == "")
+                                    descTopologyClass.A = 1;
+                                else
+                                    descTopologyClass.A = Double.Parse(textBox2.Text);
 
-                            if (textBox3.Text == "")
-                                descTopologyClass.B = 1;
-                            else
-                                descTopologyClass.B = Double.Parse(textBox3.Text);
-                            break;
-                        }
-                    default:
-                        {
-                            
-                            break;
-                        }
+                                if (textBox3.Text == "")
+                                    descTopologyClass.B = 1;
+                                else
+                                    descTopologyClass.B = Double.Parse(textBox3.Text);
+                                break;
+                            }
+                        case 1:
+                            {
+                                descTopologyClass.destributionType = DescTopologyClass.DestributionType.Exp;
+
+                                if (textBox2.Text == "")
+                                    descTopologyClass.A = 1;
+                                else
+                                    descTopologyClass.A = Double.Parse(textBox2.Text);
+                                break;
+                            }
+                        case 2:
+                            {
+                                descTopologyClass.destributionType = DescTopologyClass.DestributionType.Equels;
+
+                                if (textBox2.Text == "")
+                                    descTopologyClass.A = 1;
+                                else
+                                    descTopologyClass.A = Double.Parse(textBox2.Text);
+
+                                if (textBox3.Text == "")
+                                    descTopologyClass.B = 1;
+                                else
+                                    descTopologyClass.B = Double.Parse(textBox3.Text);
+                                break;
+                            }
+                        default:
+                            {
+
+                                break;
+                            }
+                    }
                 }
                 
-            }
+            
             DescTopologyClass.FuelContainer fuel = new DescTopologyClass.FuelContainer();  
             fuel.Fuels = FuelForContainer;
             fuel.Volume = FuelForContainerVolume;
@@ -335,6 +337,7 @@ namespace GasStation
             fileStream = new FileStream("descriptor", FileMode.Create);
             formatter.Serialize(fileStream, descTopologyClass);
             fileStream.Close();
+            }
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -351,7 +354,95 @@ namespace GasStation
                 textBox1.Text = "1";
             writeChagesToFile();
         }
+        private void readChangesFromFile()
+        {
+            try
+            {
+                FileStream fileStream = new FileStream("descriptor", FileMode.Open);
+                BinaryFormatter formatter = new BinaryFormatter();
+                descTopologyClass = (DescTopologyClass)formatter.Deserialize(fileStream);
+                fileStream.Close();
+                dataGridView1.Rows.Clear();
+                dataGridView1.Rows.Add(_FuelContarinerLength);
+                for(int i =0;i<dataGridView1.Rows.Count;i++)
+                {
+                    if (i < descTopologyClass.fuelContainer.Fuels.Length)
+                    {
+                        FuelForContainer[i] = descTopologyClass.fuelContainer.Fuels[i];
+                        FuelForContainerVolume[i] = descTopologyClass.fuelContainer.Volume[i];
+                    }
+                    else
+                    {
+                        FuelForContainer[i] = fuels[0];
+                        FuelForContainerVolume[i] = 400;
+                    }
+                }
+                CashBox = descTopologyClass.Cashbox;
+                fillDataGrid();
+                transports.AddRange(descTopologyClass.Transports);
+                listBox1.Items.Clear();
+                for(int i = 0;i<transports.Count;i++)
+                    listBox1.Items.Add(transports[i].Name);
+                switch(descTopologyClass.randomType)
+                {
+                    case DescTopologyClass.RandomType.Fixed:
+                        {
+                            textBox1.Text = descTopologyClass.A.ToString();
+                            Determ.Checked = true;
+                            break;
+                        }
+                    case DescTopologyClass.RandomType.Destribution:
+                        {
+                            Random.Checked = true;
+                            switch (descTopologyClass.destributionType)
+                            {
 
+                                case DescTopologyClass.DestributionType.Normal:
+                                {
+                                        
+                                    textBox2.Text=descTopologyClass.A.ToString();
+                                    textBox3.Text=descTopologyClass.B.ToString();
+                                    comboBox1.SelectedIndex = 0;
+                                    break;
+                                }
+                                case DescTopologyClass.DestributionType.Exp:
+                                {
+                                      
+                                        textBox2.Text = descTopologyClass.A.ToString();
+                                        comboBox1.SelectedIndex = 1;
+                                        break;
+                                }
+                                case DescTopologyClass.DestributionType.Equels:
+                                    {
+                                        
+                                        textBox2.Text = descTopologyClass.A.ToString();
+                                        textBox3.Text = descTopologyClass.B.ToString();
+                                        comboBox1.SelectedIndex=2;
+                                        break;
+                                    }
+                            }
+                            
+                            break;
+                        }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                for (int i = 0; i < _FuelContarinerLength; i++)
+                {
+                    FuelForContainer[i] = fuels[0];
+                    FuelForContainerVolume[i] = 400;
+                }
+                CashBox = new int[1];
+                CashBox[0] = 1000000;
+                fillDataGrid();
+                Random.Checked = true;
+                Determ.Checked = true;
+            }
+            _int = false;
+            
+        }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             dataGridView1.EditingControl.KeyPress -= Editing1Control_KeyPress;
@@ -554,10 +645,12 @@ namespace GasStation
             if (listBox1.Items.Count <= 0)
             {
                 flag = false;
+              
                 MessageBox.Show("Вы не выбрали модели авто для моделирования");
             }
             if (flag)
             {
+                writeChagesToFile();
                 DialogResult = DialogResult.OK;
                 Close();
             }

@@ -12,13 +12,14 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
     {
         private int _fuelPower;
         CommonCar _currentCar;
-        
-        public GasStationSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare) : base(applianceSquare, usedSquare)
+        private int _gasStationIndex;
+        public GasStationSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare, int index) : base(applianceSquare, usedSquare)
         {
+            _gasStationIndex=index;
             //MaxCar = 1;
             _fuelPower = FuelRate.FuelPower;
         }
-        
+        public int GasStationIndex { get { return _gasStationIndex; } }
         public override void UseSquare()
         {
             if(!Check(TankerConnector.CanSpawnTankerCar)||!TankerConnector.CanSpawnCollectorCar)
@@ -42,9 +43,9 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
                 return;
             }
 
-            if(_currentCar != null && _currentCar.State == CarState.UseAppliance)
+            if(_currentCar != null && _currentCar.State == CarState.UseAppliance && _currentCar.ToSquare!= TankerConnector.DisspawnSquare)
             {
-                _currentCar.Fuel += _fuelPower;
+                _currentCar.Fuel = _fuelPower;
                 TankerConnector.Volume[TankerConnector.FindFuel(_currentCar.FuelV.Type)] -= _fuelPower;
                 
             }

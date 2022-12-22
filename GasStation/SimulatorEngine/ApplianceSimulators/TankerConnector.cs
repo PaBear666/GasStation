@@ -1,4 +1,5 @@
-﻿using GasStation.DB;
+﻿using GasStation.ConstructorEngine;
+using GasStation.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
         public static double CurrentMoney { get; set; }
         public static double MaxMoney { get; set; }
         public static bool MoneyReplacing { get; set; }
+        public static Side CarSpawnSide { get; set; }
         public static double MoneyPrecent
         {
             get { return 0.70d; }

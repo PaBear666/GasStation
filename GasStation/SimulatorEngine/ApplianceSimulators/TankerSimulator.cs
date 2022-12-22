@@ -12,14 +12,15 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
     
     public class TankerSimulator : ApplianceSimulator<GaslineTankerCar>
     {
-        public Fuel[] Fuel { get; set; }
-        
+        public Fuel Fuel { get; set; }
+        public int Id { get; set; }
         public int[] MaxVolume { get; set; }
         GaslineTankerCar _currentCar;
         public int[] volume;
         
-        public TankerSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare) : base(applianceSquare, usedSquare)
+        public TankerSimulator(SimulatorSquare applianceSquare, SimulatorSquare usedSquare,int count) : base(applianceSquare, usedSquare)
         {
+            Id = count;
         }
 
         public override void UseSquare()

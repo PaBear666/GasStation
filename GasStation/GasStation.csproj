@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="SimulatorEngine\ApplianceSimulators\FuelRate.cs" />
     <Compile Include="SimulatorEngine\ApplianceSimulators\TankerConnector.cs" />
+    <Compile Include="SimulatorEngine\ViewCounterProvider.cs" />
     <Compile Include="ViewTapologyDb.cs" />
     <Compile Include="AdminForms\FuelControlForm.cs">
       <SubType>Form</SubType>

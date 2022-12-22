@@ -184,7 +184,9 @@ namespace GasStation
             {
                 if (canDelete)
                 {
-                    FuelController.Remove(fuels[e.RowIndex]);
+                    if (FuelController.Remove(fuels[e.RowIndex]) != null)
+                        MessageBox.Show("Невозможно удалить так как, есть транспорт с таким типом топлива. " +
+                            "Прежде удалить транспорт содержащий данный вид топлива");
                     FillDataGride();
                 }
             }

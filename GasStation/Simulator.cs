@@ -1,6 +1,7 @@
 ﻿using GasStation.ConstructorEngine;
 using GasStation.DB;
 using GasStation.SimulatorEngine;
+using GasStation.SimulatorEngine.ApplianceSimulators;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace GasStation
         private EditorProvider _editorProvider;
         private SimulatorArea area;
         private CancellationTokenSource _cancellation;
-        private List<Topology> _topology;
-
+    
+        private int _takerCount;
         public Simulator(TopologyTransfer topology)
         {
             InitializeComponent();
@@ -30,8 +31,9 @@ namespace GasStation
             _editorProvider = new EditorProvider();
             _editorProvider.side = topology.RowSide;
             _cancellation = new CancellationTokenSource();
+
             area = new SimulatorArea(panel1, topology, _editorProvider, _cancellation.Token);
-            
+           TankerConnector.CarSpawnSide=topology.RowSide;
             var a = area.IsCorrect;
             var b = area.ErrorMessage;
 
@@ -41,14 +43,18 @@ namespace GasStation
                 richTextBox1.AppendText(Environment.NewLine);
                 richTextBox1.AppendText(b);
             }
-
+             
             this.FormClosing += (e, c) => _cancellation.Cancel();
-            Width = 1270;
+            Width = 1470;
+            _takerCount = area.TankerCount;
         }
-
+        
         private void Simulate(object sender, EventArgs e)
         {
             button3.Enabled = false;
+            ViewCounterProvider.DataGrid = dataGridView2;
+            ViewCounterProvider.DataGridTanker = dataGridView1;
+            ViewCounterProvider.Label = label3;
             area.Run();
         }
 
@@ -61,7 +67,7 @@ namespace GasStation
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            ModelConrolForm md = new ModelConrolForm(2, 4);
+            ModelConrolForm md = new ModelConrolForm(_takerCount, 1);
             if (md.ShowDialog() == DialogResult.OK)
             {
                 button2.Enabled = true;

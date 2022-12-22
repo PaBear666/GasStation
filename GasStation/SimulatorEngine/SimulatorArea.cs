@@ -31,7 +31,7 @@ namespace GasStation.SimulatorEngine
         public int Acceleration { get; set; }
         public bool IsCorrect { get; }
         public string ErrorMessage { get; }
-
+        public int TankerCount { get { return _applianceManager.TankerProvider.Appliances.Count; } }
 
         public SimulatorArea(Panel panel, TopologyTransfer topology, EditorProvider editorProvider, CancellationToken cancellation) : base(panel, topology.WidthLength, topology.HeightLength)
         {
@@ -94,7 +94,7 @@ namespace GasStation.SimulatorEngine
                     disspawnSquare = GetSquare(Heightength - 1);
                     break;
                 case Side.Right:
-                    spawnSquare = GetSquare(Heightength * WidthLength);
+                    spawnSquare = GetSquare(Heightength * WidthLength-1);
                     disspawnSquare = GetSquare(Heightength * WidthLength - Heightength);
                     break;
                 case Side.Left:
@@ -154,6 +154,8 @@ namespace GasStation.SimulatorEngine
                 TankerConnector.MoneyReplacing = false;
                 TankerConnector.CanSpawnCollectorCar = true;
                 bool flag = true;
+                ViewCounterProvider.LastCheck = new double[_applianceManager.GasStationProvider.Appliances.Count];
+                ViewCounterProvider.LastFill = new int[_applianceManager.GasStationProvider.Appliances.Count];
                 while (!_cancellation.IsCancellationRequested)
                 {
                     while (IsStop && !_cancellation.IsCancellationRequested) 
@@ -186,11 +188,12 @@ namespace GasStation.SimulatorEngine
                     {
                         if (TankerConnector.CanFill[i]&& TankerConnector.CanSpawnTankerCar[i])
                         {
-                            var availableAppliance = _applianceManager.TankerProvider.Appliances.FirstOrDefault(a => a.TankerIsFree);
+                            var availableAppliance = _applianceManager.TankerProvider.Appliances.FirstOrDefault(a => a.TankerIsFree && a.Id == i);
                             var car = new GaslineTankerCar(_carViewProvider.GetView(CarType.GasolineTanker), null, _carProvider.SpawnSquare);
                             int rd = random.Next(0, transports.Length);
                             car.FuelV = TankerConnector.Fuel[i];
                             car.MaxFuel = TankerConnector.MaxVolume[i];
+                           
                             if (_carProvider.SpawnCar(car) && availableAppliance != null && topologyClass.ContainsFuel(transports[rd].Fuel))
                             {
                                 car.ToSquare = availableAppliance.UsedSquare;
@@ -203,12 +206,14 @@ namespace GasStation.SimulatorEngine
                     if (counter > carTimer)
                     {
                         var availableAppliance = _applianceManager.GasStationProvider.Appliances.FirstOrDefault(a => a.IsFree);
+                        
                         var car = new CommonCar(_carViewProvider.GetView(CarType.CommonCar), null, _carProvider.SpawnSquare, _carViewProvider.CarVType);
                         int rd = random.Next(0, transports.Length);
                         car.FuelV = transports[rd].Fuel;
-                        car.MaxFuel = transports[rd].FuelVolume;
+                        car.MaxFuel = random.Next(10,transports[rd].FuelVolume);
                         if (_carProvider.SpawnCar(car) && availableAppliance != null && availableAppliance.IsFree && topologyClass.ContainsFuel(transports[rd].Fuel) && !Flag(TankerConnector.CanFill)&& !TankerConnector.MoneyReplacing)
                         {
+                            car.GasStationIndex = availableAppliance.GasStationIndex;
                             car.ToSquare = availableAppliance.UsedSquare;
                             availableAppliance.Cars.Enqueue(car);
                         }

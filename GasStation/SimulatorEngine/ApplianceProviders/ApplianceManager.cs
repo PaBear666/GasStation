@@ -1,4 +1,5 @@
 ﻿using GasStation.ConstructorEngine;
+using GasStation.DB;
 using GasStation.SimulatorEngine.ApplianceSimulators;
 using GasStation.SimulatorEngine.Cars;
 using System.Collections.Generic;
@@ -69,10 +70,11 @@ namespace GasStation.SimulatorEngine.ApplianceProviders
                     ShopProvider.Appliances.Add(new ShopSimulator(current, usedSquare));
                     break;
                 case ApplianceType.GasStation:
-                    GasStationProvider.Appliances.Add(new GasStationSimulator(current, usedSquare));
+                    
+                    GasStationProvider.Appliances.Add(new GasStationSimulator(current, usedSquare, GasStationProvider.Appliances.Count));
                     break;
                 case ApplianceType.Tanker:
-                    TankerProvider.Appliances.Add(new TankerSimulator(current, usedSquare));
+                    TankerProvider.Appliances.Add(new TankerSimulator(current, usedSquare,TankerProvider.Appliances.Count));
                     break;
                 case ApplianceType.Bridge:
                     if(usedSquare == null)

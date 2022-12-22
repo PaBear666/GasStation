@@ -28,7 +28,9 @@ namespace GasStation.SimulatorEngine.ApplianceSimulators
             if (_currentCar != null && _currentCar.State == CarState.UseAppliance)
             {
                 TankerConnector.CurrentMoney-= FuelRate.MoneyRate;
-                _currentCar.MoneyTaken = TankerConnector.CurrentMoney-(TankerConnector.MaxMoney*TankerConnector.MoneyPrecent);
+                if(TankerConnector.CurrentMoney < 0)
+                    TankerConnector.CurrentMoney = 0;
+                _currentCar.MoneyTaken = TankerConnector.CurrentMoney;
             }
             else
             {

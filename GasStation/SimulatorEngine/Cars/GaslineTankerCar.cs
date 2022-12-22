@@ -21,7 +21,12 @@ namespace GasStation.SimulatorEngine.Cars
         public const int FuelRate = 100;
         public int MaxFuel { get; set; }
 
-        public int FuelGiven { set { if (value <= 0) { TankerConnector.CanFill[TankerConnector.FindFuel(FuelV.Type)] = false; NeedDispawn = true; TankerConnector.CanSpawnTankerCar[TankerConnector.FindFuel(FuelV.Type)] = true; } } }
+        public int FuelGiven { set { if (value <= 0) { 
+                    TankerConnector.CanFill[TankerConnector.FindFuel(FuelV.Type) ] = false; 
+                    NeedDispawn = true; 
+                    TankerConnector.CanSpawnTankerCar[TankerConnector.FindFuel(FuelV.Type)] = true;
+                    TankerConnector.Volume[TankerConnector.FindFuel(FuelV.Type)] = TankerConnector.MaxVolume[TankerConnector.FindFuel(FuelV.Type)];
+                    ViewCounterProvider.Fdg(); } } }
         public GaslineTankerCar(ViewComponent viewComponent, SimulatorSquare to, SimulatorSquare current) :
             base(current,
                 to,

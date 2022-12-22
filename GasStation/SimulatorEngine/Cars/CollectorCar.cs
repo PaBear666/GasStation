@@ -16,7 +16,7 @@ namespace GasStation.SimulatorEngine.Cars
         {
 
         }
-        public double MoneyTaken { set { if (value <= 0) { TankerConnector.MoneyReplacing = false; NeedDispawn = true; TankerConnector.CanSpawnCollectorCar = true; } } }
+        public double MoneyTaken { set { if (value <= 0) { TankerConnector.MoneyReplacing = false; NeedDispawn = true; TankerConnector.CanSpawnCollectorCar = true; TankerConnector.CurrentMoney = 0; } ViewCounterProvider.Fdg(); } }
 
         public override CarState State
         {
